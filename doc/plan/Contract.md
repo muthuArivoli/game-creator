@@ -1,15 +1,10 @@
-#TEAM NAME: 
+# TEAM NAME: NueveNueve
 
+### Focus of the project
 
-###Focus of the project
+As a team, we are going to work on Strategy Based games
 
-As a team, we are interested in working 
-
-###Extensions
-
-Some features we are considering adding to the project include 
-
-###Contract
+### Contract
 * Work Ethic
     * We all promise to listen to each other’s ideas with respect.
     * We all promise to do our work as best as we can.
