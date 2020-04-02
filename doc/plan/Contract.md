@@ -2,7 +2,7 @@
 
 ### Focus of the project
 
-As a team, we are going to work on Strategy Based games.
+As a team, we are going to work on Strategy Based games
 
 ### Contract
 * Work Ethic
