@@ -13,7 +13,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class GameBoard extends Pane {
+public class GameBoard extends BorderPane {
   private static final int BOARD_WIDTH = 800;
   private static final int BOARD_HEIGHT = 660;
 
@@ -26,7 +26,8 @@ public class GameBoard extends Pane {
     tileHeight = BOARD_HEIGHT/numColTiles;
 
     createTiles(numRowTiles, numColTiles, colors);
-    this.getChildren().addAll(tileGroup);
+    this.setCenter(tileGroup);
+    //this.getChildren().addAll(tileGroup);
     this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(20.0))));
   }
 

@@ -64,7 +64,7 @@ public class GameGuiController extends Application {
     myStage = primaryStage;
     startAnimationLoop();
     setAnchorPane();
-    Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.BLANCHEDALMOND);
+    Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
     scene.getStylesheets().add(STYLESHEET);
     myStage.setScene(scene);
     myStage.show();
@@ -72,6 +72,7 @@ public class GameGuiController extends Application {
 
   private void setAnchorPane() throws FileNotFoundException {
     root = new AnchorPane();
+    root.setBackground(new Background(new BackgroundFill(Color.BLANCHEDALMOND, CornerRadii.EMPTY, Insets.EMPTY)));
     root.setMaxWidth(SCENE_WIDTH);
     root.setMaxHeight(SCENE_HEIGHT);
     addBaseGameElements();
