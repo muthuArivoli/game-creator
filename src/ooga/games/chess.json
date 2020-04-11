@@ -3,15 +3,58 @@
   "pieces": [
     {
       "name": "pawn",
-      "canMove": 1,
+      "abbreviation": "p1",
       "canPlace": 0,
 
-      "moves": ["lateral"],
-      "moveAmount": 1,
+      "canMove": 1,
+      "canJump": 0,
+      "moves": {
+        "firstTime": [
+          [{"fd": 2}]
+        ],
+        "anyTime": [
+          [{"fd": 1}]
+        ]
+      },
+
       "moveDirection": ["forward"]
+    },
+    {
+      "name": "knight",
+      "abbreviation": "k1",
+      "canPlace": 0,
+
+      "canMove": 1,
+      "canJump": 1,
+      "moves": {
+        "anyTime": [
+          [
+            [{"fd":  1},{"left":  3}],
+            [{"fd":  1},{"right":  3}],
+            [{"bk":  1},{"left":  3}],
+            [{"bk":  1},{"right":  3}],
+            [{"right":  1},{"bk":  3}],
+            [{"right":  1},{"fd":  3}],
+            [{"left":  1},{"bk":  3}],
+            [{"left":  1},{"fd":  3}]
+          ]
+        ]
+      },
+      "moveDirection": ["all"]
     }
   ],
   "grid": [
-    [""]
+    ["r2", "k2", "b2", "q2", "k2", "b2", "k2", "r2"],
+    ["p2","p2","p2","p2","p2","p2","p2","p2"],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["p1","p1","p1","p1","p1","p1","p1","p1"],
+    ["r1", "k1", "b1", "q1", "k1", "b1", "k1", "r1"]
+  ],
+  "goals": [
+    "allPiecesDead",
+    {"pieceTaken": "pawn"}
   ]
 }
