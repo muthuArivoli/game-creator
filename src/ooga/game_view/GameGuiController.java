@@ -1,5 +1,6 @@
 package ooga.game_view;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
@@ -71,7 +72,7 @@ public class GameGuiController extends Application {
     myStage.show();
   }
 
-  private void setAnchorPane() {
+  private void setAnchorPane() throws FileNotFoundException {
     root = new AnchorPane();
     root.setBackground(new Background(new BackgroundFill(ALL_COLOR, CornerRadii.EMPTY, Insets.EMPTY)));
     root.setMaxWidth(SCENE_WIDTH);
@@ -79,12 +80,15 @@ public class GameGuiController extends Application {
     addBoard();
   }
 
-  private void addBoard(){
+  private void addBoard() throws FileNotFoundException {
     board = new GameBoard("connect4board.png");
     root.setRightAnchor(board, 20.0);
     root.setTopAnchor(board, 20.0);
     root.setBottomAnchor(board, 20.0);
-    root.getChildren().addAll(board);
+
+    GUIButtons buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
+
+    root.getChildren().addAll(buttons.getHBox(), board);
   }
 
   private void startAnimationLoop() {

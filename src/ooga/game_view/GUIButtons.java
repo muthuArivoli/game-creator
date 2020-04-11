@@ -22,24 +22,15 @@ import javafx.stage.Stage;
 public class GUIButtons {
 
   private static final String SUPPORTED_LANGUAGES = "src/ooga/resources/languages/LanguageList.txt";
-  private static final String PROMPTS = "src/slogo/resources/languages/HelpPrompts.txt";
-  private static final int TURTLE_SELECT_WIDTH = 200;
-  private static final int TURTLE_SELECT_HEIGHT = 200;
+
   private ResourceBundle myResources;
   private List<String> languages;
-  private List<String> helpPrompts;
-  private Stage imageWindow = new Stage();
-  private boolean loadFilePressed;
-  private boolean turtleImagePressed;
-  private boolean penColorPressed;
-  private boolean backgroundColorPressed;
-  private boolean viewAllTurtles;
+  private boolean newGamePressed;
+  private boolean restartGamePressed;
+  private boolean settingsPressed;
+  private boolean rulesPressed;
   private String languagePressed;
-  private String helpPressed;
   private HBox myButtons;
-
-  //TODO(FUN): CREATE VARIABLE PEN WIDTH SLIDER
-  //TODO(FUN): DIFF LINE TYPES (DOTTED, DASHED) BUTTON
 
   /**
    * Constructor that sets Resource Bundle and initializes all initial states of buttons
@@ -52,13 +43,10 @@ public class GUIButtons {
   public GUIButtons(String language) throws FileNotFoundException {
     myResources = ResourceBundle.getBundle(language);
     this.languages = text2Regex(new File(SUPPORTED_LANGUAGES));
-    this.helpPrompts = text2Regex(new File(PROMPTS));
-    this.loadFilePressed = false;
-    this.turtleImagePressed = false;
-    this.penColorPressed = false;
-    this.backgroundColorPressed = false;
-    this.viewAllTurtles = false;
-    this.helpPressed = myResources.getString("HelpButton");
+    this.newGamePressed = false;
+    this.restartGamePressed = false;
+    this.settingsPressed = false;
+    this.rulesPressed = false;
     this.languagePressed = myResources.getString("LanguageButton");
     renderButtons();
   }
@@ -71,20 +59,6 @@ public class GUIButtons {
   }
 
   /**
-   * @return the pressed state (boolean) of the View Turtles Button
-   */
-  public boolean isViewAllTurtles() {
-    return viewAllTurtles;
-  }
-
-  /**
-   * Unpresses the View Turtles Button
-   */
-  public void setViewAllTurtlesOff() {
-    viewAllTurtles = false;
-  }
-
-  /**
    * @return the pressed state (String) of the Language ComboBox
    */
   public String getLanguageStatus() {
@@ -92,98 +66,59 @@ public class GUIButtons {
   }
 
   /**
-   * @return the pressed state (boolean) of the Load Image Button
+   * @return the pressed state (boolean) of the New Game Button
    */
-  public boolean getImageStatus() {
-    return turtleImagePressed;
+  public boolean getNewGameStatus() {
+    return newGamePressed;
   }
 
   /**
-   * Unpresses the Load Image Button
+   * Unpresses the New Game Button
    */
-  public void setImageOff() {
-    turtleImagePressed = false;
+  public void setNewGamePressedOff() {
+    newGamePressed = false;
   }
 
   /**
-   * @return the pressed state (boolean) of the Load File Button
+   * @return the pressed state (boolean) of the restart Game Button
    */
-  public boolean getFileStatus() {
-    return loadFilePressed;
+  public boolean getRestartGameStatus() {
+    return restartGamePressed;
   }
 
   /**
-   * Unpresses the Load File Button
+   * Unpresses the restart game Button
    */
-  public void setLoadFilePressedOff() {
-    loadFilePressed = false;
+  public void setRestartGamePressedOff() {
+    restartGamePressed = false;
   }
 
   /**
-   * @return the pressed state (boolean) of the Pen Color Button
+   * @return the pressed state (boolean) of the settings Button
    */
-  public boolean getPenColorStatus() {
-    return penColorPressed;
+  public boolean getSettingsStatus() {
+    return settingsPressed;
   }
 
   /**
-   * Unpresses the Pen Color Button
+   * Unpresses the Settings Button
    */
-  public void setPenColorOff() {
-    penColorPressed = false;
+  public void setSettingsPressedOff() {
+    settingsPressed = false;
   }
 
   /**
-   * @return the pressed state (boolean) of the Background Color Button
+   * @return the pressed state (boolean) of the Rules button
    */
-  public boolean getBackgroundColorStatus() {
-    return backgroundColorPressed;
+  public boolean getRulesStatus() {
+    return rulesPressed;
   }
 
   /**
-   * Unpresses the Background Color Button
+   * Unpresses the Rules Button
    */
-  public void setBackgroundColorOff() {
-    backgroundColorPressed = false;
-  }
-
-  /**
-   * @return the pressed state (String) of the Help Combo Box
-   */
-  public String getHelpStatus() {
-    return helpPressed;
-  }
-
-  /**
-   * Sets the Help Button Text to the chosen submenu
-   */
-  public void setHelpStatus(String help) {
-    this.helpPressed = help;
-  }
-
-  /**
-   * Launches a window to allow user to choose specific Turtle on Screen Used for Image switching
-   * and Pen Color switching
-   *
-   * @param turtleButtons the List of Buttons, one for each turtle on screen
-   */
-  public void launchTurtleSelect(List<Button> turtleButtons) {
-    Pane root = new Pane();
-    Scene sc = new Scene(root, TURTLE_SELECT_WIDTH, TURTLE_SELECT_HEIGHT);
-    ListView<Button> turtleOptions = new ListView<Button>();
-    for (Button button : turtleButtons) {
-      turtleOptions.getItems().addAll(button);
-    }
-    root.getChildren().addAll(turtleOptions);
-    imageWindow.setScene(sc);
-    imageWindow.show();
-  }
-
-  /**
-   * Closes Turtle Select Window
-   */
-  public void closeTurtleSelect() {
-    imageWindow.close();
+  public void setRulesPressedOff() {
+    rulesPressed = false;
   }
 
   /**
@@ -191,26 +126,17 @@ public class GUIButtons {
    */
   private void renderButtons() {
     myButtons = new HBox();
-    Button loadButton = makeButton("LoadButton", event -> loadFilePressed = true);
-    Button imageButton = makeButton("ImageButton", event -> turtleImagePressed = true);
-    Button viewAllTurtlesButton = makeButton("ViewTurtle", event -> viewAllTurtles = true);
-    Button penButton = makeButton("PenButton", event -> penColorPressed = true);
-    Button backgroundButton = makeButton("BackgroundButton",
-        event -> backgroundColorPressed = true);
+    Button newGameButton = makeButton("NewGame", event -> newGamePressed = true);
+    Button restartGameButton = makeButton("RestartGame", event -> restartGamePressed = true);
+    Button settingsButton = makeButton("Settings", event -> settingsPressed = true);
+    Button rulesButton = makeButton("Rules", event -> rulesPressed = true);
     ComboBox langMenu = makeDropDown("LanguageButton", languages);
-    ComboBox helpMenu = new ComboBox();
-    helpMenu.setValue(helpPressed);
-    helpMenu.getItems().addAll(helpPrompts);
-    helpMenu.setOnAction(event -> this.helpPressed = (String) helpMenu.getValue());
     myButtons.getChildren()
-        .addAll(loadButton, imageButton, viewAllTurtlesButton, penButton, backgroundButton,
-            helpMenu, langMenu);
-    formatButton(loadButton);
-    formatButton(imageButton);
-    formatButton(penButton);
-    formatButton(backgroundButton);
-    formatButton(viewAllTurtlesButton);
-    formatBox(helpMenu);
+        .addAll(newGameButton, restartGameButton, settingsButton, rulesButton, langMenu);
+    formatButton(newGameButton);
+    formatButton(restartGameButton);
+    formatButton(settingsButton);
+    formatButton(rulesButton);
     formatBox(langMenu);
   }
 
@@ -227,8 +153,6 @@ public class GUIButtons {
     tempMenu.setValue(myResources.getString(key));
     if (key.equals("LanguageButton")) {
       tempMenu.setOnAction(event -> languagePressed = (String) tempMenu.getValue());
-    } else if (key.equals("HelpButton")) {
-      tempMenu.setOnAction(event -> this.helpPressed = (String) tempMenu.getValue());
     }
     return tempMenu;
   }
