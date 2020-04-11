@@ -1,29 +1,37 @@
 package ooga.parser;
 
+import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class PieceParser {
-  private JSONArray myPieceJSONs;
+  private JSONObject myPiecesJSON;
   private String [] PIECE_FIELDS = {
-      "name", "abbreviation", "canPlace", "canMove", "canJump"
+      "canPlace", "canMove", "canJump"
   };
-  public PieceParser (JSONArray pieceJSONs) throws InvalidPieceException {
-    this.myPieceJSONs = pieceJSONs;
-    parsePieces();
+  public PieceParser (JSONObject piecesJSON){
+    this.myPiecesJSON = piecesJSON;
   }
 
-  private void parsePieces() throws InvalidPieceException {
-    for (int i = 0; i < myPieceJSONs.length(); i++) {
-      JSONObject pieceJSON = myPieceJSONs.getJSONObject(i);
+  /**
+   * Returns a piece object
+   * @param pieceSymbol
+   * @throws InvalidPieceException
+   */
+  public void generatePiece(String pieceSymbol) throws InvalidPieceException {
+    String pieceName = pieceSymbol.replaceAll("[\\d]","");
+    String pieceSide = pieceSymbol.replaceAll("[a-zA-Z]","");
+    System.out.println(pieceName + " " + pieceSide);
 
-      for (String pieceField: PIECE_FIELDS) {
+    if (!myPiecesJSON.has(pieceName)) throw new InvalidPieceException("Piece: " + pieceName + " is not defined.");
+    JSONObject pieceJSON = myPiecesJSON.getJSONObject(pieceName);
+    for (String pieceField: PIECE_FIELDS) {
         if (pieceJSON.has(pieceField)){
-          System.out.println(pieceJSON.get(pieceField));
+          System.out.println("\t"+pieceField + ": " + pieceJSON.get(pieceField));
         }
       }
     }
-  }
+
 
 }

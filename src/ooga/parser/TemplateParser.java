@@ -11,25 +11,25 @@ import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.util.Iterator;
 
-public class Parser {
+public class TemplateParser {
   private JSONObject template;
 
-  public Parser (String fileName) throws FileNotFoundException {
+  public TemplateParser(String fileName) throws FileNotFoundException {
      this.template = new JSONObject(new JSONTokener(new FileReader(fileName)));
   }
 
   public void parseTemplate () {
     String title = template.getString("title");
+    GridParser myGridParser = new GridParser(
+        template.getJSONArray("grid"),
+        template.getJSONObject("pieces")
+    );
 
     try {
-      PieceParser myPieceParser = new PieceParser(template.getJSONArray("pieces"));
-      GridParser myGridParser = new GridParser(template.getJSONArray("grid"));
-    } catch (InvalidGridException e) {
-      System.out.println(e.getMessage());
-    } catch (InvalidPieceException e) {
+      myGridParser.parseGrid();
+    } catch (InvalidGridException | InvalidPieceException e) {
       System.out.println(e.getMessage());
     }
   }
-
 
 }

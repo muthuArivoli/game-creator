@@ -101,14 +101,14 @@
     }
     },
   "grid": [
-    ["r2", "k2", "b2", "q2", "k2", "b2", "k2", "r2"],
-    ["p2","p2","p2","p2","p2","p2","p2","p2"],
+    ["rook2", "knight2", "bishop2", "queen2", "king2", "bishop2", "knight2", "rook2"],
+    ["pawn2","pawn2","pawn2","pawn2","pawn2","pawn2","pawn2","pawn2"],
     ["","","","","","","",""],
     ["","","","","","","",""],
     ["","","","","","","",""],
     ["","","","","","","",""],
-    ["p1","p1","p1","p1","p1","p1","p1","p1"],
-    ["r1", "k1", "b1", "q1", "k1", "b1", "k1", "r1"]
+    ["pawn1","pawn1","pawn1","pawn1","pawn1","pawn1","pawn1","pawn1"],
+    ["rook1", "knight1", "bishop1", "queen1", "king1", "bishop1", "knight1", "rook1"]
   ],
   "goals": [
     {"enemyPiecesLeft": 0},
