@@ -1,11 +1,8 @@
 {
   "title": "chess",
-  "pieces": [
-    {
-      "name": "pawn",
-      "abbreviation": "p",
+  "pieces": {
+    "pawn": {
       "canPlace": 0,
-
       "canMove": 1,
       "canJump": 0,
       "moves": {
@@ -17,11 +14,8 @@
         ]
       }
     },
-    {
-      "name": "knight",
-      "abbreviation": "k",
+    "knight":{
       "canPlace": 0,
-
       "canMove": 1,
       "canJump": 1,
       "moves": {
@@ -39,11 +33,8 @@
         ]
       }
     },
-    {
-      "name": "rook",
-      "abbreviation": "r",
+    "rook": {
       "canPlace": 0,
-
       "canMove": 1,
       "canJump": 0,
       "moves": {
@@ -57,11 +48,8 @@
         ]
       }
     },
-    {
-      "name": "bishop",
-      "abbreviation": "b",
+    "bishop":{
       "canPlace": 0,
-
       "canMove": 1,
       "canJump": 0,
       "moves": {
@@ -75,9 +63,7 @@
         ]
       }
     },
-    {
-      "name": "queen",
-      "abbreviation": "q",
+    "queen":{
       "canPlace": 0,
 
       "canMove": 1,
@@ -97,9 +83,7 @@
         ]
       }
     },
-    {
-      "name": "king",
-      "abbreviation": "k",
+    "king":{
       "canPlace": 0,
 
       "canMove": 1,
@@ -115,7 +99,7 @@
         ]
       }
     }
-  ],
+    },
   "grid": [
     ["r2", "k2", "b2", "q2", "k2", "b2", "k2", "r2"],
     ["p2","p2","p2","p2","p2","p2","p2","p2"],
