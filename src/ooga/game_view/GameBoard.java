@@ -25,6 +25,10 @@ public class GameBoard extends Pane {
     this.getChildren().addAll(boardpic);
   }
 
+  public void createBoard(String filename){
+
+  }
+
   private void setBackground(Color c) {
     setBackground(new Background(new BackgroundFill(c, CornerRadii.EMPTY, Insets.EMPTY)));
     backgroundColor = c;

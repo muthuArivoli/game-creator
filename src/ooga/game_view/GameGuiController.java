@@ -64,19 +64,22 @@ public class GameGuiController extends Application {
     primaryStage.setTitle("Game Engine");
     myStage = primaryStage;
     startAnimationLoop();
-    setBorderPane();
+    setAnchorPane();
     Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
     scene.getStylesheets().add(STYLESHEET);
     myStage.setScene(scene);
     myStage.show();
   }
 
-  private void setBorderPane() {
+  private void setAnchorPane() {
     root = new AnchorPane();
     root.setBackground(new Background(new BackgroundFill(ALL_COLOR, CornerRadii.EMPTY, Insets.EMPTY)));
     root.setMaxWidth(SCENE_WIDTH);
     root.setMaxHeight(SCENE_HEIGHT);
-    // MOVE TO METHOD AND CALL IN START
+    addBoard();
+  }
+
+  private void addBoard(){
     board = new GameBoard("connect4board.png");
     root.setRightAnchor(board, 20.0);
     root.setTopAnchor(board, 20.0);
