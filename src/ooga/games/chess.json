@@ -3,7 +3,7 @@
   "pieces": [
     {
       "name": "pawn",
-      "abbreviation": "p1",
+      "abbreviation": "p",
       "canPlace": 0,
 
       "canMove": 1,
@@ -21,7 +21,7 @@
     },
     {
       "name": "knight",
-      "abbreviation": "k1",
+      "abbreviation": "k",
       "canPlace": 0,
 
       "canMove": 1,
@@ -39,8 +39,7 @@
             [{"left":  1},{"fd":  3}]
           ]
         ]
-      },
-      "moveDirection": ["all"]
+      }
     }
   ],
   "grid": [
@@ -54,7 +53,7 @@
     ["r1", "k1", "b1", "q1", "k1", "b1", "k1", "r1"]
   ],
   "goals": [
-    "allPiecesDead",
+    {"enemyPiecesLeft": 0},
     {"pieceTaken": "pawn"}
   ]
 }
