@@ -1,5 +1,6 @@
 package ooga.game_view;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -14,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -30,7 +33,7 @@ public class GUIButtons {
   private boolean settingsPressed;
   private boolean rulesPressed;
   private String languagePressed;
-  private HBox myButtons;
+  private VBox myButtons;
 
   /**
    * Constructor that sets Resource Bundle and initializes all initial states of buttons
@@ -54,7 +57,7 @@ public class GUIButtons {
   /**
    * @return the JavaFX HBox that contains all the buttons
    */
-  public HBox getHBox() {
+  public VBox getVBox() {
     return myButtons;
   }
 
@@ -125,19 +128,24 @@ public class GUIButtons {
    * Creates and initializes all Buttons based on Regex Values
    */
   private void renderButtons() {
-    myButtons = new HBox();
+    myButtons = new VBox();
     Button newGameButton = makeButton("NewGame", event -> newGamePressed = true);
     Button restartGameButton = makeButton("RestartGame", event -> restartGamePressed = true);
     Button settingsButton = makeButton("Settings", event -> settingsPressed = true);
     Button rulesButton = makeButton("Rules", event -> rulesPressed = true);
     ComboBox langMenu = makeDropDown("LanguageButton", languages);
-    myButtons.getChildren()
-        .addAll(newGameButton, restartGameButton, settingsButton, rulesButton, langMenu);
+    myButtons.setLayoutX(20);
+    myButtons.setLayoutY(150);
+    myButtons.setPadding(new Insets(30));
+    myButtons.setSpacing(25);
+
     formatButton(newGameButton);
     formatButton(restartGameButton);
     formatButton(settingsButton);
     formatButton(rulesButton);
     formatBox(langMenu);
+    myButtons.getChildren()
+        .addAll(newGameButton, restartGameButton, settingsButton, rulesButton, langMenu);
   }
 
   private Button makeButton(String key, EventHandler e) {
@@ -157,12 +165,10 @@ public class GUIButtons {
     return tempMenu;
   }
 
-  private void formatButton(Button tempButton) {
-    HBox.setHgrow(tempButton, Priority.ALWAYS);
-  }
+  private void formatButton(Button tempButton) {tempButton.setMinSize(150, 60);}
 
   private void formatBox(ComboBox tempMenu) {
-    HBox.setHgrow(tempMenu, Priority.ALWAYS);
+    tempMenu.setMinSize(150,60);
   }
 
   private List<String> text2Regex(File dataFile) throws FileNotFoundException {

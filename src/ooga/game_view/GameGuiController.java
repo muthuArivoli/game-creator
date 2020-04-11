@@ -81,14 +81,12 @@ public class GameGuiController extends Application {
   }
 
   private void addBoard() throws FileNotFoundException {
-    board = new GameBoard("connect4board.png");
+    board = new GameBoard("chessboard.png");
     root.setRightAnchor(board, 20.0);
     root.setTopAnchor(board, 20.0);
     root.setBottomAnchor(board, 20.0);
-
     GUIButtons buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
-
-    root.getChildren().addAll(buttons.getHBox(), board);
+    root.getChildren().addAll(buttons.getVBox(), board);
   }
 
   private void startAnimationLoop() {
