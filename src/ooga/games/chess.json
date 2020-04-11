@@ -1,0 +1,17 @@
+{
+  "title": "chess",
+  "pieces": [
+    {
+      "name": "pawn",
+      "canMove": 1,
+      "canPlace": 0,
+
+      "moves": ["lateral"],
+      "moveAmount": 1,
+      "moveDirection": ["forward"]
+    }
+  ],
+  "grid": [
+    [""]
+  ]
+}

@@ -17,7 +17,7 @@ Hours Spent:
 ### Primary Roles
 
 
-### ooga.resources Used
+### ooga.games Used
 
 
 ### Running the Program
