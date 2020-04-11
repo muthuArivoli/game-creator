@@ -11,13 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.io.File;
 
 public class GameGuiController extends Application {
 
@@ -40,7 +37,7 @@ public class GameGuiController extends Application {
   private AnchorPane root;
   private Stage myStage;
   private Timeline animation;
-  private GameBoard board;
+  private GameArea gameDisplay;
 
   /**
    * Empty Constructor needed to run the application due to Application requirements
@@ -77,31 +74,28 @@ public class GameGuiController extends Application {
     root.setBackground(new Background(new BackgroundFill(ALL_COLOR, CornerRadii.EMPTY, Insets.EMPTY)));
     root.setMaxWidth(SCENE_WIDTH);
     root.setMaxHeight(SCENE_HEIGHT);
-    addBoard();
+    addBaseGameElements();
   }
 
-  private void addBoard() throws FileNotFoundException {
-    board = new GameBoard("chessboard.png");
-    root.setRightAnchor(board, 20.0);
-    root.setTopAnchor(board, 20.0);
-    root.setBottomAnchor(board, 20.0);
+  private void addBaseGameElements() throws FileNotFoundException {
+    gameDisplay = new GameArea("chessboard.png");
+    root.setRightAnchor(gameDisplay, 20.0);
+    root.setTopAnchor(gameDisplay, 20.0);
+    root.setBottomAnchor(gameDisplay, 20.0);
     GUIButtons buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
-    root.getChildren().addAll(buttons.getVBox(), board);
+    root.getChildren().addAll(buttons.getVBox(), gameDisplay);
   }
 
   private void startAnimationLoop() {
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
-      try {
-        step(); }
-      catch (IOException ex) {
-        System.out.println("Help Text File Not Found."); } });
+      step(); });
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
   }
 
-  private void step() throws IOException {
+  private void step() {
 
   }
 
