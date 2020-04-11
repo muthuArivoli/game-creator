@@ -10,7 +10,7 @@ public class Forward implements Movement{
 
     @Override
     public boolean isValidMove(Coordinate initialPos, Coordinate finalPos) {
-        return ((initialPos.getXpos()==finalPos.getXpos()) && (initialPos.getYpos()<=finalPos.getYpos()) && (units==-1 || initialPos.getYpos()+units>=finalPos.getYpos()));
+        return ((initialPos.getXpos()==finalPos.getXpos()) && (initialPos.getYpos()<=finalPos.getYpos()) && (units==-1 || initialPos.getYpos()+units==finalPos.getYpos()));
     }
 
     @Override
