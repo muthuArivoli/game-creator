@@ -2,20 +2,20 @@ package ooga.piece.movement;
 
 import ooga.piece.Coordinate;
 
-public class Forward implements Movement{
+public class Backward implements Movement {
     private int units;
-    public Forward(int units){
+    public Backward(int units){
         this.units = units;
     }
 
     @Override
     public boolean isValidMove(Coordinate initialPos, Coordinate finalPos) {
-        return ((initialPos.getXpos()==finalPos.getXpos()) && (initialPos.getYpos()<=finalPos.getYpos()) && (units==-1 || initialPos.getYpos()+units>=finalPos.getYpos()));
+        return ((initialPos.getXpos()==finalPos.getXpos()) && (initialPos.getYpos()>=finalPos.getYpos()) && (units==-1 || initialPos.getYpos()-units<=finalPos.getYpos()));
     }
 
     @Override
     public String toString() {
-        return "Forward{" +
+        return "Backward{" +
                 "units=" + units +
                 '}';
     }
