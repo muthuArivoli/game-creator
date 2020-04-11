@@ -165,10 +165,10 @@ public class GUIButtons {
     return tempMenu;
   }
 
-  private void formatButton(Button tempButton) {tempButton.setMinSize(150, 60);}
+  private void formatButton(Button tempButton) {tempButton.setMinSize(250, 60);}
 
   private void formatBox(ComboBox tempMenu) {
-    tempMenu.setMinSize(150,60);
+    tempMenu.setMinSize(250,60);
   }
 
   private List<String> text2Regex(File dataFile) throws FileNotFoundException {

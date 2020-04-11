@@ -1,7 +1,7 @@
 package ooga.game_view;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,6 +15,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import ooga.game_view.Board.GameBoard;
 
 public class GameGuiController extends Application {
 
@@ -37,7 +38,7 @@ public class GameGuiController extends Application {
   private AnchorPane root;
   private Stage myStage;
   private Timeline animation;
-  private GameArea gameDisplay;
+  private GameBoard gameDisplay;
 
   /**
    * Empty Constructor needed to run the application due to Application requirements
@@ -71,18 +72,21 @@ public class GameGuiController extends Application {
 
   private void setAnchorPane() throws FileNotFoundException {
     root = new AnchorPane();
-    root.setBackground(new Background(new BackgroundFill(ALL_COLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+    root.setBackground(new Background(new BackgroundFill(Color.BLANCHEDALMOND, CornerRadii.EMPTY, Insets.EMPTY)));
     root.setMaxWidth(SCENE_WIDTH);
     root.setMaxHeight(SCENE_HEIGHT);
     addBaseGameElements();
   }
 
   private void addBaseGameElements() throws FileNotFoundException {
-    gameDisplay = new GameArea("chessboard.png");
-    root.setRightAnchor(gameDisplay, 20.0);
+    ArrayList<Color> colors = new ArrayList<>();
+    colors.add(Color.SEASHELL);
+    colors.add(Color.BURLYWOOD);
+    gameDisplay = new GameBoard(8,8,colors);
+    GUIButtons buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
     root.setTopAnchor(gameDisplay, 20.0);
     root.setBottomAnchor(gameDisplay, 20.0);
-    GUIButtons buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
+    root.setRightAnchor(gameDisplay, 20.0);
     root.getChildren().addAll(buttons.getVBox(), gameDisplay);
   }
 
