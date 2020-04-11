@@ -15,9 +15,7 @@
         "anyTime": [
           [{"fd": 1}]
         ]
-      },
-
-      "moveDirection": ["forward"]
+      }
     },
     {
       "name": "knight",
