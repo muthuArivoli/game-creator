@@ -38,6 +38,82 @@
           ]
         ]
       }
+    },
+    {
+      "name": "rook",
+      "abbreviation": "r",
+      "canPlace": 0,
+
+      "canMove": 1,
+      "canJump": 0,
+      "moves": {
+        "anyTime": [
+          [
+            [{"fd":  -1}],
+            [{"bk":  -1}],
+            [{"left":  -1}],
+            [{"right":  -1}]
+          ]
+        ]
+      }
+    },
+    {
+      "name": "bishop",
+      "abbreviation": "b",
+      "canPlace": 0,
+
+      "canMove": 1,
+      "canJump": 0,
+      "moves": {
+        "anyTime": [
+          [
+            [{"diagFdLeft":  -1}],
+            [{"diagFdRight":  -1}],
+            [{"diagBkLeft":  -1}],
+            [{"diagBkRight":  -1}]
+          ]
+        ]
+      }
+    },
+    {
+      "name": "queen",
+      "abbreviation": "q",
+      "canPlace": 0,
+
+      "canMove": 1,
+      "canJump": 0,
+      "moves": {
+        "anyTime": [
+          [
+            [{"fd":  -1}],
+            [{"bk":  -1}],
+            [{"left":  -1}],
+            [{"right":  -1}],
+            [{"diagFdLeft":  -1}],
+            [{"diagFdRight":  -1}],
+            [{"diagBkLeft":  -1}],
+            [{"diagBkRight":  -1}]
+          ]
+        ]
+      }
+    },
+    {
+      "name": "king",
+      "abbreviation": "k",
+      "canPlace": 0,
+
+      "canMove": 1,
+      "canJump": 0,
+      "moves": {
+        "anyTime": [
+          [
+            [{"fd":  1}],
+            [{"bk":  1}],
+            [{"left":  1}],
+            [{"right":  1}]
+          ]
+        ]
+      }
     }
   ],
   "grid": [

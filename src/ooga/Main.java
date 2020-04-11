@@ -15,6 +15,7 @@ public class Main {
     public static void main (String[] args) {
         try {
             Parser myParser = new Parser("./src/ooga/games/chess.json");
+            myParser.parseTemplate();
         } catch (FileNotFoundException e) {
             System.out.println("File Not Found");
         }

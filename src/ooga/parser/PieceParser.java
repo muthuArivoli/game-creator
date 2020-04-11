@@ -10,15 +10,17 @@ public class PieceParser {
   };
   public PieceParser (JSONArray pieceJSONs) {
     this.myPieceJSONs = pieceJSONs;
-
     parsePieces();
   }
 
   private void parsePieces() {
     for (int i = 0; i < myPieceJSONs.length(); i++) {
-      JSONObject pieceJSON = new JSONObject(myPieceJSONs.get(i));
+      JSONObject pieceJSON = myPieceJSONs.getJSONObject(i);
+
       for (String pieceField: PIECE_FIELDS) {
-        // update the piece object field
+        if (pieceJSON.has(pieceField)){
+          System.out.println(pieceJSON.get(pieceField));
+        }
       }
     }
   }
