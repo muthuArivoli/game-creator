@@ -15,7 +15,7 @@ public class GameArea extends Pane {
   private static final String GAME_BOARDS = "src/ooga/resources/images/gameBoards/";
 
   private static Color backgroundColor;
-
+  //Change to not accept fileAdress
   public GameArea(String fileAddress){
     Image image = new Image("File:" + GAME_BOARDS + fileAddress);
     ImageView boardpic = new ImageView();
@@ -23,7 +23,7 @@ public class GameArea extends Pane {
     boardpic.setFitHeight(680);
     boardpic.setImage(image);
     this.getChildren().addAll(boardpic);
-  }
+   }
 
   public void createBoard(String filename){
 
