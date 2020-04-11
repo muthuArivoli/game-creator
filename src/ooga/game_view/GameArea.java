@@ -10,13 +10,13 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class GameBoard extends Pane {
+public class GameArea extends Pane {
 
   private static final String GAME_BOARDS = "src/ooga/resources/images/gameBoards/";
 
   private static Color backgroundColor;
 
-  public GameBoard(String fileAddress){
+  public GameArea(String fileAddress){
     Image image = new Image("File:" + GAME_BOARDS + fileAddress);
     ImageView boardpic = new ImageView();
     boardpic.setFitWidth(1000);

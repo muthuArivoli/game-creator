@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         GameGuiController frameWork = new GameGuiController(args);
         try {
-            TemplateParser myParser = new TemplateParser("./src/ooga/games/chess.json");
+            TemplateParser myParser = new TemplateParser("./src/ooga/resources/gameFiles/chess.json");
             myParser.parseTemplate();
         } catch (FileNotFoundException e) {
             System.out.println("File Not Found");
