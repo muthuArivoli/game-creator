@@ -1,6 +1,8 @@
 package ooga.parser;
 
 import java.time.Period;
+import ooga.exceptions.InvalidGridException;
+import ooga.exceptions.InvalidPieceException;
 import org.json.JSONTokener;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,8 +21,14 @@ public class Parser {
   public void parseTemplate () {
     String title = template.getString("title");
 
-    PieceParser myPieceParser = new PieceParser(template.getJSONArray("pieces"));
-    GridParser myGridParser = new GridParser(template.getJSONArray("grid"));
+    try {
+      PieceParser myPieceParser = new PieceParser(template.getJSONArray("pieces"));
+      GridParser myGridParser = new GridParser(template.getJSONArray("grid"));
+    } catch (InvalidGridException e) {
+      System.out.println(e.getMessage());
+    } catch (InvalidPieceException e) {
+      System.out.println(e.getMessage());
+    }
   }
 
 

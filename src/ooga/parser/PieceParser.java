@@ -1,5 +1,6 @@
 package ooga.parser;
 
+import ooga.exceptions.InvalidPieceException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,12 +9,12 @@ public class PieceParser {
   private String [] PIECE_FIELDS = {
       "name", "abbreviation", "canPlace", "canMove", "canJump"
   };
-  public PieceParser (JSONArray pieceJSONs) {
+  public PieceParser (JSONArray pieceJSONs) throws InvalidPieceException {
     this.myPieceJSONs = pieceJSONs;
     parsePieces();
   }
 
-  private void parsePieces() {
+  private void parsePieces() throws InvalidPieceException {
     for (int i = 0; i < myPieceJSONs.length(); i++) {
       JSONObject pieceJSON = myPieceJSONs.getJSONObject(i);
 
