@@ -28,7 +28,7 @@ public class PieceParser {
    * @param pieceSymbol
    * @throws InvalidPieceException
    */
-  public Piece generatePiece(String pieceSymbol) throws InvalidPieceException {
+  public Piece generatePiece(String pieceSymbol, int row, int column) throws InvalidPieceException {
     String pieceName = pieceSymbol.replaceAll("[\\d]","");
     int pieceSide = Integer.parseInt(pieceSymbol.replaceAll("[a-zA-Z]",""));
 
@@ -46,6 +46,8 @@ public class PieceParser {
     return new Piece(
         pieceName,
         pieceSide,
+        row,
+        column,
         normalMovesJSON.has("firstTime") ? generateMoves(normalMovesJSON.getJSONArray("firstTime")) : new ArrayList<List<Movement>> (),
         normalMovesJSON.has("anyTime") ? generateMoves(normalMovesJSON.getJSONArray("anyTime")) : new ArrayList<List<Movement>> (),
         generateMoves(pieceJSON.getJSONArray("captureMoves")),

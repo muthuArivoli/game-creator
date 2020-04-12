@@ -29,7 +29,8 @@ public class GridParser {
         String pieceSymbol = rowJSON.getString(j);
 
         if(!pieceSymbol.equals("")){
-          Piece newPiece = myPieceParser.generatePiece(pieceSymbol);
+          Piece newPiece = myPieceParser.generatePiece(pieceSymbol, i, j);
+          myGridModel.addPiece(newPiece);
         }
       }
     }

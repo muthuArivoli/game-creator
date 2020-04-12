@@ -5,10 +5,12 @@ import java.util.List;
 import ooga.piece.Piece;
 
 public class GridModel {
-  private List<List<Piece>> myGrid;
+  private List<Piece> myGrid;
   public GridModel () {
-    this.myGrid = new ArrayList<List<Piece>>();
+    this.myGrid = new ArrayList<Piece>();
   }
 
-
+  public void addPiece(Piece piece) {
+    myGrid.add(piece);
+  }
 }
