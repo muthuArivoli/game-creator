@@ -45,7 +45,8 @@ public class PieceParser {
     return new Piece(
         pieceName,
         pieceSide,
-        generateMoves(pieceJSON.getJSONArray("normalMoves")),
+        generateMoves(pieceJSON.getJSONObject("normalMoves").getJSONArray("firstTime")),
+        generateMoves(pieceJSON.getJSONObject("normalMoves").getJSONArray("anyTime")),
         generateMoves(pieceJSON.getJSONArray("captureMoves")),
         pieceJSON.getBoolean("canCapture"),
         pieceJSON.getBoolean("canPlace"),

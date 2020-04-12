@@ -28,6 +28,7 @@ public class GridParser {
       for (int j = 0; j < rowJSON.length(); j++){
         String pieceSymbol = rowJSON.getString(j);
 
+        System.out.println("here");
         if(pieceSymbol!=""){
           Piece newPiece = myPieceParser.generatePiece(pieceSymbol);
         }
