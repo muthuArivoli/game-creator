@@ -2,6 +2,9 @@ package ooga.piece.movement;
 
 import ooga.piece.Coordinate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class right implements Movement {
     private int units;
     public right(int units){
@@ -9,8 +12,12 @@ public class right implements Movement {
     }
 
     @Override
-    public boolean isValidMove(Coordinate initialPos, Coordinate finalPos) {
-        return ((initialPos.getYpos()==finalPos.getYpos()) && (initialPos.getXpos()<=finalPos.getXpos()) && (units==-1 || initialPos.getXpos()+units==finalPos.getXpos()));
+    public List<Coordinate> validMoves(Coordinate position) {
+        List<Coordinate> moves = new ArrayList<>();
+        for(int i=1;i<=units;i++){
+            moves.add(new Coordinate(position.getXpos()+i,position.getYpos()));
+        }
+        return moves;
     }
 
     @Override
