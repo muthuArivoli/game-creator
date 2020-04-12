@@ -5,12 +5,18 @@
       "canPlace": 0,
       "canMove": 1,
       "canJump": 0,
-      "moves": {
+      "normalMoves": {
         "firstTime": [
           [{"fd": 2}]
         ],
         "anyTime": [
           [{"fd": 1}]
+        ]
+      },
+      "captureMoves": {
+        "anyTime": [
+          [{"diagFdLeft": 1}],
+          [{"diagFdRight": 1}]
         ]
       }
     },
@@ -18,7 +24,7 @@
       "canPlace": 0,
       "canMove": 1,
       "canJump": 1,
-      "moves": {
+      "normalMoves": {
         "anyTime": [
           [
             [{"fd":  1},{"left":  3}],
@@ -31,13 +37,25 @@
             [{"left":  1},{"fd":  3}]
           ]
         ]
+      },
+      "captureMoves": {
+        "anyTime": [
+          [{"fd":  1},{"left":  3}],
+          [{"fd":  1},{"right":  3}],
+          [{"bk":  1},{"left":  3}],
+          [{"bk":  1},{"right":  3}],
+          [{"right":  1},{"bk":  3}],
+          [{"right":  1},{"fd":  3}],
+          [{"left":  1},{"bk":  3}],
+          [{"left":  1},{"fd":  3}]
+        ]
       }
     },
     "rook": {
       "canPlace": 0,
       "canMove": 1,
       "canJump": 0,
-      "moves": {
+      "normalMoves": {
         "anyTime": [
           [
             [{"fd":  -1}],
@@ -46,13 +64,21 @@
             [{"right":  -1}]
           ]
         ]
+      },
+      "captureMoves": {
+        "anyTime": [
+          [{"fd":  -1}],
+          [{"bk":  -1}],
+          [{"left":  -1}],
+          [{"right":  -1}]
+        ]
       }
     },
     "bishop":{
       "canPlace": 0,
       "canMove": 1,
       "canJump": 0,
-      "moves": {
+      "normalMoves": {
         "anyTime": [
           [
             [{"diagFdLeft":  -1}],
@@ -61,6 +87,14 @@
             [{"diagBkRight":  -1}]
           ]
         ]
+      },
+      "captureMoves": {
+        "anyTime": [
+          [{"diagFdLeft":  -1}],
+          [{"diagFdRight":  -1}],
+          [{"diagBkLeft":  -1}],
+          [{"diagBkRight":  -1}]
+        ]
       }
     },
     "queen":{
@@ -68,7 +102,7 @@
 
       "canMove": 1,
       "canJump": 0,
-      "moves": {
+      "normalMoves": {
         "anyTime": [
           [
             [{"fd":  -1}],
@@ -81,6 +115,18 @@
             [{"diagBkRight":  -1}]
           ]
         ]
+      },
+      "captureMoves": {
+        "anyTime": [
+          [{"fd":  -1}],
+          [{"bk":  -1}],
+          [{"left":  -1}],
+          [{"right":  -1}],
+          [{"diagFdLeft":  -1}],
+          [{"diagFdRight":  -1}],
+          [{"diagBkLeft":  -1}],
+          [{"diagBkRight":  -1}]
+        ]
       }
     },
     "king":{
@@ -88,14 +134,30 @@
 
       "canMove": 1,
       "canJump": 0,
-      "moves": {
+      "normalMoves": {
         "anyTime": [
           [
             [{"fd":  1}],
             [{"bk":  1}],
             [{"left":  1}],
-            [{"right":  1}]
+            [{"right":  1}],
+            [{"diagFdLeft":  1}],
+            [{"diagFdRight":  1}],
+            [{"diagBkLeft":  1}],
+            [{"diagBkRight":  1}]
           ]
+        ]
+      },
+      "captureMoves": {
+        "anyTime": [
+          [{"fd":  1}],
+          [{"bk":  1}],
+          [{"left":  1}],
+          [{"right":  1}],
+          [{"diagFdLeft":  1}],
+          [{"diagFdRight":  1}],
+          [{"diagBkLeft":  1}],
+          [{"diagBkRight":  1}]
         ]
       }
     }

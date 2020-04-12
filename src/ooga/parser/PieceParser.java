@@ -2,6 +2,7 @@ package ooga.parser;
 
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
+import ooga.piece.Piece;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,7 +20,7 @@ public class PieceParser {
    * @param pieceSymbol
    * @throws InvalidPieceException
    */
-  public void generatePiece(String pieceSymbol) throws InvalidPieceException {
+  public Piece generatePiece(String pieceSymbol) throws InvalidPieceException {
     String pieceName = pieceSymbol.replaceAll("[\\d]","");
     String pieceSide = pieceSymbol.replaceAll("[a-zA-Z]","");
     System.out.println(pieceName + " " + pieceSide);
@@ -31,7 +32,8 @@ public class PieceParser {
           System.out.println("\t"+pieceField + ": " + pieceJSON.get(pieceField));
         }
       }
-    }
+    return newPiece;
+  }
 
 
 }

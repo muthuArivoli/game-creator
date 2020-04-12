@@ -3,6 +3,7 @@ package ooga.parser;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.models.GridModel;
+import ooga.piece.Piece;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,7 +29,7 @@ public class GridParser {
         String pieceSymbol = rowJSON.getString(j);
 
         if(pieceSymbol!=""){
-          myPieceParser.generatePiece(pieceSymbol);
+          Piece newPiece = myPieceParser.generatePiece(pieceSymbol);
         }
       }
     }
