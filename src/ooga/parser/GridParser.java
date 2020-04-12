@@ -14,7 +14,7 @@ public class GridParser {
     this.myPieceParser = new PieceParser(piecesJSON);
   }
 
-  public void parseGrid () throws InvalidGridException, InvalidPieceException {
+  public void populateGridModel () throws InvalidGridException, InvalidPieceException {
     if (!validateGrid()) {
       throw new InvalidGridException("Grid must contain same number of columns per row.");
     }

@@ -20,13 +20,15 @@ public class TemplateParser {
 
   public void parseTemplate () {
     String title = template.getString("title");
+
+
     GridParser myGridParser = new GridParser(
         template.getJSONArray("grid"),
         template.getJSONObject("pieces")
     );
 
     try {
-      myGridParser.parseGrid();
+      myGridParser.populateGridModel();
     } catch (InvalidGridException | InvalidPieceException e) {
       System.out.println(e.getMessage());
     }
