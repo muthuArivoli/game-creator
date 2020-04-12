@@ -1,5 +1,6 @@
 package ooga.parser;
 
+import java.awt.*;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.piece.Piece;
+import ooga.piece.movement.CompositeMovement;
 import ooga.piece.movement.Movement;
 import ooga.piece.movement.MovementFactory;
 import org.json.JSONArray;
@@ -48,8 +50,8 @@ public class PieceParser {
         pieceSide,
         row,
         column,
-        normalMovesJSON.has("firstTime") ? generateMoves(normalMovesJSON.getJSONArray("firstTime")) : new ArrayList<List<Movement>> (),
-        normalMovesJSON.has("anyTime") ? generateMoves(normalMovesJSON.getJSONArray("anyTime")) : new ArrayList<List<Movement>> (),
+        normalMovesJSON.has("firstTime") ? generateMoves(normalMovesJSON.getJSONArray("firstTime")) : new ArrayList<Movement>(),
+        normalMovesJSON.has("anyTime") ? generateMoves(normalMovesJSON.getJSONArray("anyTime")) : new ArrayList<Movement>(),
         generateMoves(pieceJSON.getJSONArray("captureMoves")),
         pieceJSON.getInt("canCapture") > 0 ? true : false,
         pieceJSON.getInt("canPlace") > 0 ? true : false,
@@ -57,13 +59,13 @@ public class PieceParser {
     );
   }
 
-  private List<List<Movement>> generateMoves(JSONArray movesJSON)
+  private List<Movement> generateMoves(JSONArray movesJSON)
       throws InvalidPieceException {
-    List<List<Movement>> moves = new ArrayList<List<Movement>>();
+    List<Movement> moves = new ArrayList<>();
 
     for (int i = 0; i < movesJSON.length(); i++){
       JSONArray moveSetJSON = movesJSON.getJSONArray(i);
-      List <Movement> moveSet = new ArrayList<>();
+      CompositeMovement moveSet = new CompositeMovement();
       for (int j = 0; j < moveSetJSON.length(); j++) {
         JSONObject singleMoveJSON = moveSetJSON.getJSONObject(j);
 

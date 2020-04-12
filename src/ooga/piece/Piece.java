@@ -7,23 +7,21 @@ import ooga.piece.movement.Movement;
 public class Piece {
     private String name;
     private int side;
-    private int row;
-    private int column;
+    private Coordinate position;
 
-    private List<List<Movement>> normalFirstMovements;
-    private List<List<Movement>> normalAnyMovements;
+    private List<Movement> normalFirstMovements;
+    private List<Movement> normalAnyMovements;
 
-    private List<List<Movement>> captureMovements;
+    private List<Movement> captureMovements;
 
     private boolean canCapture;
     private boolean canPlace;
     private boolean canJump;
 
-    public Piece(String name, int side, int row, int column, List<List<Movement>> normalFirstMovements,List<List<Movement>> normalAnyMovements, List<List<Movement>> captureMovements, boolean canCapture, boolean canPlace, boolean canJump) {
+    public Piece(String name, int side, int row, int column, List<Movement> normalFirstMovements,List<Movement> normalAnyMovements, List<Movement> captureMovements, boolean canCapture, boolean canPlace, boolean canJump) {
         this.name = name;
         this.side = side;
-        this.row = row;
-        this.column = column;
+        position = new Coordinate(column, row);
 
         this.normalFirstMovements = normalFirstMovements;
         this.normalAnyMovements = normalAnyMovements;
