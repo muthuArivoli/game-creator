@@ -2,16 +2,19 @@ package ooga.parser;
 
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
+import ooga.models.GridModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GridParser {
   private JSONArray myGridJSON;
   private PieceParser myPieceParser;
+  private GridModel myGridModel;
 
-  public GridParser (JSONArray gridJSON, JSONObject piecesJSON) {
+  public GridParser (JSONArray gridJSON, JSONObject piecesJSON, GridModel gridModel) {
     this.myGridJSON = gridJSON;
     this.myPieceParser = new PieceParser(piecesJSON);
+    this.myGridModel = gridModel;
   }
 
   public void populateGridModel () throws InvalidGridException, InvalidPieceException {
