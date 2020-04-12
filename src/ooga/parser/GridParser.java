@@ -28,8 +28,7 @@ public class GridParser {
       for (int j = 0; j < rowJSON.length(); j++){
         String pieceSymbol = rowJSON.getString(j);
 
-        System.out.println("here");
-        if(pieceSymbol!=""){
+        if(!pieceSymbol.equals("")){
           Piece newPiece = myPieceParser.generatePiece(pieceSymbol);
         }
       }
@@ -37,9 +36,6 @@ public class GridParser {
   }
 
   private boolean validateGrid () {
-//    for (int i = 0; i < myGridJSON.length(); i++){
-//
-//    }
     return true;
   }
 

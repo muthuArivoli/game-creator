@@ -5,6 +5,7 @@
       "canPlace": 0,
       "canMove": 1,
       "canJump": 0,
+      "canCapture":1,
       "normalMoves": {
         "firstTime": [
           [{"fd": 2}]
@@ -22,9 +23,9 @@
       "canPlace": 0,
       "canMove": 1,
       "canJump": 1,
+      "canCapture":1,
       "normalMoves": {
         "anyTime": [
-          [
             [{"fd":  1},{"left":  3}],
             [{"fd":  1},{"right":  3}],
             [{"bk":  1},{"left":  3}],
@@ -34,7 +35,6 @@
             [{"left":  1},{"bk":  3}],
             [{"left":  1},{"fd":  3}]
           ]
-        ]
       },
       "captureMoves":  [
           [{"fd":  1},{"left":  3}],
@@ -52,14 +52,13 @@
       "canPlace": 0,
       "canMove": 1,
       "canJump": 0,
+      "canCapture":1,
       "normalMoves": {
         "anyTime": [
-          [
             [{"fd":  -1}],
             [{"bk":  -1}],
             [{"left":  -1}],
             [{"right":  -1}]
-          ]
         ]
       },
       "captureMoves": [
@@ -73,14 +72,13 @@
       "canPlace": 0,
       "canMove": 1,
       "canJump": 0,
+      "canCapture":1,
       "normalMoves": {
         "anyTime": [
-          [
             [{"diagFdLeft":  -1}],
             [{"diagFdRight":  -1}],
             [{"diagBkLeft":  -1}],
             [{"diagBkRight":  -1}]
-          ]
         ]
       },
       "captureMoves": [
@@ -95,9 +93,9 @@
 
       "canMove": 1,
       "canJump": 0,
+      "canCapture":1,
       "normalMoves": {
         "anyTime": [
-          [
             [{"fd":  -1}],
             [{"bk":  -1}],
             [{"left":  -1}],
@@ -106,7 +104,6 @@
             [{"diagFdRight":  -1}],
             [{"diagBkLeft":  -1}],
             [{"diagBkRight":  -1}]
-          ]
         ]
       },
       "captureMoves":  [
@@ -125,9 +122,9 @@
 
       "canMove": 1,
       "canJump": 0,
+      "canCapture":1,
       "normalMoves": {
         "anyTime": [
-          [
             [{"fd":  1}],
             [{"bk":  1}],
             [{"left":  1}],
@@ -136,7 +133,6 @@
             [{"diagFdRight":  1}],
             [{"diagBkLeft":  1}],
             [{"diagBkRight":  1}]
-          ]
         ]
       },
       "captureMoves": [

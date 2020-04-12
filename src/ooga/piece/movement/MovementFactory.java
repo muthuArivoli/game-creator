@@ -8,16 +8,16 @@ import ooga.piece.movement.Movement;
  * within movement package
  */
 public class MovementFactory {
-  private static final String PACKAGE = "piece.movement.";
+  private static final String PACKAGE = "ooga.piece.movement.";
 
   /**
    * Takes in a String which corresponds to the movement
-   * @param command the String representation of the command from Resources file
+   * @param movementString the String representation of the movement
    * @return the Movement object constructed from the string
    */
-  public Movement getMovement(String movementString) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+  public Movement getMovement(String movementString, int units) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
     Class c = Class.forName(PACKAGE + movementString);
-    Movement movement = (Movement) c.getConstructor().newInstance();
+    Movement movement = (Movement) c.getDeclaredConstructor(int.class).newInstance(units);
     return movement;
   }
 

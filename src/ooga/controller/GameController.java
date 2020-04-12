@@ -11,7 +11,7 @@ public class GameController {
   GridModel myGridModel;
 
   public GameController () {
-    this.myGridModel = new GridModel ();
+    this.myGridModel = new GridModel();
     this.myTemplateParser = new TemplateParser(myGridModel);
   }
 

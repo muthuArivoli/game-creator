@@ -24,7 +24,7 @@ public class TemplateParser {
     template = new JSONObject(new JSONTokener(new FileReader(fileName)));
     String title = template.getString("title");
 
-
+    System.out.println(title);
     GridParser myGridParser = new GridParser(
         template.getJSONArray("grid"),
         template.getJSONObject("pieces"),

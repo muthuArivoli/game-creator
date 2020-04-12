@@ -41,16 +41,17 @@ public class PieceParser {
 //    }
 
     JSONObject pieceJSON = myPiecesJSON.getJSONObject(pieceName);
+    JSONObject normalMovesJSON = pieceJSON.getJSONObject("normalMoves");
 
     return new Piece(
         pieceName,
         pieceSide,
-        generateMoves(pieceJSON.getJSONObject("normalMoves").getJSONArray("firstTime")),
-        generateMoves(pieceJSON.getJSONObject("normalMoves").getJSONArray("anyTime")),
+        normalMovesJSON.has("firstTime") ? generateMoves(normalMovesJSON.getJSONArray("firstTime")) : new ArrayList<List<Movement>> (),
+        normalMovesJSON.has("anyTime") ? generateMoves(normalMovesJSON.getJSONArray("anyTime")) : new ArrayList<List<Movement>> (),
         generateMoves(pieceJSON.getJSONArray("captureMoves")),
-        pieceJSON.getBoolean("canCapture"),
-        pieceJSON.getBoolean("canPlace"),
-        pieceJSON.getBoolean("canJump")
+        pieceJSON.getInt("canCapture") > 0 ? true : false,
+        pieceJSON.getInt("canPlace") > 0 ? true : false,
+        pieceJSON.getInt("canJump") > 0 ? true : false
     );
   }
 
@@ -66,14 +67,16 @@ public class PieceParser {
 
         Iterator<String> keys = singleMoveJSON.keys();
         String moveName = "";
+        int units = -1;
         while(keys.hasNext()) {
           String key = keys.next();
-          moveName = singleMoveJSON.getString(key);
+          moveName = key;
+          units = singleMoveJSON.getInt(moveName);
         }
         try {
-          moveSet.add(factory.getMovement(moveName));
+          moveSet.add(factory.getMovement(moveName, units));
         } catch (ClassNotFoundException | InstantiationException |NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-          throw new InvalidPieceException("Incorrect Move Specified");
+          throw new InvalidPieceException("Invalid Move Specified: " + moveName + "..." + units);
         }
       }
       moves.add(moveSet);
