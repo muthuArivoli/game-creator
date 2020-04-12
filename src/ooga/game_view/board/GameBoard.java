@@ -21,8 +21,8 @@ public class GameBoard extends BorderPane {
 
   private static final int DISPLAY_WIDTH = 1000;
   private static final int DISPLAY_HEIGHT = 720;
-  private static final int BOARD_WIDTH = 1000;
-  private static final int BOARD_HEIGHT = 720;
+  private static final int BOARD_WIDTH = 620;
+  private static final int BOARD_HEIGHT = 620;
   public static final double DISPLAY_BORDER_WIDTH = 5.0;
 
   private double tileWidth;
@@ -37,7 +37,7 @@ public class GameBoard extends BorderPane {
 
     createPieceDisplay();
     createTiles(numRowTiles, numColTiles, colors);
-    setBackgroundColor(Color.WHITE);
+    setBackgroundColor(Color.BEIGE);
     this.setCenter(tileGroup);
     this.setBottom(displayBox);
     this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(
