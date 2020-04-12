@@ -1,7 +1,7 @@
 package ooga.piece;
 
 public class Piece {
-    private List<Movement> movements;
+  /**  private List<Movement> movements;
     private boolean capturable;
     private boolean placeable;
     private Coordinate coordinate;
@@ -10,5 +10,5 @@ public class Piece {
         this.capturable = capturable;
         this.placeable = placeable;
     }
-
+    **/
 }

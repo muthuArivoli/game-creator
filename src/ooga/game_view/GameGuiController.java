@@ -7,15 +7,23 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ooga.game_view.Board.GameBoard;
+import ooga.game_view.board.GameBoard;
 
 public class GameGuiController extends Application {
 
@@ -35,7 +43,7 @@ public class GameGuiController extends Application {
   private static ResourceBundle myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + startLanguage);
   //private static FileSelect GameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("GameFile"), LANGUAGES_PACKAGE + startLanguage);
 
-  private AnchorPane root;
+  private BorderPane root;
   private Stage myStage;
   private Timeline animation;
   private GameBoard gameDisplay;
@@ -63,31 +71,30 @@ public class GameGuiController extends Application {
     primaryStage.setTitle("Game Engine");
     myStage = primaryStage;
     startAnimationLoop();
-    setAnchorPane();
+    setBorderPane();
+    addBaseGameElements();
     Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
     scene.getStylesheets().add(STYLESHEET);
     myStage.setScene(scene);
     myStage.show();
   }
 
-  private void setAnchorPane() throws FileNotFoundException {
-    root = new AnchorPane();
+  private void setBorderPane() {
+    root = new BorderPane();
     root.setBackground(new Background(new BackgroundFill(Color.BLANCHEDALMOND, CornerRadii.EMPTY, Insets.EMPTY)));
     root.setMaxWidth(SCENE_WIDTH);
     root.setMaxHeight(SCENE_HEIGHT);
-    addBaseGameElements();
   }
 
   private void addBaseGameElements() throws FileNotFoundException {
     ArrayList<Color> colors = new ArrayList<>();
-    colors.add(Color.SEASHELL);
-    colors.add(Color.BURLYWOOD);
-    gameDisplay = new GameBoard(8,8,colors);
+    colors.add(Color.BLACK);
+    colors.add(Color.WHITE);
+    gameDisplay = new GameBoard(6,6,colors);
     GUIButtons buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
-    root.setTopAnchor(gameDisplay, 20.0);
-    root.setBottomAnchor(gameDisplay, 20.0);
-    root.setRightAnchor(gameDisplay, 20.0);
-    root.getChildren().addAll(buttons.getVBox(), gameDisplay);
+    root.setRight(gameDisplay);
+    root.setLeft(buttons.getVBox());
+    //BorderPane.setAlignment(buttons.getVBox(), Pos.TOP_LEFT);
   }
 
   private void startAnimationLoop() {
