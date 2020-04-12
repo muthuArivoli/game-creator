@@ -3,6 +3,7 @@ package ooga.parser;
 import java.time.Period;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
+import ooga.models.GridModel;
 import org.json.JSONTokener;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,23 +14,24 @@ import java.util.Iterator;
 
 public class TemplateParser {
   private JSONObject template;
-
-  public TemplateParser(String fileName) throws FileNotFoundException {
-     this.template = new JSONObject(new JSONTokener(new FileReader(fileName)));
+  private GridModel myGridModel;
+  public TemplateParser(GridModel gridModel) {
+    myGridModel = gridModel;
   }
 
-  public void parseTemplate () {
+  public void parseTemplate (String fileName)
+      throws FileNotFoundException, InvalidGridException, InvalidPieceException {
+    template = new JSONObject(new JSONTokener(new FileReader(fileName)));
     String title = template.getString("title");
+
+    System.out.println(title);
     GridParser myGridParser = new GridParser(
         template.getJSONArray("grid"),
-        template.getJSONObject("pieces")
+        template.getJSONObject("pieces"),
+        myGridModel
     );
 
-    try {
-      myGridParser.parseGrid();
-    } catch (InvalidGridException | InvalidPieceException e) {
-      System.out.println(e.getMessage());
-    }
+    myGridParser.populateGridModel();
   }
 
 }

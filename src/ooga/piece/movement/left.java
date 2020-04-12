@@ -2,9 +2,9 @@ package ooga.piece.movement;
 
 import ooga.piece.Coordinate;
 
-public class Leftward implements Movement {
+public class left implements Movement {
     private int units;
-    public Leftward(int units){
+    public left(int units){
         this.units = units;
     }
 
