@@ -162,7 +162,6 @@ public class GUIButtons {
     if (key.equals("LanguageButton")) {
       tempMenu.setOnAction(event -> languagePressed = (String) tempMenu.getValue());
     }
-    System.out.println(tempMenu.getValue());
     return tempMenu;
   }
 
