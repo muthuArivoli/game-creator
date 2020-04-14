@@ -39,15 +39,17 @@ public class GameGuiController extends Application {
   private static final double SCENE_HEIGHT = 720;
   private static final Color ALL_COLOR = Color.WHITE;
 
-  private static String startLanguage = "English";
+  private static String currentLanguage = "English";
   private static String guiLanguage = "English";
-  private static ResourceBundle myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + startLanguage);
+  private static ResourceBundle myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
   //private static FileSelect GameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("GameFile"), LANGUAGES_PACKAGE + startLanguage);
 
   private BorderPane root;
   private Stage myStage;
   private Timeline animation;
   private GameBoard gameDisplay;
+  private GUIButtons buttons;
+  private VBox buttonGroup;
 
   /**
    * Empty Constructor needed to run the application due to Application requirements
@@ -73,7 +75,8 @@ public class GameGuiController extends Application {
     myStage = primaryStage;
     startAnimationLoop();
     setBorderPane();
-    addBaseGameElements();
+    addGameBoardDisplay();
+    addGameButtons();
     Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
     scene.getStylesheets().add(STYLESHEET);
     myStage.setScene(scene);
@@ -87,35 +90,47 @@ public class GameGuiController extends Application {
     root.setMaxHeight(SCENE_HEIGHT);
   }
 
-  private void addBaseGameElements() throws FileNotFoundException {
+  private void addGameButtons() throws FileNotFoundException {
+    buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
+    buttonGroup = buttons.getVBox();
+    root.setLeft(buttonGroup);
+    root.setAlignment(buttonGroup, Pos.BOTTOM_LEFT);
+  }
+
+  private void addGameBoardDisplay(){
     ArrayList<Color> colors = new ArrayList<>();
     colors.add(Color.BLACK);
     colors.add(Color.WHITE);
     gameDisplay = new GameBoard(6,6,colors);
-    GUIButtons buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
-    VBox buttonGroup = buttons.getVBox();
-    HBox test = new HBox();
-    test.setPrefSize(280, 150);
     root.setRight(gameDisplay);
-    root.setLeft(test);
-    root.setLeft(buttonGroup);
-    root.setAlignment(buttonGroup, Pos.BOTTOM_LEFT);
-    root.setAlignment(test, Pos.TOP_LEFT);
-    //root.setLeft(buttons.getVBox());
   }
 
   private void startAnimationLoop() {
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
-      step(); });
+      try {
+        step();
+      } catch (FileNotFoundException ex) {
+      }
+    });
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
   }
 
-  private void step() {
-
+  private void step() throws FileNotFoundException {
+    changeLanguage(buttons.getLanguageStatus());
   }
 
+  private void changeLanguage(String language) throws FileNotFoundException {
+    guiLanguage = myResources.getString(language);
+    if (!guiLanguage.contains(currentLanguage)) {
+      currentLanguage = guiLanguage;
+      myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
+      buttonGroup.getChildren().clear();
+      root.getChildren().remove(buttonGroup);
+      addGameButtons();
+    }
+  }
 
 }
