@@ -99,9 +99,9 @@ public class GameGuiController extends Application {
 
   private void addGameBoardDisplay(){
     ArrayList<Color> colors = new ArrayList<>();
-    colors.add(Color.BLACK);
     colors.add(Color.WHITE);
-    gameDisplay = new GameBoard(6,6,colors);
+    colors.add(Color.WHITE);
+    gameDisplay = new GameBoard(6,7,colors);
     root.setRight(gameDisplay);
   }
 

@@ -37,7 +37,7 @@ public class GameBoard extends BorderPane {
 
     createPieceDisplay();
     createTiles(numRowTiles, numColTiles, colors);
-    setBackgroundColor(Color.BEIGE);
+    setBackgroundColor(Color.BLUE);
     this.setCenter(tileGroup);
     this.setBottom(displayBox);
     this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(
@@ -57,7 +57,7 @@ public class GameBoard extends BorderPane {
       for (int y= 0; y < numCol; y++){
         Color main = colors.get(0);
         if ((x+y) % 2 == 0){main = colors.get(1);}
-        RectangleTile tile = new RectangleTile(tileWidth, tileHeight, x, y, main);
+        CircleTile tile = new CircleTile(tileWidth, tileHeight, x, y, main);
         tileGroup.getChildren().addAll(tile);
       }
     }
