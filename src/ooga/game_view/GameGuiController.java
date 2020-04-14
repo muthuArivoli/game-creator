@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -92,9 +93,15 @@ public class GameGuiController extends Application {
     colors.add(Color.WHITE);
     gameDisplay = new GameBoard(6,6,colors);
     GUIButtons buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
+    VBox buttonGroup = buttons.getVBox();
+    HBox test = new HBox();
+    test.setPrefSize(280, 150);
     root.setRight(gameDisplay);
-    root.setLeft(buttons.getVBox());
-    //BorderPane.setAlignment(buttons.getVBox(), Pos.TOP_LEFT);
+    root.setLeft(test);
+    root.setLeft(buttonGroup);
+    root.setAlignment(buttonGroup, Pos.BOTTOM_LEFT);
+    root.setAlignment(test, Pos.TOP_LEFT);
+    //root.setLeft(buttons.getVBox());
   }
 
   private void startAnimationLoop() {
