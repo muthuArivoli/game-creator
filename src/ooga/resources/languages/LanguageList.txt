@@ -2,3 +2,4 @@ English
 French
 German
 Italian
+Spanish
