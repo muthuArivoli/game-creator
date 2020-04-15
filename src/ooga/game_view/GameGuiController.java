@@ -1,5 +1,6 @@
 package ooga.game_view;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -9,17 +10,10 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -31,8 +25,8 @@ public class GameGuiController extends Application {
   private static final String STYLESHEET = "ooga/resources/styleSheets/default.css";
   private static final String PIECES_DIRECTORY = "src/ooga/resources/images/pieces";
   private static final String LANGUAGES_PACKAGE = "ooga.resources.languages.";
-  private static final String GAME_DIRECTORY = "ooga.resources.gameFiles";
-  private static final String GAME_FILE_EXTENSIONS = "*.xml,*.json,*.csv";
+  private static final String GAME_DIRECTORY = "data/gameFiles";
+  private static final String GAME_FILE_EXTENSIONS = "*.json";
   private static final double FRAMES_PER_SECOND = 30;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private static final double SCENE_WIDTH = 1280;
@@ -42,7 +36,7 @@ public class GameGuiController extends Application {
   private static String currentLanguage = "English";
   private static String guiLanguage = "English";
   private static ResourceBundle myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
-  //private static FileSelect GameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("GameFile"), LANGUAGES_PACKAGE + startLanguage);
+  private static FileSelect gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
 
   private BorderPane root;
   private Stage myStage;
@@ -120,6 +114,7 @@ public class GameGuiController extends Application {
 
   private void step() throws FileNotFoundException {
     changeLanguage(buttons.getLanguageStatus());
+    checkNewGame(buttons.getNewGameStatus());
   }
 
   private void changeLanguage(String language) throws FileNotFoundException {
@@ -127,9 +122,18 @@ public class GameGuiController extends Application {
     if (!guiLanguage.contains(currentLanguage)) {
       currentLanguage = guiLanguage;
       myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
+      gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
       buttonGroup.getChildren().clear();
       root.getChildren().remove(buttonGroup);
       addGameButtons();
+    }
+  }
+
+  private void checkNewGame(boolean newGamePressed){
+    if (newGamePressed){
+      File dataFile = gameFile.getFileChooser().showOpenDialog(myStage);
+      buttons.setNewGamePressedOff();
+      if (dataFile == null) { return; }
     }
   }
 
