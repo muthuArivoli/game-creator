@@ -4,3 +4,4 @@ German
 Italian
 Spanish
 Chinese
+Swahili
