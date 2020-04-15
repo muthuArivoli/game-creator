@@ -3,3 +3,4 @@ French
 German
 Italian
 Spanish
+Chinese
