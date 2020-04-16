@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import ooga.controller.GameController;
 import ooga.game_view.board.GameBoard;
 
 public class GameGuiController extends Application {
@@ -27,7 +28,7 @@ public class GameGuiController extends Application {
   private static final String LANGUAGES_PACKAGE = "ooga.resources.languages.";
   private static final String GAME_DIRECTORY = "data/gameFiles";
   private static final String GAME_FILE_EXTENSIONS = "*.json";
-  private static final double FRAMES_PER_SECOND = 30;
+  private static final double FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private static final double SCENE_WIDTH = 1280;
   private static final double SCENE_HEIGHT = 720;
@@ -44,6 +45,8 @@ public class GameGuiController extends Application {
   private GameBoard gameDisplay;
   private GUIButtons buttons;
   private VBox buttonGroup;
+
+  private GameController myGameController;
 
   /**
    * Empty Constructor needed to run the application due to Application requirements
@@ -69,8 +72,9 @@ public class GameGuiController extends Application {
     myStage = primaryStage;
     startAnimationLoop();
     setBorderPane();
-    addGameBoardDisplay();
+    initiateGameController();
     addGameButtons();
+    addGameBoardDisplay();
     Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
     scene.getStylesheets().add(STYLESHEET);
     myStage.setScene(scene);
@@ -82,6 +86,10 @@ public class GameGuiController extends Application {
     root.setBackground(new Background(new BackgroundFill(Color.BLANCHEDALMOND, CornerRadii.EMPTY, Insets.EMPTY)));
     root.setMaxWidth(SCENE_WIDTH);
     root.setMaxHeight(SCENE_HEIGHT);
+  }
+
+  private void initiateGameController(){
+    myGameController = new GameController();
   }
 
   private void addGameButtons() throws FileNotFoundException {
@@ -134,6 +142,9 @@ public class GameGuiController extends Application {
       File dataFile = gameFile.getFileChooser().showOpenDialog(myStage);
       buttons.setNewGamePressedOff();
       if (dataFile == null) { return; }
+      else {
+        myGameController.parseFile(dataFile.getPath());
+      }
     }
   }
 
