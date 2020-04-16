@@ -8,8 +8,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.LightBase;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -36,15 +39,21 @@ public class GameGuiController extends Application {
   private static String guiLanguage = "English";
   private static ResourceBundle myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
   private static FileSelect gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
+  private File currentDataFile;
 
   private BorderPane root;
   private Stage myStage;
+  private Scene myScene;
   private Timeline animation;
+
+  private GameController myGameController;
   private GameBoard gameDisplay;
   private GUIButtons buttons;
   private VBox buttonGroup;
 
-  private GameController myGameController;
+  private boolean darkEnabled = false;
+
+  private String currentStyleSheet = LIGHT_STYLESHEET;
 
   /**
    * Empty Constructor needed to run the application due to Application requirements
@@ -68,14 +77,14 @@ public class GameGuiController extends Application {
   public void start(Stage primaryStage) throws Exception {
     primaryStage.setTitle("Game Engine");
     myStage = primaryStage;
-    startAnimationLoop();
     setBorderPane();
+    startAnimationLoop();
     initiateGameController();
     addGameButtons();
     addGameBoardDisplay();
-    Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-    scene.getStylesheets().add(LIGHT_STYLESHEET);
-    myStage.setScene(scene);
+    myScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+    myScene.getStylesheets().add(currentStyleSheet);
+    myStage.setScene(myScene);
     myStage.show();
   }
 
@@ -121,6 +130,7 @@ public class GameGuiController extends Application {
     changeLanguage(buttons.getLanguageStatus());
     checkNewGame(buttons.getNewGameStatus());
     checkSettings(buttons.getSettingsStatus());
+    checkRestartGame(buttons.getRestartGameStatus());
   }
 
   private void changeLanguage(String language) throws FileNotFoundException {
@@ -137,28 +147,59 @@ public class GameGuiController extends Application {
 
   private void checkNewGame(boolean newGamePressed){
     if (newGamePressed){
-      File dataFile = gameFile.getFileChooser().showOpenDialog(myStage);
+      currentDataFile = gameFile.getFileChooser().showOpenDialog(myStage);
       buttons.setNewGamePressedOff();
-      if (dataFile == null) { return; }
-      else {
-        myGameController.parseFile(dataFile.getPath());
-      }
+      startGame();
+    }
+  }
+
+  private void startGame(){
+    if (currentDataFile == null) { return; }
+    else {
+      myGameController.parseFile(currentDataFile.getPath());
     }
   }
 
   private void checkSettings(boolean settingsStatus){
     if (settingsStatus){
       buttons.setSettingsPressedOff();
-      Stage s = new Stage();
-      s.setTitle(myResources.getString("Settings"));
-      Pane rt = new Pane();
-      Scene sc = new Scene(rt, 300, 300);
-      sc.getStylesheets().add(DARK_STYLESHEET);
-      s.setScene(sc);
-      s.show();
+      FlowPane rt = new FlowPane();
+      rt.setAlignment(Pos.CENTER);
+      rt.setVgap(20);
+      Stage newStage = createNewStage(rt, "Settings", 250, 250);
+      Button darkMode = new Button(myResources.getString("DarkSetting"));
+      darkMode.setOnAction(event -> changeLightTheme(newStage.getScene()));
+      rt.getChildren().addAll(darkMode);
+      newStage.show();
     }
   }
 
+  private void checkRestartGame(boolean restartStatus){
+    if(restartStatus){
+      buttons.setRestartGamePressedOff();
+      startGame();
+    }
+  }
 
+  private Stage createNewStage(Pane rt, String title, double width, double height){
+    Stage s = new Stage();
+    s.setTitle(myResources.getString(title));
+    Scene temporaryScene = new Scene(rt,width,height);
+    temporaryScene.getStylesheets().add(currentStyleSheet);
+    s.setScene(temporaryScene);
+    return s;
+  }
+
+  private void changeLightTheme(Scene scene){
+    darkEnabled = !darkEnabled;
+    scene.getStylesheets().removeAll(currentStyleSheet);
+    myScene.getStylesheets().removeAll(currentStyleSheet);
+    currentStyleSheet = LIGHT_STYLESHEET;
+    if(darkEnabled) {
+      currentStyleSheet = DARK_STYLESHEET;
+    }
+    scene.getStylesheets().add(currentStyleSheet);
+    myScene.getStylesheets().add(currentStyleSheet);
+  }
 
 }

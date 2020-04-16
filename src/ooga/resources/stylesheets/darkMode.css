@@ -32,6 +32,12 @@
   linear-gradient(#0000CD, #d6d6d6);
 }
 
+.GameBoard {
+  -fx-background-color: #191970;
+  -fx-border-width: 5;
+  -fx-border-color: black;
+}
+
 .label {
   -fx-background-color: #000000;
   -fx-text-fill: #ffffff;
