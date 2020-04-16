@@ -12,13 +12,15 @@ public class GridParser {
   private PieceParser myPieceParser;
   private GridModel myGridModel;
 
-  public GridParser (JSONArray gridJSON, JSONObject piecesJSON, GridModel gridModel) {
+  public GridParser (JSONArray gridJSON, JSONObject piecesJSON)
+      throws InvalidGridException, InvalidPieceException {
     this.myGridJSON = gridJSON;
     this.myPieceParser = new PieceParser(piecesJSON);
-    this.myGridModel = gridModel;
+    this.myGridModel = new GridModel();
+    populateGridModel();
   }
 
-  public void populateGridModel () throws InvalidGridException, InvalidPieceException {
+  private void populateGridModel () throws InvalidGridException, InvalidPieceException {
     if (!validateGrid()) {
       throw new InvalidGridException("Grid must contain same number of columns per row.");
     }
@@ -39,5 +41,7 @@ public class GridParser {
   private boolean validateGrid () {
     return true;
   }
+
+  public GridModel getMyGridModel(){return myGridModel;}
 
 }

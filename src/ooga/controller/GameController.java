@@ -11,8 +11,7 @@ public class GameController {
   GridModel myGridModel;
 
   public GameController () {
-    this.myGridModel = new GridModel();
-    this.myTemplateParser = new TemplateParser(myGridModel);
+    this.myTemplateParser = new TemplateParser();
   }
 
   public void parseFile (String fileName) {
@@ -21,5 +20,11 @@ public class GameController {
     } catch (FileNotFoundException | InvalidGridException | InvalidPieceException e) {
       System.out.println(e.getMessage());
     }
+
+    myGridModel = myTemplateParser.getMyGridParser().getMyGridModel();
+  }
+
+  public GridModel getMyGridModel() {
+    return myGridModel;
   }
 }

@@ -14,9 +14,8 @@ import java.util.Iterator;
 
 public class TemplateParser {
   private JSONObject template;
-  private GridModel myGridModel;
-  public TemplateParser(GridModel gridModel) {
-    myGridModel = gridModel;
+  private GridParser myGridParser;
+  public TemplateParser() {
   }
 
   public void parseTemplate (String fileName)
@@ -25,13 +24,12 @@ public class TemplateParser {
     String title = template.getString("title");
 
     System.out.println(title);
-    GridParser myGridParser = new GridParser(
+    myGridParser = new GridParser(
         template.getJSONArray("grid"),
-        template.getJSONObject("pieces"),
-        myGridModel
+        template.getJSONObject("pieces")
     );
-
-    myGridParser.populateGridModel();
   }
+
+  public GridParser getMyGridParser(){return myGridParser;}
 
 }
