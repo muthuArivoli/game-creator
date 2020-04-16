@@ -37,7 +37,6 @@ public class GameBoard extends BorderPane {
 
     createPieceDisplay();
     createTiles(numRowTiles, numColTiles, colors);
-    setBackgroundColor(Color.SILVER);
     this.setCenter(tileGroup);
     this.setBottom(displayBox);
     this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(

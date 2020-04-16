@@ -1,6 +1,6 @@
 package ooga.game_view;
 
-import java.awt.Color;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,15 +9,9 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 /**
  * ButtonController.java Creates all the Buttons and Pop-Ups in the Game environment

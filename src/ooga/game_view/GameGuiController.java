@@ -8,8 +8,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.LightBase;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -39,12 +42,17 @@ public class GameGuiController extends Application {
 
   private BorderPane root;
   private Stage myStage;
+  private Scene myScene;
   private Timeline animation;
+
+  private GameController myGameController;
   private GameBoard gameDisplay;
   private GUIButtons buttons;
   private VBox buttonGroup;
 
-  private GameController myGameController;
+  private boolean darkEnabled = false;
+
+  private String currentStyleSheet = LIGHT_STYLESHEET;
 
   /**
    * Empty Constructor needed to run the application due to Application requirements
@@ -68,14 +76,14 @@ public class GameGuiController extends Application {
   public void start(Stage primaryStage) throws Exception {
     primaryStage.setTitle("Game Engine");
     myStage = primaryStage;
-    startAnimationLoop();
     setBorderPane();
+    startAnimationLoop();
     initiateGameController();
     addGameButtons();
     addGameBoardDisplay();
-    Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-    scene.getStylesheets().add(LIGHT_STYLESHEET);
-    myStage.setScene(scene);
+    myScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+    myScene.getStylesheets().add(currentStyleSheet);
+    myStage.setScene(myScene);
     myStage.show();
   }
 
@@ -151,14 +159,29 @@ public class GameGuiController extends Application {
       buttons.setSettingsPressedOff();
       Stage s = new Stage();
       s.setTitle(myResources.getString("Settings"));
-      Pane rt = new Pane();
-      Scene sc = new Scene(rt, 300, 300);
-      sc.getStylesheets().add(DARK_STYLESHEET);
+      FlowPane rt = new FlowPane();
+      rt.setAlignment(Pos.CENTER);
+      rt.setVgap(20);
+      Scene sc = new Scene(rt, 250, 250);
+      sc.getStylesheets().add(currentStyleSheet);
+      Button darkMode = new Button(myResources.getString("DarkSetting"));
+      darkMode.setOnAction(event -> changeLightTheme(sc));
+      rt.getChildren().addAll(darkMode);
       s.setScene(sc);
       s.show();
     }
   }
 
-
+  private void changeLightTheme(Scene scene){
+    darkEnabled = !darkEnabled;
+    scene.getStylesheets().removeAll(currentStyleSheet);
+    myScene.getStylesheets().removeAll(currentStyleSheet);
+    currentStyleSheet = LIGHT_STYLESHEET;
+    if(darkEnabled) {
+      currentStyleSheet = DARK_STYLESHEET;
+    }
+    scene.getStylesheets().add(currentStyleSheet);
+    myScene.getStylesheets().add(currentStyleSheet);
+  }
 
 }
