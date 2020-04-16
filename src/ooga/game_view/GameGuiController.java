@@ -39,6 +39,7 @@ public class GameGuiController extends Application {
   private static String guiLanguage = "English";
   private static ResourceBundle myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
   private static FileSelect gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
+  private File currentDataFile;
 
   private BorderPane root;
   private Stage myStage;
@@ -129,6 +130,7 @@ public class GameGuiController extends Application {
     changeLanguage(buttons.getLanguageStatus());
     checkNewGame(buttons.getNewGameStatus());
     checkSettings(buttons.getSettingsStatus());
+    checkRestartGame(buttons.getRestartGameStatus());
   }
 
   private void changeLanguage(String language) throws FileNotFoundException {
@@ -145,12 +147,16 @@ public class GameGuiController extends Application {
 
   private void checkNewGame(boolean newGamePressed){
     if (newGamePressed){
-      File dataFile = gameFile.getFileChooser().showOpenDialog(myStage);
+      currentDataFile = gameFile.getFileChooser().showOpenDialog(myStage);
       buttons.setNewGamePressedOff();
-      if (dataFile == null) { return; }
-      else {
-        myGameController.parseFile(dataFile.getPath());
-      }
+      startGame();
+    }
+  }
+
+  private void startGame(){
+    if (currentDataFile == null) { return; }
+    else {
+      myGameController.parseFile(currentDataFile.getPath());
     }
   }
 
@@ -160,7 +166,7 @@ public class GameGuiController extends Application {
       FlowPane rt = new FlowPane();
       rt.setAlignment(Pos.CENTER);
       rt.setVgap(20);
-      Stage newStage = createNewStage(rt, "Settings");
+      Stage newStage = createNewStage(rt, "Settings", 250, 250);
       Button darkMode = new Button(myResources.getString("DarkSetting"));
       darkMode.setOnAction(event -> changeLightTheme(newStage.getScene()));
       rt.getChildren().addAll(darkMode);
@@ -168,10 +174,17 @@ public class GameGuiController extends Application {
     }
   }
 
-  private Stage createNewStage(Pane rt, String title){
+  private void checkRestartGame(boolean restartStatus){
+    if(restartStatus){
+      buttons.setRestartGamePressedOff();
+      startGame();
+    }
+  }
+
+  private Stage createNewStage(Pane rt, String title, double width, double height){
     Stage s = new Stage();
     s.setTitle(myResources.getString(title));
-    Scene temporaryScene = new Scene(rt,250,250);
+    Scene temporaryScene = new Scene(rt,width,height);
     temporaryScene.getStylesheets().add(currentStyleSheet);
     s.setScene(temporaryScene);
     return s;
