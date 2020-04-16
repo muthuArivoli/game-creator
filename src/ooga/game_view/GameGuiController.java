@@ -7,13 +7,10 @@ import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -23,7 +20,8 @@ import ooga.game_view.board.GameBoard;
 
 public class GameGuiController extends Application {
 
-  private static final String STYLESHEET = "ooga/resources/styleSheets/default.css";
+  private static final String LIGHT_STYLESHEET = "ooga/resources/styleSheets/lightMode.css";
+  private static final String DARK_STYLESHEET = "ooga/resources/styleSheets/darkMode.css";
   private static final String PIECES_DIRECTORY = "src/ooga/resources/images/pieces";
   private static final String LANGUAGES_PACKAGE = "ooga.resources.languages.";
   private static final String GAME_DIRECTORY = "data/gameFiles";
@@ -76,14 +74,13 @@ public class GameGuiController extends Application {
     addGameButtons();
     addGameBoardDisplay();
     Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-    scene.getStylesheets().add(STYLESHEET);
+    scene.getStylesheets().add(LIGHT_STYLESHEET);
     myStage.setScene(scene);
     myStage.show();
   }
 
   private void setBorderPane() {
     root = new BorderPane();
-    root.setBackground(new Background(new BackgroundFill(Color.BLANCHEDALMOND, CornerRadii.EMPTY, Insets.EMPTY)));
     root.setMaxWidth(SCENE_WIDTH);
     root.setMaxHeight(SCENE_HEIGHT);
   }
@@ -102,8 +99,8 @@ public class GameGuiController extends Application {
   private void addGameBoardDisplay(){
     ArrayList<Color> colors = new ArrayList<>();
     colors.add(Color.WHITE);
-    colors.add(Color.WHITE);
-    gameDisplay = new GameBoard(6,7,colors);
+    colors.add(Color.BLACK);
+    gameDisplay = new GameBoard(8,8,colors);
     root.setRight(gameDisplay);
   }
 
@@ -123,6 +120,7 @@ public class GameGuiController extends Application {
   private void step() throws FileNotFoundException {
     changeLanguage(buttons.getLanguageStatus());
     checkNewGame(buttons.getNewGameStatus());
+    checkSettings(buttons.getSettingsStatus());
   }
 
   private void changeLanguage(String language) throws FileNotFoundException {
@@ -147,5 +145,20 @@ public class GameGuiController extends Application {
       }
     }
   }
+
+  private void checkSettings(boolean settingsStatus){
+    if (settingsStatus){
+      buttons.setSettingsPressedOff();
+      Stage s = new Stage();
+      s.setTitle(myResources.getString("Settings"));
+      Pane rt = new Pane();
+      Scene sc = new Scene(rt, 300, 300);
+      sc.getStylesheets().add(DARK_STYLESHEET);
+      s.setScene(sc);
+      s.show();
+    }
+  }
+
+
 
 }

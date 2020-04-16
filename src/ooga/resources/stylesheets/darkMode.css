@@ -1,0 +1,39 @@
+.root {
+  -fx-font-family: "Lucida Console";
+  -fx-font-size: 14;
+  -fx-background-color: 	#191970;
+}
+
+.button {
+  -fx-background-color: linear-gradient(#4169E1, #191970),
+  linear-gradient(#4169E1 0%, #0000CD 20%, #191970 100%),
+  linear-gradient(#4169E1 0%, #191970 50%);
+  -fx-text-fill: white;
+  -fx-border-color: white;
+}
+
+.button:hover {
+  -fx-background-color: linear-gradient(#191970 0%, #4169E1 50%),
+  linear-gradient(#4169E1 0%, #0000CD 20%, #d6d6d6 100%),
+  linear-gradient(#0000CD, #d6d6d6);
+}
+
+.combo-box .list-cell{
+  -fx-background-color: linear-gradient(#4169E1, #191970),
+  linear-gradient(#4169E1 0%, #0000CD 20%, #191970 100%),
+  linear-gradient(#4169E1 0%, #191970 50%);
+  -fx-text-fill: white;
+  -fx-border-color: white;
+}
+
+.combo-box .list-cell:hover{
+  -fx-background-color: linear-gradient(#191970 0%, #4169E1 50%),
+  linear-gradient(#4169E1 0%, #0000CD 20%, #d6d6d6 100%),
+  linear-gradient(#0000CD, #d6d6d6);
+}
+
+.label {
+  -fx-background-color: #000000;
+  -fx-text-fill: #ffffff;
+}
+
