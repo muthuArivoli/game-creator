@@ -157,19 +157,24 @@ public class GameGuiController extends Application {
   private void checkSettings(boolean settingsStatus){
     if (settingsStatus){
       buttons.setSettingsPressedOff();
-      Stage s = new Stage();
-      s.setTitle(myResources.getString("Settings"));
       FlowPane rt = new FlowPane();
       rt.setAlignment(Pos.CENTER);
       rt.setVgap(20);
-      Scene sc = new Scene(rt, 250, 250);
-      sc.getStylesheets().add(currentStyleSheet);
+      Stage newStage = createNewStage(rt, "Settings");
       Button darkMode = new Button(myResources.getString("DarkSetting"));
-      darkMode.setOnAction(event -> changeLightTheme(sc));
+      darkMode.setOnAction(event -> changeLightTheme(newStage.getScene()));
       rt.getChildren().addAll(darkMode);
-      s.setScene(sc);
-      s.show();
+      newStage.show();
     }
+  }
+
+  private Stage createNewStage(Pane rt, String title){
+    Stage s = new Stage();
+    s.setTitle(myResources.getString(title));
+    Scene temporaryScene = new Scene(rt,250,250);
+    temporaryScene.getStylesheets().add(currentStyleSheet);
+    s.setScene(temporaryScene);
+    return s;
   }
 
   private void changeLightTheme(Scene scene){
