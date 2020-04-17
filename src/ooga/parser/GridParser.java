@@ -12,11 +12,12 @@ public class GridParser {
   private PieceParser myPieceParser;
   private GridModel myGridModel;
 
-  public GridParser (JSONArray gridJSON, JSONObject piecesJSON)
+  public GridParser (GridModel gridModel, JSONArray gridJSON, JSONObject piecesJSON)
       throws InvalidGridException, InvalidPieceException {
     this.myGridJSON = gridJSON;
     this.myPieceParser = new PieceParser(piecesJSON);
-    this.myGridModel = new GridModel();
+    this.myGridModel = gridModel;
+
     populateGridModel();
   }
 
@@ -32,7 +33,7 @@ public class GridParser {
 
         if(!pieceSymbol.equals("")){
           Piece newPiece = myPieceParser.generatePiece(pieceSymbol, i, j);
-          myGridModel.addPiece(newPiece);
+          myGridModel.addPiece(newPiece, i, j);
         }
       }
     }
@@ -41,7 +42,5 @@ public class GridParser {
   private boolean validateGrid () {
     return true;
   }
-
-  public GridModel getMyGridModel(){return myGridModel;}
 
 }

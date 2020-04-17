@@ -19,7 +19,7 @@ public class Main {
 //        GameGuiController frameWork = new GameGuiController(args);
 
         GameController myGameController = new GameController();
-        myGameController.parseFile("./src/ooga/resources/gameFiles/chess.json");
+        myGameController.parseFile("./data/gameFiles/chess.json");
 
     }
 

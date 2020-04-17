@@ -11,7 +11,8 @@ public class GameController {
   GridModel myGridModel;
 
   public GameController () {
-    this.myTemplateParser = new TemplateParser();
+    this.myGridModel = new GridModel();
+    this.myTemplateParser = new TemplateParser(myGridModel);
   }
 
   public void parseFile (String fileName) {
@@ -21,7 +22,7 @@ public class GameController {
       System.out.println(e.getMessage());
     }
 
-    myGridModel = myTemplateParser.getMyGridParser().getMyGridModel();
+
   }
 
   public GridModel getMyGridModel() {
