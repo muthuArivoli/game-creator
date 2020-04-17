@@ -26,14 +26,13 @@ public class TemplateParser {
     template = new JSONObject(new JSONTokener(new FileReader(fileName)));
     String title = template.getString("title");
 
-    System.out.println(title);
+    myGridModel.initGrid(template.getInt("rows"), template.getInt("columns"));
+
     myGridParser = new GridParser(
         myGridModel,
         template.getJSONArray("grid"),
         template.getJSONObject("pieces")
     );
   }
-
-  public GridParser getMyGridParser(){return myGridParser;}
 
 }

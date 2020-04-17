@@ -14,9 +14,9 @@ public class GridParser {
 
   public GridParser (GridModel gridModel, JSONArray gridJSON, JSONObject piecesJSON)
       throws InvalidGridException, InvalidPieceException {
+    this.myGridModel = gridModel;
     this.myGridJSON = gridJSON;
     this.myPieceParser = new PieceParser(piecesJSON);
-    this.myGridModel = gridModel;
 
     populateGridModel();
   }
