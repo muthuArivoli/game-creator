@@ -66,7 +66,7 @@ public class GameGuiController extends Application {
   private GameBoard gameDisplay;
   private GUIButtons buttons;
   private VBox buttonGroup;
-  private String gameTitle;
+  private Text gameTitle;
   private VBox titleBox;
 
   private boolean darkEnabled = false;
@@ -185,14 +185,16 @@ public class GameGuiController extends Application {
   private void startGame(){
     if (currentDataFile == null) { return; }
     else {
+      gameDisplay.getChildren().removeAll();
+      titleBox.getChildren().remove(gameTitle);
+      myGameController = new GameController();
       myGameController.parseFile(currentDataFile.getPath());
+      gameTitle = new Text(myGameController.getGameName().toUpperCase());
       ArrayList<Color> colors = new ArrayList<>();
       colors.add(Color.WHITE);
       colors.add(Color.BLACK);
-      gameDisplay.getChildren().removeAll();
-      titleBox.getChildren().removeAll();
       gameDisplay.createGameBoard(8,8,colors, scene_width, scene_height);
-      titleBox.getChildren().add(new Text(myGameController.getGameName().toUpperCase()));
+      titleBox.getChildren().add(gameTitle);
     }
   }
 
