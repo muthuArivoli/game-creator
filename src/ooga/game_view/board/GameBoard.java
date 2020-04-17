@@ -42,7 +42,7 @@ public class GameBoard extends BorderPane {
     createPieceDisplay();
     createTiles(numRowTiles, numColTiles, colors);
     BorderPane.setAlignment(tileGroup, Pos.TOP_CENTER);
-    this.setTop(tileGroup);
+    this.setCenter(tileGroup);
     this.setBottom(displayBox);
     this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(
         displayBorderWidth))));
@@ -55,13 +55,8 @@ public class GameBoard extends BorderPane {
     if (displayWidth < boardSideLength) {
       boardSideLength = displayWidth * 0.62;
     }
-    this.setPrefSize(displayWidth, dispHeight);
+    this.setMaxSize(displayWidth, dispHeight);
     displayBox.setPrefSize(displayWidth, displayHeight);
-    System.out.println("w"+ dispWidth);
-    System.out.println("h"+ dispHeight);
-    System.out.println("boardw" + displayWidth);
-    System.out.println("boardh" + displayHeight);
-    System.out.println("length" + boardSideLength);
   }
 
   private void createPieceDisplay() {

@@ -47,8 +47,8 @@ public class GameGuiController extends Application {
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
   private Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-  private double scene_width = primaryScreenBounds.getWidth();
-  private double scene_height = primaryScreenBounds.getWidth();
+  private double scene_width = primaryScreenBounds.getWidth()*0.9;
+  private double scene_height = primaryScreenBounds.getHeight()*0.9;
 
 
   private static String currentLanguage = "English";
@@ -124,14 +124,16 @@ public class GameGuiController extends Application {
     buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
     buttonGroup = buttons.getVBox();
     titleBox = new VBox();
-    titleBox.setPrefSize(280,200);
+    titleBox.setLayoutX(30);
+    titleBox.setLayoutY(30);
+    titleBox.setPrefSize(250,200);
     titleBox.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
     titleBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
         null,new BorderWidths(3))));
-    BorderPane.setAlignment(titleBox, Pos.TOP_LEFT);
-    BorderPane.setAlignment(buttonGroup, Pos.BOTTOM_LEFT);
-    root.setLeft(titleBox);
-    //root.setLeft(buttonGroup);
+    BorderPane leftSide = new BorderPane();
+    leftSide.setTop(titleBox);
+    leftSide.setCenter(buttonGroup);
+    root.setLeft(leftSide);
   }
 
   private void addGameBoardDisplay(){
