@@ -7,15 +7,29 @@ import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.controller.GameController;
@@ -31,9 +45,11 @@ public class GameGuiController extends Application {
   private static final String GAME_FILE_EXTENSIONS = "*.json";
   private static final double FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  private static final double SCENE_WIDTH = 1280;
-  private static final double SCENE_HEIGHT = 720;
-  private static final Color ALL_COLOR = Color.WHITE;
+
+  private Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+  private double scene_width = primaryScreenBounds.getWidth();
+  private double scene_height = primaryScreenBounds.getWidth();
+
 
   private static String currentLanguage = "English";
   private static String guiLanguage = "English";
@@ -50,6 +66,8 @@ public class GameGuiController extends Application {
   private GameBoard gameDisplay;
   private GUIButtons buttons;
   private VBox buttonGroup;
+  private String gameTitle;
+  private VBox titleBox;
 
   private boolean darkEnabled = false;
 
@@ -77,12 +95,16 @@ public class GameGuiController extends Application {
   public void start(Stage primaryStage) throws Exception {
     primaryStage.setTitle("Game Engine");
     myStage = primaryStage;
+    myStage.setX(primaryScreenBounds.getMinX());
+    myStage.setY(primaryScreenBounds.getMinY());
+    myStage.setWidth(primaryScreenBounds.getWidth());
+    myStage.setHeight(primaryScreenBounds.getHeight());
     setBorderPane();
     startAnimationLoop();
     initiateGameController();
     addGameButtons();
     addGameBoardDisplay();
-    myScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+    myScene = new Scene(root, scene_width, scene_height);
     myScene.getStylesheets().add(currentStyleSheet);
     myStage.setScene(myScene);
     myStage.show();
@@ -90,8 +112,8 @@ public class GameGuiController extends Application {
 
   private void setBorderPane() {
     root = new BorderPane();
-    root.setMaxWidth(SCENE_WIDTH);
-    root.setMaxHeight(SCENE_HEIGHT);
+    root.setMaxWidth(scene_width);
+    root.setMaxHeight(scene_height);
   }
 
   private void initiateGameController(){
@@ -101,15 +123,23 @@ public class GameGuiController extends Application {
   private void addGameButtons() throws FileNotFoundException {
     buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
     buttonGroup = buttons.getVBox();
-    root.setLeft(buttonGroup);
-    root.setAlignment(buttonGroup, Pos.BOTTOM_LEFT);
+    titleBox = new VBox();
+    titleBox.setPrefSize(280,200);
+    titleBox.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+    titleBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
+        null,new BorderWidths(3))));
+    BorderPane.setAlignment(titleBox, Pos.TOP_LEFT);
+    BorderPane.setAlignment(buttonGroup, Pos.BOTTOM_LEFT);
+    root.setLeft(titleBox);
+    //root.setLeft(buttonGroup);
   }
 
   private void addGameBoardDisplay(){
     ArrayList<Color> colors = new ArrayList<>();
     colors.add(Color.WHITE);
     colors.add(Color.BLACK);
-    gameDisplay = new GameBoard(8,8,colors);
+    gameDisplay = new GameBoard(8,8,colors, scene_width, scene_height);
+    BorderPane.setAlignment(gameDisplay, Pos.CENTER);
     root.setRight(gameDisplay);
   }
 
@@ -158,6 +188,10 @@ public class GameGuiController extends Application {
     else {
       myGameController.parseFile(currentDataFile.getPath());
     }
+  }
+
+  private void addGameTitle(){
+
   }
 
   private void checkSettings(boolean settingsStatus){

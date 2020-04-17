@@ -2,7 +2,9 @@ package ooga.game_view.board;
 
 import java.util.List;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -12,40 +14,57 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import ooga.game_view.board.tile.CircleTile;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import ooga.game_view.board.tile.RectangleTile;
 
 public class GameBoard extends BorderPane {
-
-  private static final int DISPLAY_WIDTH = 1000;
-  private static final int DISPLAY_HEIGHT = 720;
-  private static final int BOARD_WIDTH = 620;
-  private static final int BOARD_HEIGHT = 620;
-  public static final double DISPLAY_BORDER_WIDTH = 5.0;
-
   private double tileWidth;
   private double tileHeight;
-  private Color backgroundColor;
-  private HBox displayBox;
+  private double displayWidth;
+  private double displayHeight;
+  private double boardSideLength;
+  private double displayBorderWidth= 5.0;
+
+  private List<Shape> tileList;
+
+  private HBox displayBox = new HBox();
   private Group tileGroup = new Group();
 
-  public GameBoard(int numRowTiles, int numColTiles, List<Color> colors){
-    tileWidth = BOARD_WIDTH/numRowTiles;
-    tileHeight = BOARD_HEIGHT/numColTiles;
+  public GameBoard(int numRowTiles, int numColTiles, List<Color> colors, double width, double height){
+    calculateSize(width, height);
+
+    tileWidth = boardSideLength/numRowTiles;
+    tileHeight = boardSideLength/numColTiles;
 
     createPieceDisplay();
     createTiles(numRowTiles, numColTiles, colors);
-    this.setCenter(tileGroup);
+    BorderPane.setAlignment(tileGroup, Pos.TOP_CENTER);
+    this.setTop(tileGroup);
     this.setBottom(displayBox);
     this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(
-        DISPLAY_BORDER_WIDTH))));
+        displayBorderWidth))));
 }
 
+  private void calculateSize(double dispWidth, double dispHeight) {
+    displayWidth = dispWidth * 0.80;
+    displayHeight = dispHeight * 0.14;
+    boardSideLength = dispHeight - displayHeight;
+    if (displayWidth < boardSideLength) {
+      boardSideLength = displayWidth * 0.62;
+    }
+    this.setPrefSize(displayWidth, dispHeight);
+    displayBox.setPrefSize(displayWidth, displayHeight);
+    System.out.println("w"+ dispWidth);
+    System.out.println("h"+ dispHeight);
+    System.out.println("boardw" + displayWidth);
+    System.out.println("boardh" + displayHeight);
+    System.out.println("length" + boardSideLength);
+  }
+
   private void createPieceDisplay() {
-    displayBox = new HBox();
-    displayBox.setPrefSize(DISPLAY_WIDTH,DISPLAY_HEIGHT);
     displayBox.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
     displayBox.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,
         null,new BorderWidths(3))));
@@ -60,11 +79,6 @@ public class GameBoard extends BorderPane {
         tileGroup.getChildren().addAll(tile);
       }
     }
-  }
-
-  public void setBackgroundColor(Color clr){
-    backgroundColor = clr;
-    this.setBackground(new Background(new BackgroundFill(backgroundColor, CornerRadii.EMPTY, Insets.EMPTY)));
   }
 
 }
