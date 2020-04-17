@@ -1,10 +1,14 @@
 package ooga.controller;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.util.Pair;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.models.GridModel;
 import ooga.parser.TemplateParser;
+import ooga.piece.Piece;
 
 public class GameController {
   TemplateParser myTemplateParser;
@@ -23,7 +27,13 @@ public class GameController {
     }
   }
 
-  
+  public List<Pair<Integer, Integer>> pieceSelected (Piece piece, int x, int y) {
+    return new ArrayList<Pair<Integer, Integer>>;
+  }
+
+  public void moveSelectedPiece (int x, int y) {
+
+  }
 
   public GridModel getGridModel() {
     return myGridModel;
