@@ -35,7 +35,24 @@
 .GameBoard {
   -fx-background-color: #191970;
   -fx-border-width: 5;
+  -fx-border-style: solid;
   -fx-border-color: black;
+}
+
+.displayBox {
+  -fx-background-color: #FFFFFF;
+  -fx-border-width: 3;
+  -fx-border-style: solid;
+  -fx-border-color: black;
+}
+
+.titleBox {
+  -fx-background-color: #FFFFCC;
+  -fx-border-color: #000000;
+  -fx-border-width: 3px;
+  -fx-padding: 40;
+  -fx-font-family: "Copperplate Gothic Light";
+  -fx-font-size: 60;
 }
 
 .label {

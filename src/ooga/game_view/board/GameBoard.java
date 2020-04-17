@@ -31,20 +31,20 @@ public class GameBoard extends BorderPane {
   private HBox displayBox = new HBox();
   private Group tileGroup = new Group();
 
-  public GameBoard(int numRowTiles, int numColTiles, List<Color> colors, double width, double height){
-    calculateSize(width, height);
+  public GameBoard(){
+    this.getStyleClass().add("GameBoard");
+  }
 
+  public void createGameBoard(int numRowTiles, int numColTiles, List<Color> colors, double width, double height){
+    calculateSize(width, height);
     tileWidth = boardSideLength/numRowTiles;
     tileHeight = boardSideLength/numColTiles;
-
     createPieceDisplay();
     createTiles(numRowTiles, numColTiles, colors);
     BorderPane.setAlignment(tileGroup, Pos.TOP_CENTER);
     this.setCenter(tileGroup);
     this.setBottom(displayBox);
-    this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(
-        displayBorderWidth))));
-}
+  }
 
   private void calculateSize(double dispWidth, double dispHeight) {
     displayWidth = dispWidth * 0.80;
@@ -54,13 +54,11 @@ public class GameBoard extends BorderPane {
       boardSideLength = displayWidth * 0.62;
     }
     this.setMaxSize(displayWidth, dispHeight);
-    displayBox.setPrefSize(displayWidth, displayHeight);
   }
 
   private void createPieceDisplay() {
-    displayBox.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-    displayBox.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,
-        null,new BorderWidths(3))));
+    displayBox.setPrefSize(displayWidth, displayHeight);
+    displayBox.getStyleClass().add("displayBox");
   }
 
   private void createTiles(int numRow, int numCol, List<Color> colors){

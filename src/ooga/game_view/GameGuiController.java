@@ -66,7 +66,7 @@ public class GameGuiController extends Application {
   private GameBoard gameDisplay;
   private GUIButtons buttons;
   private VBox buttonGroup;
-  private String gameTitle;
+  private Text gameTitle;
   private VBox titleBox;
 
   private boolean darkEnabled = false;
@@ -125,9 +125,7 @@ public class GameGuiController extends Application {
     buttonGroup = buttons.getVBox();
     titleBox = new VBox();
     titleBox.setPrefHeight(150);
-    titleBox.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-    titleBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
-        null,new BorderWidths(3))));
+    titleBox.getStyleClass().addAll("titleBox");
     BorderPane.setAlignment(titleBox, Pos.CENTER);
     BorderPane leftSide = new BorderPane();
     leftSide.setTop(titleBox);
@@ -139,10 +137,7 @@ public class GameGuiController extends Application {
   }
 
   private void addGameBoardDisplay(){
-    ArrayList<Color> colors = new ArrayList<>();
-    colors.add(Color.WHITE);
-    colors.add(Color.BLACK);
-    gameDisplay = new GameBoard(8,8,colors, scene_width, scene_height);
+    gameDisplay = new GameBoard();
     BorderPane.setAlignment(gameDisplay, Pos.CENTER);
     root.setRight(gameDisplay);
   }
@@ -190,12 +185,17 @@ public class GameGuiController extends Application {
   private void startGame(){
     if (currentDataFile == null) { return; }
     else {
+      gameDisplay.getChildren().removeAll();
+      titleBox.getChildren().remove(gameTitle);
+      myGameController = new GameController();
       myGameController.parseFile(currentDataFile.getPath());
+      gameTitle = new Text(myGameController.getGameName().toUpperCase());
+      ArrayList<Color> colors = new ArrayList<>();
+      colors.add(Color.WHITE);
+      colors.add(Color.BLACK);
+      gameDisplay.createGameBoard(8,8,colors, scene_width, scene_height);
+      titleBox.getChildren().add(gameTitle);
     }
-  }
-
-  private void addGameTitle(){
-
   }
 
   private void checkSettings(boolean settingsStatus){
