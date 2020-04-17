@@ -28,7 +28,7 @@ public class GameController {
   }
 
   public List<Pair<Integer, Integer>> pieceSelected (Piece piece, int x, int y) {
-    return new ArrayList<Pair<Integer, Integer>>;
+    return new ArrayList<Pair<Integer, Integer>> ();
   }
 
   public void moveSelectedPiece (int x, int y) {
