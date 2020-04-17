@@ -25,7 +25,7 @@ public class GameController {
 
   
 
-  public GridModel getMyGridModel() {
+  public GridModel getGridModel() {
     return myGridModel;
   }
 
