@@ -35,4 +35,8 @@ public class TemplateParser {
     );
   }
 
+  public String getGameName(){
+    return template.getString("title");
+  }
+
 }

@@ -28,4 +28,6 @@ public class GameController {
   public GridModel getMyGridModel() {
     return myGridModel;
   }
+
+  public String getGameName() {return myTemplateParser.getGameName();}
 }
