@@ -20,7 +20,6 @@ public class Main {
 
         GameController myGameController = new GameController();
         myGameController.parseFile("./data/gameFiles/chess.json");
-
     }
 
 }

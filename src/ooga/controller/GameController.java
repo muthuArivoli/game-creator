@@ -21,9 +21,9 @@ public class GameController {
     } catch (FileNotFoundException | InvalidGridException | InvalidPieceException e) {
       System.out.println(e.getMessage());
     }
-
-
   }
+
+  
 
   public GridModel getMyGridModel() {
     return myGridModel;

@@ -22,4 +22,8 @@ public class GridModel {
   public void addPiece(Piece piece, int x, int y) {
     myGrid[x][y] = piece;
   }
+
+  public Piece[][] getGrid () {
+    return myGrid;
+  }
 }
