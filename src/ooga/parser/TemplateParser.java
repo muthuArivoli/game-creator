@@ -32,4 +32,8 @@ public class TemplateParser {
 
   public GridParser getMyGridParser(){return myGridParser;}
 
+  public String getGameName(){
+    return template.getString("title");
+  }
+
 }

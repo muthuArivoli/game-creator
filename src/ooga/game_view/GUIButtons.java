@@ -128,10 +128,9 @@ public class GUIButtons {
     Button settingsButton = makeButton("Settings", event -> settingsPressed = true);
     Button rulesButton = makeButton("Rules", event -> rulesPressed = true);
     ComboBox langMenu = makeDropDown("LanguageButton", languages);
-    myButtons.setLayoutX(20);
-    myButtons.setLayoutY(150);
+    myButtons.setPrefSize(280, 350);
     myButtons.setPadding(new Insets(30));
-    myButtons.setSpacing(25);
+    myButtons.setSpacing(10);
 
     formatButton(newGameButton);
     formatButton(restartGameButton);
@@ -159,10 +158,10 @@ public class GUIButtons {
     return tempMenu;
   }
 
-  private void formatButton(Button tempButton) {tempButton.setMinSize(250, 60);}
+  private void formatButton(Button tempButton) {tempButton.setPrefSize(250, 60);}
 
   private void formatBox(ComboBox tempMenu) {
-    tempMenu.setMinSize(250,60);
+    tempMenu.setPrefSize(250,60);
   }
 
   private List<String> text2Regex(File dataFile) throws FileNotFoundException {
