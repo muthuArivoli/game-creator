@@ -47,12 +47,12 @@
 }
 
 .titleBox {
-  -fx-background-color: #FFFFFF;
+  -fx-background-color: #FFFFCC;
   -fx-border-color: #000000;
   -fx-border-width: 3px;
-  -fx-padding: 60;
-  -fx-font-family: "Lucida Console";
-  -fx-font-size: 40;
+  -fx-padding: 40;
+  -fx-font-family: "Copperplate Gothic Light";
+  -fx-font-size: 60;
 }
 
 .label {
