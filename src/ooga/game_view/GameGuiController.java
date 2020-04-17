@@ -124,15 +124,17 @@ public class GameGuiController extends Application {
     buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
     buttonGroup = buttons.getVBox();
     titleBox = new VBox();
-    titleBox.setLayoutX(30);
-    titleBox.setLayoutY(30);
-    titleBox.setPrefSize(250,200);
+    titleBox.setPrefHeight(150);
     titleBox.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
     titleBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
         null,new BorderWidths(3))));
+    BorderPane.setAlignment(titleBox, Pos.CENTER);
     BorderPane leftSide = new BorderPane();
     leftSide.setTop(titleBox);
     leftSide.setCenter(buttonGroup);
+    leftSide.setMaxHeight(scene_height);
+    BorderPane.setAlignment(leftSide, Pos.CENTER);
+    root.setPadding(new Insets(0, 0 , 0, 30));
     root.setLeft(leftSide);
   }
 
