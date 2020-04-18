@@ -68,6 +68,7 @@ public class GridModel {
   }
 
   private void removePieceOverlap(List<List<Coordinate>> possiblePaths, int pieceSide) {
+    System.out.println(possiblePaths);
     for(int i=0;i<possiblePaths.size();i++){
       if(checkPieceExists(possiblePaths.get(i).get(possiblePaths.get(i).size()-1))
               && getPiece(possiblePaths.get(i).get(possiblePaths.get(i).size()-1)).getSide()==pieceSide){

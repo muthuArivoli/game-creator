@@ -39,8 +39,11 @@ public class GameController {
 //    for (Coordinate c: myGridModel.getValidMoves((new Coordinate(x, y)), 1)) {
 //        System.out.println(c.getRow() + " " + c.getCol());
 //      }
-
-    return myGridModel.getValidMoves((new Coordinate(x, y)), 1);
+    Collection<Coordinate> validMoves = myGridModel.getValidMoves((new Coordinate(x, y)), 1);
+    for (Coordinate move: validMoves) {
+      System.out.println(move.getRow() + "" + move.getCol());
+    }
+    return validMoves;
   }
 
     //test code for fd
