@@ -50,16 +50,20 @@ public class GridModel {
     }
     Predicate<Coordinate> checkCoordinateInBounds = coord ->(coord.getRow() >=0 && coord.getRow() < rows &&
             coord.getCol() >= 0 && coord.getCol() < cols);
-    System.out.println(getPiece(c).getName());
-    List<List<Coordinate>> possiblePaths =  getPiece(c).getValidPaths(c, playerSide, checkCoordinateInBounds);
-    if(!getPiece(c).isCanJump()){
+
+    Piece piece = getPiece(c);
+
+    List<List<Coordinate>> possiblePaths =  piece.getValidPaths(c, playerSide, checkCoordinateInBounds);
+    if(!piece.isCanJump()){
       removeJumps(possiblePaths);
     }
     removePieceOverlap(possiblePaths,getPiece(c).getSide()); //remove paths that results in the final position overlapping with another piece of same side
+
     Set<Coordinate> validMoves = new HashSet<>();
-    for(int i=0;i<possiblePaths.size();i++){
-      validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
-    }
+//    for(int i=0;i<possiblePaths.size();i++){
+//      System.out.println(possiblePaths.get(i));
+//      validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
+//    }
     return validMoves;
   }
 

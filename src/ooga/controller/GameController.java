@@ -40,7 +40,7 @@ public class GameController {
         System.out.println(c.getRow() + " " + c.getCol());
       }
 
-    return myGridModel.getValidMoves((new Coordinate(x, y)), 1);
+    return myGridModel.getValidMoves((new Coordinate(x, y)), -1);
   }
 
     //test code for fd

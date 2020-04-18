@@ -32,6 +32,13 @@ public class fd implements Movement{
             paths.add(new ArrayList<>(paths.get(paths.size()-1)));
             paths.get(paths.size()-1).add(nextCoord);
         }
+
+//        for (List<Coordinate> path: paths){
+//            for (Coordinate pslice: path) {
+//                System.out.print(pslice.getRow() + ""+ pslice.getCol() + " ");
+//            }
+//            System.out.println();
+//        }
         return paths;
     }
 
