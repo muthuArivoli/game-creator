@@ -62,16 +62,12 @@ public class GameBoard extends BorderPane {
   private void createTiles(GridModel grid, int numRow, int numCol, List<Color> colors){
     Group tileGroup = new Group();
     Group pieceGroup = new Group();
-    System.out.println(numRow);
-    System.out.println(numCol);
     for (int x = 0; x < numCol; x++){
       for (int y= 0; y < numRow; y++){
-        System.out.println("row:" + x + "col:" + y);
         Color main = colors.get(0);
         if ((x+y) % 2 == 0){main = colors.get(1);}
           RectangleTile tile = new RectangleTile(tileWidth, tileHeight, x, y, main);
         if(grid.getGrid()[y][x]!= null){
-          System.out.println(grid.getGrid()[y][x].getPieceName());
           PieceView piece = new PieceView(tileWidth, tileHeight, x, y);
           pieceGroup.getChildren().addAll(piece);
         }
@@ -80,5 +76,4 @@ public class GameBoard extends BorderPane {
     }
     everything.getChildren().addAll(tileGroup, pieceGroup);
   }
-
 }
