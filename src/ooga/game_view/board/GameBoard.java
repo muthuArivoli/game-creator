@@ -1,17 +1,9 @@
 package ooga.game_view.board;
 
 import java.util.List;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
@@ -25,7 +17,6 @@ public class GameBoard extends BorderPane {
   private double displayWidth;
   private double displayHeight;
   private double boardSideLength;
-  private double displayBorderWidth= 5.0;
 
   private List<Shape> tileList;
 
@@ -40,8 +31,6 @@ public class GameBoard extends BorderPane {
     calculateSize(width, height);
     int numRowTiles = gridModel.getGrid().length;
     int numColTiles = gridModel.getGrid()[0].length;
-    System.out.println(numRowTiles);
-    System.out.println(numColTiles);
     tileWidth = boardSideLength/numRowTiles;
     tileHeight = boardSideLength/numColTiles;
     createPieceDisplay();
@@ -71,7 +60,7 @@ public class GameBoard extends BorderPane {
       for (int y= 0; y < numCol; y++){
         Color main = colors.get(0);
         if ((x+y) % 2 == 0){main = colors.get(1);}
-        CircleTile tile = new CircleTile(tileWidth, tileHeight, x, y, main);
+        RectangleTile tile = new RectangleTile(tileWidth, tileHeight, x, y, main);
         tileGroup.getChildren().addAll(tile);
       }
     }
