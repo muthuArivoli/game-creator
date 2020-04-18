@@ -1,5 +1,6 @@
 package ooga.piece.movement;
 
+import ooga.models.GridModel;
 import ooga.piece.Coordinate;
 
 import java.util.ArrayList;
@@ -12,10 +13,11 @@ public class diagBkLeft implements Movement {
   }
 
   @Override
-  public List<Coordinate> validMoves(Coordinate position) {
+  public List<Coordinate> getValidIndices(Coordinate position, int playerSide,
+      GridModel gridModel) {
     List<Coordinate> moves = new ArrayList<>();
     for(int i=1;i<=units;i++){
-      moves.add(new Coordinate(position.getXpos()-i,position.getYpos()-i));
+      moves.add(new Coordinate(position.getRow()-i,position.getCol()-i));
     }
     return moves;
   }

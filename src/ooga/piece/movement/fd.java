@@ -1,5 +1,6 @@
 package ooga.piece.movement;
 
+import ooga.models.GridModel;
 import ooga.piece.Coordinate;
 
 import java.util.ArrayList;
@@ -12,11 +13,18 @@ public class fd implements Movement{
     }
 
     @Override
-    public List<Coordinate> validMoves(Coordinate position) {
+    public List<Coordinate> getValidIndices(Coordinate position, int playerSide,
+        GridModel gridModel) {
         List<Coordinate> moves = new ArrayList<>();
-        for(int i=1;i<=units;i++){
-            moves.add(new Coordinate(position.getXpos(),position.getYpos()+i));
-        }
+
+        int i = 0;
+        do {
+            i+=1;
+            Coordinate c = new Coordinate(position.getRow()+i*playerSide,position.getCol());
+            if (gridModel.checkPieceExists(c)) break;
+            moves.add(c);
+        } while (units == -1);
+
         return moves;
     }
 
