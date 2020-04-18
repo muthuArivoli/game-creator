@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class PieceParser {
   private JSONObject myPiecesJSON;
   private String [] PIECE_FIELDS = {
-      "canPlace", "canMove", "canJump"
+      "canPlace"
   };
   private MovementFactory factory = new MovementFactory();
   public PieceParser (JSONObject piecesJSON){
@@ -53,9 +53,7 @@ public class PieceParser {
         normalMovesJSON.has("firstTime") ? generateMoves(normalMovesJSON.getJSONArray("firstTime")) : new ArrayList<Movement>(),
         normalMovesJSON.has("anyTime") ? generateMoves(normalMovesJSON.getJSONArray("anyTime")) : new ArrayList<Movement>(),
         generateMoves(pieceJSON.getJSONArray("captureMoves")),
-        pieceJSON.getInt("canCapture") > 0 ? true : false,
-        pieceJSON.getInt("canPlace") > 0 ? true : false,
-        pieceJSON.getInt("canJump") > 0 ? true : false
+        pieceJSON.getInt("canPlace") > 0 ? true : false
     );
   }
 

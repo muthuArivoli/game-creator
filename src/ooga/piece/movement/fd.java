@@ -18,6 +18,8 @@ public class fd implements Movement{
             for(int i=1;i<=units;i++){
                 moves.add(new Coordinate(position.getXpos(),position.getYpos()+i*playerSide));
             }
+        } else {
+            moves.add(new Coordinate(position.getXpos(), position.getYpos()+units*playerSide));
         }
 
         return moves;

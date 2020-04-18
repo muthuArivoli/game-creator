@@ -46,9 +46,7 @@ public class GameController {
 
   private Set<Coordinate> validateMoves (Set<Coordinate> indicesToCheck) {
     for (Coordinate c: indicesToCheck) {
-      if (!selectedPiece.isCanJump()) {
 
-      }
     }
   }
 
