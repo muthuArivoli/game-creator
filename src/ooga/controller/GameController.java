@@ -31,7 +31,7 @@ public class GameController {
     }
 
     // test code
-    pieceSelected(6,4);
+    pieceSelected(7,0);
 
   }
 
