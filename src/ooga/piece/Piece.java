@@ -31,4 +31,14 @@ public class Piece {
         this.canPlace = canPlace;
         this.canJump = canJump;
     }
+
+    public List<Movement> getNormalFirstMovements (){
+        return this.normalFirstMovements;
+    }
+    public List<Movement> getNormalAnyMovements () {
+        return this.normalAnyMovements;
+    }
+    public List<Movement> getCaptureMovements () {
+        return this.captureMovements;
+    }
 }
