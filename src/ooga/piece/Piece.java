@@ -62,4 +62,8 @@ public class Piece {
     public boolean isCanJump() {
         return canJump;
     }
+
+    public String getName() {
+        return name;
+    }
 }

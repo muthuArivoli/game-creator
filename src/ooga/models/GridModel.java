@@ -50,6 +50,7 @@ public class GridModel {
     }
     Predicate<Coordinate> checkCoordinateInBounds = coord ->(coord.getRow() >=0 && coord.getRow() < rows &&
             coord.getCol() >= 0 && coord.getCol() < cols);
+    System.out.println(getPiece(c).getName());
     List<List<Coordinate>> possiblePaths =  getPiece(c).getValidPaths(c, playerSide, checkCoordinateInBounds);
     if(!getPiece(c).isCanJump()){
       removeJumps(possiblePaths);
