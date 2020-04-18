@@ -31,14 +31,17 @@ public class GameController {
     }
 
     // test code
-//    pieceSelected(3,4);
+    pieceSelected(6,4);
 
   }
 
-  public Collection<Coordinate> pieceSelected (int x, int y){
-    return myGridModel.getValidMoves((new Coordinate(x, y)),1);
+  public Collection<Coordinate> pieceSelected (int x, int y) {
+//    for (Coordinate c: myGridModel.getValidMoves((new Coordinate(x, y)), 1)) {
+//        System.out.println(c.getRow() + " " + c.getCol());
+//      }
 
-
+    return myGridModel.getValidMoves((new Coordinate(x, y)), 1);
+  }
 
     //test code for fd
 //    try {
@@ -52,7 +55,7 @@ public class GameController {
 //    }
 
     //return new ArrayList (allValidIndices);
-  }
+
 
 //  private Set<Coordinate> validateMoves (Set<Coordinate> indicesToCheck) {
 //    for (Coordinate c: indicesToCheck) {

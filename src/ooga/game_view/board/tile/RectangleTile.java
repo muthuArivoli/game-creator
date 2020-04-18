@@ -6,9 +6,9 @@ import javafx.scene.shape.Rectangle;
 public class RectangleTile extends Rectangle {
 
   public RectangleTile(double tileWidth, double tileHeight, int xCoordinate, int yCoordinate, Color clr){
-    this.setWidth(tileWidth);
-    this.setHeight(tileHeight);
-    relocate(xCoordinate*tileWidth, yCoordinate*tileHeight);
+    this.setWidth(tileHeight);
+    this.setHeight(tileWidth);
+    relocate(xCoordinate*tileHeight, yCoordinate*tileWidth);
     this.setFill(clr);
     this.setStroke(Color.BLACK);
   }

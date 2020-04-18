@@ -18,20 +18,27 @@ public class fd implements Movement{
     @Override
     public List<List<Coordinate>> getValidPaths(Coordinate position, int playerSide, Predicate<Coordinate> checkCoordinatesInBound) {
         List<List<Coordinate>> paths = new ArrayList<>();
-        Coordinate nextCoord = new Coordinate(position.getRow(),position.getCol()+rangeBegin*playerSide);
+        Coordinate nextCoord = new Coordinate(position.getRow() - rangeBegin*playerSide,position.getCol());
         if(!checkCoordinatesInBound.test(nextCoord)){
             return paths;
         }
         paths.add(new ArrayList<>());
         paths.get(0).add(nextCoord);
         for(int i=rangeBegin+1;i<=rangeEnd;i++){
-            nextCoord = new Coordinate(position.getRow(),position.getCol()+i*playerSide);
+            nextCoord = new Coordinate(position.getRow()-i*playerSide,position.getCol());
             if(!checkCoordinatesInBound.test(nextCoord)){
                 return paths;
             }
             paths.add(new ArrayList<>(paths.get(paths.size()-1)));
             paths.get(paths.size()-1).add(nextCoord);
         }
+
+//        for (List<Coordinate> path: paths){
+//            for (Coordinate pslice: path) {
+//                System.out.print(pslice.getRow() + ""+ pslice.getCol() + " ");
+//            }
+//            System.out.println();
+//        }
         return paths;
     }
 
