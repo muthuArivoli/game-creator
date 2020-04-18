@@ -3,6 +3,7 @@ package ooga.game_view.board;
 import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -19,20 +20,23 @@ public class GameBoard extends BorderPane {
   private double displayWidth;
   private double displayHeight;
   private double boardSideLength;
+  private Background boardBackground;
 
   private List<Shape> tileList;
 
   private HBox displayBox = new HBox();
-  private Group tileGroup = new Group();
-  private Group pieceGroup = new Group();
-  private StackPane everything = new StackPane();
+  private StackPane everything;
 
   public GameBoard(){
     this.getStyleClass().add("GameBoard");
-    everything.setBackground(this.getBackground());
+    boardBackground = this.getBackground();
   }
 
   public void createGameBoard(GridModel gridModel, List<Color> colors, double width, double height){
+    everything = new StackPane();
+    everything.setBackground(boardBackground);
+    everything.setMaxSize(boardSideLength, boardSideLength);
+    BorderPane.setAlignment(everything, Pos.TOP_CENTER);
     calculateSize(width, height);
     int numRowTiles = gridModel.getGrid().length;
     int numColTiles = gridModel.getGrid()[0].length;
@@ -40,8 +44,6 @@ public class GameBoard extends BorderPane {
     tileHeight = boardSideLength/numColTiles;
     createPieceDisplay();
     createTiles(gridModel, numRowTiles, numColTiles, colors);
-    everything.setMaxSize(boardSideLength, boardSideLength);
-    BorderPane.setAlignment(everything, Pos.TOP_CENTER);
     this.setCenter(everything);
     this.setBottom(displayBox);
   }
@@ -62,12 +64,15 @@ public class GameBoard extends BorderPane {
   }
 
   private void createTiles(GridModel grid, int numRow, int numCol, List<Color> colors){
+    Group tileGroup = new Group();
+    Group pieceGroup = new Group();
     for (int x = 0; x < numRow; x++){
       for (int y= 0; y < numCol; y++){
         Color main = colors.get(0);
         if ((x+y) % 2 == 0){main = colors.get(1);}
-        RectangleTile tile = new RectangleTile(tileWidth, tileHeight, x, y, main);
-        if(grid.getGrid()[y][x]!= null){
+        //RectangleTile tile = new RectangleTile(tileWidth, tileHeight, x, y, main);
+          CircleTile tile = new CircleTile(tileWidth, tileHeight, x, y, main);
+        if(grid.getGrid()[x][y]!= null){
           CircleTile piece = new CircleTile(tileWidth, tileHeight, x, y, Color.RED);
           pieceGroup.getChildren().addAll(piece);
         }
@@ -75,6 +80,7 @@ public class GameBoard extends BorderPane {
       }
     }
     everything.getChildren().addAll(tileGroup, pieceGroup);
+    System.out.println(everything.getChildren().size());
   }
 
 }
