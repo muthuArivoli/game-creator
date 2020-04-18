@@ -1,10 +1,12 @@
 package ooga.piece.movement;
 
 public class diagBkLeft implements Movement {
-  private int units;
-  public diagBkLeft(int units){
-    this.units = units;
-  }
+  private int rangeBegin;
+  private int rangeEnd;
 
+  public diagBkLeft(int rangeBegin, int rangeEnd){
+    this.rangeBegin = rangeBegin;
+    this.rangeEnd = rangeEnd;
+  }
 
 }
