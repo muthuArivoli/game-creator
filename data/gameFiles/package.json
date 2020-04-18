@@ -1,7 +1,7 @@
 {
   "title": "test",
   "rows": 8,
-  "columns": 7,
+  "columns": 6,
 
   "pieces": {
     "pawn": {
@@ -138,14 +138,14 @@
     }
   },
   "grid": [
-    ["rook2", "knight2", "bishop2", "queen2", "king2", "bishop2", "knight2"],
-    ["","","","","","",""],
-    ["","","","","","",""],
-    ["","","","","","",""],
-    ["","","","","","",""],
-    ["","","","","","",""],
-    ["pawn1","pawn1","pawn1","pawn1","pawn1","pawn1","pawn1"],
-    ["rook1", "knight1", "bishop1", "queen1", "king1", "bishop1", "knight1"]
+    ["rook2", "knight2", "bishop2", "queen2", "king2", "bishop2"],
+    ["","","","","",""],
+    ["","","","","",""],
+    ["","","","","",""],
+    ["","","","","",""],
+    ["","","","","",""],
+    ["pawn1","pawn1","pawn1","pawn1","pawn1","pawn1"],
+    ["rook1", "knight1", "bishop1", "queen1", "king1", "bishop1"]
   ],
   "goals": [
     {"enemyPiecesLeft": 0},

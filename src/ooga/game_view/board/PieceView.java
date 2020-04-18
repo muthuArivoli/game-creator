@@ -9,15 +9,15 @@ public class PieceView extends Ellipse {
 
   public PieceView (double tileX, double tileY, int xCoordinate, int yCoordinate){
     setParameters(tileX, tileY);
-    relocate(xCoordinate*tileX, yCoordinate*tileY);
+    relocate(xCoordinate*tileY, yCoordinate*tileX);
     setOnMouseClicked(e -> {
       this.setFill(Color.BLUE);
     });
   }
 
   private void setParameters(double tileX, double tileY){
-    this.setRadiusX(tileX*0.95/2);
-    this.setRadiusY(tileY*0.95/2);
+    this.setRadiusX(tileY*0.95/2);
+    this.setRadiusY(tileX*0.95/2);
     this.setFill(Color.RED);
     this.setStroke(Color.BLACK);
   }
