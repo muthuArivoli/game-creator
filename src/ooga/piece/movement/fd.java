@@ -12,11 +12,14 @@ public class fd implements Movement{
     }
 
     @Override
-    public List<Coordinate> validMoves(Coordinate position) {
+    public List<Coordinate> validMoves(Coordinate position, int playerSide) {
         List<Coordinate> moves = new ArrayList<>();
-        for(int i=1;i<=units;i++){
-            moves.add(new Coordinate(position.getXpos(),position.getYpos()+i));
+        if(units == -1) {
+            for(int i=1;i<=units;i++){
+                moves.add(new Coordinate(position.getXpos(),position.getYpos()+i*playerSide));
+            }
         }
+
         return moves;
     }
 

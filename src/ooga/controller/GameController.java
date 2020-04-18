@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javafx.util.Pair;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.models.GridModel;
@@ -38,7 +37,7 @@ public class GameController {
 
     Set <Coordinate> allPossibleMoves = new HashSet<>();
     for (Movement movement: piece.getNormalAnyMovements()) {
-      allPossibleMoves.addAll(movement.validMoves(new Coordinate(x, y)));
+      allPossibleMoves.addAll(movement.validMoves(new Coordinate(x, y), 1));
     }
     Set <Coordinate> allValidMoves = validateMoves(removeMovesOutOfBounds(allPossibleMoves));
 

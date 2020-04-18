@@ -11,7 +11,7 @@ public class diagFdRight implements Movement{
     this.units = units;
   }
 
-  public List<Coordinate> validMoves(Coordinate position) {
+  public List<Coordinate> validMoves(Coordinate position, int playerSide) {
     List<Coordinate> moves = new ArrayList<>();
     for(int i=1;i<=units;i++){
       moves.add(new Coordinate(position.getXpos()+i,position.getYpos()+i));
