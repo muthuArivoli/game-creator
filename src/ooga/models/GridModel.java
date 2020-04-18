@@ -31,6 +31,17 @@ public class GridModel {
     myGrid[x][y] = piece;
   }
 
+  public void movePiece(Piece piece, int x, int y) {
+    Coordinate prevCoordinate = piece.getPosition();
+    removePiece(prevCoordinate.getRow(), prevCoordinate.getCol());
+    piece.setPosition(x, y);
+    addPiece(piece, x, y);
+  }
+
+  public void removePiece(int x, int y) {
+    myGrid[x][y] = null;
+  }
+
   public Piece getPiece(Coordinate coordinate){
     return myGrid[coordinate.getRow()][coordinate.getCol()];
   }

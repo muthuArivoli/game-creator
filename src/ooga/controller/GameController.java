@@ -39,7 +39,7 @@ public class GameController {
 //    for (Coordinate c: myGridModel.getValidMoves((new Coordinate(x, y)), 1)) {
 //        System.out.println(c.getRow() + " " + c.getCol());
 //      }
-    Collection<Coordinate> validMoves = myGridModel.getValidMoves((new Coordinate(x, y)), 1);
+    Collection<Coordinate> validMoves = myGridModel.getValidMoves((new Coordinate(x, y)),1);
     for (Coordinate move: validMoves) {
       System.out.println(move.getRow() + "" + move.getCol());
     }
@@ -79,7 +79,17 @@ public class GameController {
 //  }
 
   public void moveSelectedPiece (int x, int y) {
+    if(myGridModel.checkPieceExists(new Coordinate(x,y)) && selectedPiece.isCanCaptureJump()) {
+      // don't switch sides
+    } else {
+      myGridModel.movePiece(selectedPiece, x, y);
+      switchPlayers();
+    }
+  }
 
+  private void switchPlayers () {
+    selectedPiece = null;
+    playerTurn = 2;
   }
 
   public GridModel getGridModel() {
