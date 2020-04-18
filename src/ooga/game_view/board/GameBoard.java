@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import ooga.game_view.board.tile.CircleTile;
 import ooga.game_view.board.tile.RectangleTile;
+import ooga.models.GridModel;
 
 public class GameBoard extends BorderPane {
   private double tileWidth;
@@ -35,8 +36,12 @@ public class GameBoard extends BorderPane {
     this.getStyleClass().add("GameBoard");
   }
 
-  public void createGameBoard(int numRowTiles, int numColTiles, List<Color> colors, double width, double height){
+  public void createGameBoard(GridModel gridModel, List<Color> colors, double width, double height){
     calculateSize(width, height);
+    int numRowTiles = gridModel.getGrid().length;
+    int numColTiles = gridModel.getGrid()[0].length;
+    System.out.println(numRowTiles);
+    System.out.println(numColTiles);
     tileWidth = boardSideLength/numRowTiles;
     tileHeight = boardSideLength/numColTiles;
     createPieceDisplay();

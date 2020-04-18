@@ -190,7 +190,7 @@ public class GameGuiController extends Application {
       ArrayList<Color> colors = new ArrayList<>();
       colors.add(Color.WHITE);
       colors.add(Color.BLACK);
-      gameDisplay.createGameBoard(8,8,colors, scene_width, scene_height);
+      gameDisplay.createGameBoard(myGameController.getGridModel(),colors, scene_width, scene_height);
       titleBox.getChildren().add(gameTitle);
     }
   }
@@ -236,5 +236,4 @@ public class GameGuiController extends Application {
     scene.getStylesheets().add(currentStyleSheet);
     myScene.getStylesheets().add(currentStyleSheet);
   }
-
 }
