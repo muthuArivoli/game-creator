@@ -174,15 +174,16 @@ public class GameGuiController extends Application {
 
   private void checkNewGame(boolean newGamePressed){
     if (newGamePressed){
-      currentDataFile = gameFile.getFileChooser().showOpenDialog(myStage);
+      File tempFile = gameFile.getFileChooser().showOpenDialog(myStage);
       buttons.setNewGamePressedOff();
-      startGame();
+      startGame(tempFile);
     }
   }
 
-  private void startGame(){
-    if (currentDataFile == null) { return; }
+  private void startGame(File temporaryFile){
+    if (temporaryFile == null) { return; }
     else {
+      currentDataFile = temporaryFile;
       gameDisplay.getChildren().removeAll();
       titleBox.getChildren().remove(gameTitle);
       myGameController = new GameController();
@@ -213,7 +214,7 @@ public class GameGuiController extends Application {
   private void checkRestartGame(boolean restartStatus){
     if(restartStatus){
       buttons.setRestartGamePressedOff();
-      startGame();
+      startGame(currentDataFile);
     }
   }
 

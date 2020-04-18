@@ -70,7 +70,6 @@ public class GameBoard extends BorderPane {
         Color main = colors.get(0);
         if ((x+y) % 2 == 0){main = colors.get(1);}
           RectangleTile tile = new RectangleTile(tileWidth, tileHeight, x, y, main);
-          //CircleTile tile = new CircleTile(tileWidth, tileHeight, x, y, main);
         if(grid.getGrid()[y][x]!= null){
           System.out.println(grid.getGrid()[y][x].getPieceName());
           PieceView piece = new PieceView(tileWidth, tileHeight, x, y);
