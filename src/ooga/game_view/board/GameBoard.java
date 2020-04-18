@@ -5,11 +5,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import ooga.game_view.board.tile.CircleTile;
 import ooga.game_view.board.tile.RectangleTile;
 import ooga.models.GridModel;
+import ooga.piece.Piece;
 
 public class GameBoard extends BorderPane {
   private double tileWidth;
@@ -22,9 +24,12 @@ public class GameBoard extends BorderPane {
 
   private HBox displayBox = new HBox();
   private Group tileGroup = new Group();
+  private Group pieceGroup = new Group();
+  private StackPane everything = new StackPane();
 
   public GameBoard(){
     this.getStyleClass().add("GameBoard");
+    everything.setBackground(this.getBackground());
   }
 
   public void createGameBoard(GridModel gridModel, List<Color> colors, double width, double height){
@@ -34,9 +39,10 @@ public class GameBoard extends BorderPane {
     tileWidth = boardSideLength/numRowTiles;
     tileHeight = boardSideLength/numColTiles;
     createPieceDisplay();
-    createTiles(numRowTiles, numColTiles, colors);
-    BorderPane.setAlignment(tileGroup, Pos.TOP_CENTER);
-    this.setCenter(tileGroup);
+    createTiles(gridModel, numRowTiles, numColTiles, colors);
+    everything.setMaxSize(boardSideLength, boardSideLength);
+    BorderPane.setAlignment(everything, Pos.TOP_CENTER);
+    this.setCenter(everything);
     this.setBottom(displayBox);
   }
 
@@ -55,15 +61,20 @@ public class GameBoard extends BorderPane {
     displayBox.getStyleClass().add("displayBox");
   }
 
-  private void createTiles(int numRow, int numCol, List<Color> colors){
+  private void createTiles(GridModel grid, int numRow, int numCol, List<Color> colors){
     for (int x = 0; x < numRow; x++){
       for (int y= 0; y < numCol; y++){
         Color main = colors.get(0);
         if ((x+y) % 2 == 0){main = colors.get(1);}
         RectangleTile tile = new RectangleTile(tileWidth, tileHeight, x, y, main);
+        if(grid.getGrid()[y][x]!= null){
+          CircleTile piece = new CircleTile(tileWidth, tileHeight, x, y, Color.RED);
+          pieceGroup.getChildren().addAll(piece);
+        }
         tileGroup.getChildren().addAll(tile);
       }
     }
+    everything.getChildren().addAll(tileGroup, pieceGroup);
   }
 
 }
