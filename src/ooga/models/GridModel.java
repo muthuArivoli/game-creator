@@ -16,8 +16,8 @@ public class GridModel {
     myGrid = new Piece [rows] [cols];
   }
 
-  public Pair<Integer, Integer> getDimensions () {
-    return new Pair <Integer, Integer> (myGrid.length, myGrid[0].length);
+  public Coordinate getDimensions () {
+    return new Coordinate (myGrid.length, myGrid[0].length);
   }
 
   public void addPiece(Piece piece, int x, int y) {

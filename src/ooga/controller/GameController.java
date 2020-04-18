@@ -2,6 +2,7 @@ package ooga.controller;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javafx.util.Pair;
@@ -35,21 +36,33 @@ public class GameController {
   public List<Coordinate> pieceSelected (Piece piece, int x, int y) {
     this.selectedPiece = piece;
 
-    List <Coordinate> allPossibleMoves = new ArrayList<>();
+    Set <Coordinate> allPossibleMoves = new HashSet<>();
     for (Movement movement: piece.getNormalAnyMovements()) {
       allPossibleMoves.addAll(movement.validMoves(new Coordinate(x, y)));
     }
-    List <Coordinate> allValidMoves = validateMoves(allPossibleMoves);
+    Set <Coordinate> allValidMoves = validateMoves(removeMovesOutOfBounds(allPossibleMoves));
 
-    return allPossibleMoves;
+    return new ArrayList (allValidMoves);
   }
 
-  private List<Coordinate> validateMoves (List<Coordinate> allPossibleMoves) {
-    List<Coordinate> allValidMoves = new ArrayList<>();
-    for (Coordinate c: allPossibleMoves) {
-//      if (!selectedPiece.isCanJump() && myGridModel.getPiece(c).)
-      checkOpposingPieceExists();
+  private Set<Coordinate> validateMoves (Set<Coordinate> indicesToCheck) {
+    for (Coordinate c: indicesToCheck) {
+      if (!selectedPiece.isCanJump()) {
+
+      }
     }
+  }
+
+  private Set<Coordinate> removeMovesOutOfBounds (Set <Coordinate> allPossibleIndices) {
+    Set <Coordinate> ret = new HashSet<>();
+    Coordinate bounds = myGridModel.getDimensions();
+    for (Coordinate c: allPossibleIndices) {
+      if(c.getXpos() >= 0 && c.getXpos() < bounds.getXpos()
+          && c.getYpos() >= 0 && c.getYpos() < bounds.getYpos()){
+        ret.add(c);
+      }
+    }
+    return ret;
   }
 
   public void moveSelectedPiece (int x, int y) {
