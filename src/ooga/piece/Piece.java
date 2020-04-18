@@ -2,6 +2,8 @@ package ooga.piece;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+
 import ooga.piece.movement.Movement;
 
 public class Piece {
@@ -38,6 +40,10 @@ public class Piece {
         return this.captureMovements;
     }
 
+    public List<List<Coordinate>> getValidPaths(Coordinate c, int playerSide, Predicate<Coordinate> checkCoordinateInBounds){
+        //handle each possible movement separately
+        return null;
+    }
 
     public boolean isCanPlace () {
         return canPlace;

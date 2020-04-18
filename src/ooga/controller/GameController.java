@@ -38,12 +38,9 @@ public class GameController {
   }
 
   public List<Coordinate> pieceSelected (int x, int y){
-    this.selectedPiece = myGridModel.getPiece(new Coordinate(x, y));
+    return myGridModel.getValidMoves((new Coordinate(x, y)));
 
-    Set <Coordinate> allValidIndices = new HashSet<>();
-    for (Movement movement: selectedPiece.getNormalAnyMovements()) {
-      allValidIndices.addAll(movement.getValidIndices(new Coordinate(x, y), 1, myGridModel ));
-    }
+
 
     //test code for fd
 //    try {
@@ -56,7 +53,7 @@ public class GameController {
 //
 //    }
 
-    return new ArrayList (allValidIndices);
+    //return new ArrayList (allValidIndices);
   }
 
 //  private Set<Coordinate> validateMoves (Set<Coordinate> indicesToCheck) {

@@ -3,6 +3,9 @@ package ooga.models;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 public class GridModel {
   private Piece [][] myGrid;
   private int rows;
@@ -37,6 +40,17 @@ public class GridModel {
   public boolean checkPieceExists(Coordinate c) {
     return checkCoordInBounds(c) &&
         myGrid[c.getRow()][c.getCol()] != null;
+  }
+
+  public List<Coordinate> getValidMoves(Coordinate c, int playerSide){
+    if(!checkPieceExists(c)){
+      //HANDLE EXCEPTION
+    }
+    Predicate<Coordinate> checkCoordinateInBounds = coord ->(coord.getRow() >=0 && coord.getRow() < rows &&
+            coord.getCol() >= 0 && coord.getCol() < cols);
+    List<List<Coordinate>> possiblePaths =  getPiece(c).getValidPaths(c, playerSide, checkCoordinateInBounds);
+    return null;
+    //HANDLE JUMP
   }
 
   public Piece[][] getGrid () {
