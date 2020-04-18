@@ -1,6 +1,6 @@
 package ooga.game_view;
 
-import java.awt.Color;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,15 +9,9 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 /**
  * ButtonController.java Creates all the Buttons and Pop-Ups in the Game environment
@@ -134,10 +128,9 @@ public class GUIButtons {
     Button settingsButton = makeButton("Settings", event -> settingsPressed = true);
     Button rulesButton = makeButton("Rules", event -> rulesPressed = true);
     ComboBox langMenu = makeDropDown("LanguageButton", languages);
-    myButtons.setLayoutX(20);
-    myButtons.setLayoutY(150);
+    myButtons.setPrefSize(280, 350);
     myButtons.setPadding(new Insets(30));
-    myButtons.setSpacing(25);
+    myButtons.setSpacing(10);
 
     formatButton(newGameButton);
     formatButton(restartGameButton);
@@ -165,10 +158,10 @@ public class GUIButtons {
     return tempMenu;
   }
 
-  private void formatButton(Button tempButton) {tempButton.setMinSize(250, 60);}
+  private void formatButton(Button tempButton) {tempButton.setPrefSize(250, 60);}
 
   private void formatBox(ComboBox tempMenu) {
-    tempMenu.setMinSize(250,60);
+    tempMenu.setPrefSize(250,60);
   }
 
   private List<String> text2Regex(File dataFile) throws FileNotFoundException {

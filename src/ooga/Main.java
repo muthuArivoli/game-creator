@@ -1,6 +1,7 @@
 package ooga;
 
 import java.io.FileNotFoundException;
+import ooga.controller.GameController;
 import ooga.game_view.GameGuiController;
 
 import java.io.FileNotFoundException;
@@ -15,13 +16,10 @@ public class Main {
      * Start of the program.
      */
     public static void main(String[] args) throws FileNotFoundException {
-        GameGuiController frameWork = new GameGuiController(args);
-        try {
-            TemplateParser myParser = new TemplateParser("./src/ooga/resources/gameFiles/chess.json");
-            myParser.parseTemplate();
-        } catch (FileNotFoundException e) {
-            System.out.println("File Not Found");
-        }
+//        GameGuiController frameWork = new GameGuiController(args);
+
+        GameController myGameController = new GameController();
+        myGameController.parseFile("./data/gameFiles/chess.json");
     }
 
 }

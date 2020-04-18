@@ -1,0 +1,62 @@
+.root {
+  -fx-font-family: "Lucida Console";
+  -fx-font-size: 14;
+  -fx-background-color: 	#C0C0C0;
+}
+
+.button {
+  -fx-background-color: linear-gradient(#FFFFFF, #C0C0C0),
+  linear-gradient(#FFFFFF 0%, #808080 20%, #C0C0C0 100%),
+  linear-gradient(#FFFFFF 0%, #C0C0C0 50%);
+  -fx-text-fill: black;
+  -fx-border-color: black;
+}
+
+.button:hover {
+  -fx-background-color: linear-gradient(#C0C0C0 0%, #FFFFFF 50%),
+  linear-gradient(#FFFFFF 0%, #C0C0C0 20%, #808080 100%),
+  linear-gradient(#C0C0C0, #808080);
+}
+
+.combo-box .list-cell{
+  -fx-background-color: linear-gradient(#FFFFFF, #C0C0C0),
+  linear-gradient(#FFFFFF 0%, #808080 20%, #C0C0C0 100%),
+  linear-gradient(#FFFFFF 0%, #C0C0C0 50%);
+  -fx-text-fill: black;
+  -fx-border-color: black;
+}
+
+.combo-box .list-cell:hover{
+  -fx-background-color: linear-gradient(#C0C0C0 0%, #FFFFFF 50%),
+  linear-gradient(#FFFFFF 0%, #C0C0C0 20%, #808080 100%),
+  linear-gradient(#C0C0C0, #808080);
+}
+
+.GameBoard {
+  -fx-background-color: #C0C0C0;
+  -fx-border-width: 5;
+  -fx-border-style: solid;
+  -fx-border-color: black;
+}
+
+.displayBox {
+  -fx-background-color: #FFFFFF;
+  -fx-border-width: 3;
+  -fx-border-style: solid;
+  -fx-border-color: black;
+}
+
+.titleBox {
+  -fx-background-color: #FFFFCC;
+  -fx-border-color: #000000;
+  -fx-border-width: 3px;
+  -fx-padding: 40;
+  -fx-font-family: "Copperplate Gothic Light";
+  -fx-font-size: 60;
+}
+
+.label {
+  -fx-background-color: #000000;
+  -fx-text-fill: #ffffff;
+}
+
