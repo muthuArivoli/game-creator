@@ -17,6 +17,9 @@ public class MovementFactory {
    */
   public Movement getMovement(String movementString, int rbegin, int rend) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
     Class c = Class.forName(PACKAGE + movementString);
+    if(rend == -1){
+      rend = Integer.MAX_VALUE;
+    }
     Movement movement = (Movement) c.getDeclaredConstructor(int.class,int.class).newInstance(rbegin,rend);
     return movement;
   }
