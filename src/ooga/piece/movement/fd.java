@@ -17,9 +17,10 @@ public class fd implements Movement{
         GridModel gridModel) {
         List<Coordinate> moves = new ArrayList<>();
 
-        int i = 1;
+        int i = 0;
         do {
-            Coordinate c = new Coordinate(position.getXpos(),position.getYpos()+i*playerSide);
+            i+=1;
+            Coordinate c = new Coordinate(position.getRow()+i*playerSide,position.getCol());
             if (gridModel.checkPieceExists(c)) break;
             moves.add(c);
         } while (units == -1);

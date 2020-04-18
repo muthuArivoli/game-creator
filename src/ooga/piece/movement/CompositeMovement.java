@@ -29,7 +29,8 @@ public class CompositeMovement implements Movement {
         for(int i=0;i<movements.size();i++){
             List<Coordinate> newValidMovements = new ArrayList<>();
             for(int k=0;k<validCoordinates.size();k++){
-                newValidMovements.addAll(movements.get(i).getValidIndices(validCoordinates.get(k), 1, ));
+                //NEED TO FIX COMPOSITE MOVEMENT LOGIC
+//                newValidMovements.addAll(movements.get(i).getValidIndices(validCoordinates.get(k), 1));
             }
             validCoordinates = new ArrayList<>(newValidMovements);
         }

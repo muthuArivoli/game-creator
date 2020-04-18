@@ -17,7 +17,7 @@ public class diagBkLeft implements Movement {
       GridModel gridModel) {
     List<Coordinate> moves = new ArrayList<>();
     for(int i=1;i<=units;i++){
-      moves.add(new Coordinate(position.getXpos()-i,position.getYpos()-i));
+      moves.add(new Coordinate(position.getRow()-i,position.getCol()-i));
     }
     return moves;
   }

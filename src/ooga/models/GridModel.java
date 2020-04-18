@@ -1,8 +1,5 @@
 package ooga.models;
 
-import java.util.ArrayList;
-import java.util.List;
-import javafx.util.Pair;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
 
@@ -22,7 +19,7 @@ public class GridModel {
   }
 
   public Coordinate getDimensions () {
-    return new Coordinate (myGrid.length, myGrid[0].length);
+    return new Coordinate (rows, cols);
   }
 
   public void addPiece(Piece piece, int x, int y) {
@@ -30,16 +27,16 @@ public class GridModel {
   }
 
   public Piece getPiece(Coordinate coordinate){
-    return myGrid[coordinate.getXpos()][coordinate.getYpos()];
+    return myGrid[coordinate.getRow()][coordinate.getCol()];
   }
 
   public boolean checkCoordInBounds (Coordinate c) {
-    return c.getXpos() >=0 && c.getXpos() < rows &&
-        c.getYpos() >= 0 && c.getYpos() < cols;
+    return c.getRow() >=0 && c.getRow() < rows &&
+        c.getCol() >= 0 && c.getCol() < cols;
   }
   public boolean checkPieceExists(Coordinate c) {
     return checkCoordInBounds(c) &&
-        myGrid[c.getXpos()][c.getYpos()] != null;
+        myGrid[c.getRow()][c.getCol()] != null;
   }
 
   public Piece[][] getGrid () {
