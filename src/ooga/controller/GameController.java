@@ -14,8 +14,10 @@ import ooga.piece.Piece;
 import ooga.piece.movement.Movement;
 
 public class GameController {
-  TemplateParser myTemplateParser;
-  GridModel myGridModel;
+  private TemplateParser myTemplateParser;
+  private GridModel myGridModel;
+  private int playerTurn = 1;
+  private Piece selectedPiece;
 
   public GameController () {
     this.myGridModel = new GridModel();
@@ -31,6 +33,8 @@ public class GameController {
   }
 
   public List<Coordinate> pieceSelected (Piece piece, int x, int y) {
+    this.selectedPiece = piece;
+
     List <Coordinate> allPossibleMoves = new ArrayList<>();
     for (Movement movement: piece.getNormalAnyMovements()) {
       allPossibleMoves.addAll(movement.validMoves(new Coordinate(x, y)));
@@ -43,7 +47,8 @@ public class GameController {
   private List<Coordinate> validateMoves (List<Coordinate> allPossibleMoves) {
     List<Coordinate> allValidMoves = new ArrayList<>();
     for (Coordinate c: allPossibleMoves) {
-      if ()
+//      if (!selectedPiece.isCanJump() && myGridModel.getPiece(c).)
+      checkOpposingPieceExists();
     }
   }
 

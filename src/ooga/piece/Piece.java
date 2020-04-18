@@ -41,4 +41,16 @@ public class Piece {
     public List<Movement> getCaptureMovements () {
         return this.captureMovements;
     }
+
+    public boolean isCanCapture() {
+        return canCapture;
+    }
+
+    public boolean isCanPlace () {
+        return canPlace;
+    }
+
+    public boolean isCanJump() {
+        return canJump;
+    }
 }
