@@ -3,6 +3,11 @@ package ooga.models;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+
 public class GridModel {
   private Piece [][] myGrid;
   private int rows;
@@ -37,6 +42,46 @@ public class GridModel {
   public boolean checkPieceExists(Coordinate c) {
     return checkCoordInBounds(c) &&
         myGrid[c.getRow()][c.getCol()] != null;
+  }
+
+  public Set<Coordinate> getValidMoves(Coordinate c, int playerSide){
+    if(!checkPieceExists(c)){
+      //HANDLE EXCEPTION
+    }
+    Predicate<Coordinate> checkCoordinateInBounds = coord ->(coord.getRow() >=0 && coord.getRow() < rows &&
+            coord.getCol() >= 0 && coord.getCol() < cols);
+    List<List<Coordinate>> possiblePaths =  getPiece(c).getValidPaths(c, playerSide, checkCoordinateInBounds);
+    if(!getPiece(c).isCanJump()){
+      removeJumps(possiblePaths);
+    }
+    removePieceOverlap(possiblePaths,getPiece(c).getSide()); //remove paths that results in the final position overlapping with another piece of same side
+    Set<Coordinate> validMoves = new HashSet<>();
+    for(int i=0;i<possiblePaths.size();i++){
+      validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
+    }
+    return validMoves;
+  }
+
+  private void removePieceOverlap(List<List<Coordinate>> possiblePaths, int pieceSide) {
+    for(int i=0;i<possiblePaths.size();i++){
+      if(checkPieceExists(possiblePaths.get(i).get(possiblePaths.get(i).size()-1))
+              && getPiece(possiblePaths.get(i).get(possiblePaths.get(i).size()-1)).getSide()==pieceSide){
+        possiblePaths.remove(i);
+        i--;
+      }
+    }
+  }
+
+  private void removeJumps(List<List<Coordinate>> possiblePaths) {
+    for(int i=0;i<possiblePaths.size();i++){
+      for(int k=0;k<possiblePaths.get(i).size()-1;k++){
+        if(checkPieceExists(possiblePaths.get(i).get(k))){
+          possiblePaths.remove(i);
+          i--;
+          break;
+        }
+      }
+    }
   }
 
   public Piece[][] getGrid () {

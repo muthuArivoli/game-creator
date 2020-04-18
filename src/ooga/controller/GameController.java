@@ -1,10 +1,8 @@
 package ooga.controller;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.models.GridModel;
@@ -37,13 +35,10 @@ public class GameController {
 
   }
 
-  public List<Coordinate> pieceSelected (int x, int y){
-    this.selectedPiece = myGridModel.getPiece(new Coordinate(x, y));
+  public Collection<Coordinate> pieceSelected (int x, int y){
+    return myGridModel.getValidMoves((new Coordinate(x, y)),1);
 
-    Set <Coordinate> allValidIndices = new HashSet<>();
-    for (Movement movement: selectedPiece.getNormalAnyMovements()) {
-      allValidIndices.addAll(movement.getValidIndices(new Coordinate(x, y), 1, myGridModel ));
-    }
+
 
     //test code for fd
 //    try {
@@ -56,7 +51,7 @@ public class GameController {
 //
 //    }
 
-    return new ArrayList (allValidIndices);
+    //return new ArrayList (allValidIndices);
   }
 
 //  private Set<Coordinate> validateMoves (Set<Coordinate> indicesToCheck) {

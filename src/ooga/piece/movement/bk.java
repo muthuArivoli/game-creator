@@ -1,31 +1,37 @@
 package ooga.piece.movement;
 
-import ooga.models.GridModel;
 import ooga.piece.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class bk implements Movement {
-    private int units;
-    public bk(int units){
-        this.units = units;
+    private int rangeBegin;
+    private int rangeEnd;
+
+    public bk(int rangeBegin, int rangeEnd){
+        this.rangeBegin = rangeBegin;
+        this.rangeEnd = rangeEnd;
     }
 
     @Override
-    public List<Coordinate> getValidIndices(Coordinate position, int playerSide,
-        GridModel gridModel) {
-        List<Coordinate> moves = new ArrayList<>();
-        for(int i=1;i<=units;i++){
-            moves.add(new Coordinate(position.getRow(),position.getCol()-i));
+    public List<List<Coordinate>> getValidPaths(Coordinate position, int playerSide, Predicate<Coordinate> checkCoordinatesInBound) {
+        List<List<Coordinate>> paths = new ArrayList<>();
+        Coordinate nextCoord = new Coordinate(position.getRow(),position.getCol()-rangeBegin*playerSide);
+        if(!checkCoordinatesInBound.test(nextCoord)){
+            return paths;
         }
-        return moves;
-    }
-
-    @Override
-    public String toString() {
-        return "Backward{" +
-                "units=" + units +
-                '}';
+        paths.add(new ArrayList<>());
+        paths.get(0).add(nextCoord);
+        for(int i=rangeBegin+1;i<=rangeEnd;i++){
+            nextCoord = new Coordinate(position.getRow(),position.getCol()-i*playerSide);
+            if(!checkCoordinatesInBound.test(nextCoord)){
+                return paths;
+            }
+            paths.add(new ArrayList<>(paths.get(paths.size()-1)));
+            paths.get(paths.size()-1).add(nextCoord);
+        }
+        return paths;
     }
 }

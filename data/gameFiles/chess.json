@@ -6,127 +6,133 @@
   "pieces": {
     "pawn": {
       "canPlace": 0,
+      "canJump": 0,
       "normalMoves": {
         "firstTime": [
-          [{"fd": 2}]
+          [{"fd": [1,2]}]
         ],
         "anyTime": [
-          [{"fd": 1}]
+          [{"fd": [1,1]}]
         ]
       },
       "captureMoves": [
-          [{"diagFdLeft": 1}],
-          [{"diagFdRight": 1}]
+          [{"diagFdLeft": [1,1]}],
+          [{"diagFdRight": [1,1]}]
         ]
       },
     "knight":{
       "canPlace": 0,
+      "canJump": 1,
       "normalMoves": {
         "anyTime": [
-            [{"fd":  1},{"left":  3}],
-            [{"fd":  1},{"right":  3}],
-            [{"bk":  1},{"left":  3}],
-            [{"bk":  1},{"right":  3}],
-            [{"right":  1},{"bk":  3}],
-            [{"right":  1},{"fd":  3}],
-            [{"left":  1},{"bk":  3}],
-            [{"left":  1},{"fd":  3}]
+            [{"fd":  [2,2]},{"left":  [1,1]}],
+            [{"fd":  [2,2]},{"right": [1,1]}],
+            [{"bk":  [2,2]},{"left":  [1,1]}],
+            [{"bk":  [2,2]},{"right": [1,1]}],
+            [{"right":  [2,2]},{"bk": [1,1]}],
+            [{"right":  [2,2]},{"fd": [1,1]}],
+            [{"left":  [2,2]},{"bk":  [1,1]}],
+            [{"left":  [2,2]},{"fd":  [1,1]}]
           ]
       },
       "captureMoves":  [
-          [{"fd":  1},{"left":  3}],
-          [{"fd":  1},{"right":  3}],
-          [{"bk":  1},{"left":  3}],
-          [{"bk":  1},{"right":  3}],
-          [{"right":  1},{"bk":  3}],
-          [{"right":  1},{"fd":  3}],
-          [{"left":  1},{"bk":  3}],
-          [{"left":  1},{"fd":  3}]
+          [{"fd":  [2,2]},{"left":  [1,1]}],
+          [{"fd":  [2,2]},{"right":  [1,1]}],
+          [{"bk":  [2,2]},{"left":  [1,1]}],
+          [{"bk":  [2,2]},{"right":  [1,1]}],
+          [{"right":  [2,2]},{"bk":  [1,1]}],
+          [{"right":  [2,2]},{"fd":  [1,1]}],
+          [{"left":  [2,2]},{"bk":  [1,1]}],
+          [{"left":  [2,2]},{"fd":  [1,1]}]
         ]
 
     },
     "rook": {
       "canPlace": 0,
+      "canJump": 0,
       "normalMoves": {
         "anyTime": [
-            [{"fd":  -1}],
-            [{"bk":  -1}],
-            [{"left":  -1}],
-            [{"right":  -1}]
+            [{"fd":  [1,-1]}],
+            [{"bk":  [1,-1]}],
+            [{"left":  [1,-1]}],
+            [{"right":  [1,-1]}]
         ]
       },
       "captureMoves": [
-          [{"fd":  -1}],
-          [{"bk":  -1}],
-          [{"left":  -1}],
-          [{"right":  -1}]
+          [{"fd":  [1,-1]}],
+          [{"bk":  [1,-1]}],
+          [{"left":  [1,-1]}],
+          [{"right":  [1,-1]}]
         ]
     },
     "bishop":{
       "canPlace": 0,
+      "canJump": 0,
       "normalMoves": {
         "anyTime": [
-            [{"diagFdLeft":  -1}],
-            [{"diagFdRight":  -1}],
-            [{"diagBkLeft":  -1}],
-            [{"diagBkRight":  -1}]
+            [{"diagFdLeft":  [1,-1]}],
+            [{"diagFdRight":  [1,-1]}],
+            [{"diagBkLeft":  [1,-1]}],
+            [{"diagBkRight":  [1,-1]}]
         ]
       },
       "captureMoves": [
-          [{"diagFdLeft":  -1}],
-          [{"diagFdRight":  -1}],
-          [{"diagBkLeft":  -1}],
-          [{"diagBkRight":  -1}]
+          [{"diagFdLeft":  [1,-1]}],
+          [{"diagFdRight":  [1,-1]}],
+          [{"diagBkLeft":  [1,-1]}],
+          [{"diagBkRight":  [1,-1]}]
         ]
     },
     "queen":{
       "canPlace": 0,
+      "canJump": 0,
       "normalMoves": {
         "anyTime": [
-            [{"fd":  -1}],
-            [{"bk":  -1}],
-            [{"left":  -1}],
-            [{"right":  -1}],
-            [{"diagFdLeft":  -1}],
-            [{"diagFdRight":  -1}],
-            [{"diagBkLeft":  -1}],
-            [{"diagBkRight":  -1}]
+            [{"fd":  [1,-1]}],
+            [{"bk":  [1,-1]}],
+            [{"left":  [1,-1]}],
+            [{"right":  [1,-1]}],
+            [{"diagFdLeft":  [1,-1]}],
+            [{"diagFdRight":  [1,-1]}],
+            [{"diagBkLeft":  [1,-1]}],
+            [{"diagBkRight":  [1,-1]}]
         ]
       },
       "captureMoves":  [
-          [{"fd":  -1}],
-          [{"bk":  -1}],
-          [{"left":  -1}],
-          [{"right":  -1}],
-          [{"diagFdLeft":  -1}],
-          [{"diagFdRight":  -1}],
-          [{"diagBkLeft":  -1}],
-          [{"diagBkRight":  -1}]
+          [{"fd":  [1,-1]}],
+          [{"bk":  [1,-1]}],
+          [{"left":  [1,-1]}],
+          [{"right":  [1,-1]}],
+          [{"diagFdLeft":  [1,-1]}],
+          [{"diagFdRight":  [1,-1]}],
+          [{"diagBkLeft":  [1,-1]}],
+          [{"diagBkRight":  [1,-1]}]
         ]
     },
     "king":{
       "canPlace": 0,
+      "canJump": 0,
       "normalMoves": {
         "anyTime": [
-            [{"fd":  1}],
-            [{"bk":  1}],
-            [{"left":  1}],
-            [{"right":  1}],
-            [{"diagFdLeft":  1}],
-            [{"diagFdRight":  1}],
-            [{"diagBkLeft":  1}],
-            [{"diagBkRight":  1}]
+            [{"fd":  [1,1]}],
+            [{"bk":  [1,1]}],
+            [{"left":  [1,1]}],
+            [{"right":  [1,1]}],
+            [{"diagFdLeft":  [1,1]}],
+            [{"diagFdRight":  [1,1]}],
+            [{"diagBkLeft":  [1,1]}],
+            [{"diagBkRight":  [1,1]}]
         ]
       },
       "captureMoves": [
-          [{"fd":  1}],
-          [{"bk":  1}],
-          [{"left":  1}],
-          [{"right":  1}],
-          [{"diagFdLeft":  1}],
-          [{"diagFdRight":  1}],
-          [{"diagBkLeft":  1}],
-          [{"diagBkRight":  1}]
+          [{"fd":  [1,1]}],
+          [{"bk":  [1,1]}],
+          [{"left":  [1,1]}],
+          [{"right":  [1,1]}],
+          [{"diagFdLeft":  [1,1]}],
+          [{"diagFdRight":  [1,1]}],
+          [{"diagBkLeft":  [1,1]}],
+          [{"diagBkRight":  [1,1]}]
         ]
 
     }
