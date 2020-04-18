@@ -36,7 +36,6 @@ import ooga.controller.GameController;
 import ooga.game_view.board.GameBoard;
 
 public class GameGuiController extends Application {
-
   private static final String LIGHT_STYLESHEET = "ooga/resources/styleSheets/lightMode.css";
   private static final String DARK_STYLESHEET = "ooga/resources/styleSheets/darkMode.css";
   private static final String PIECES_DIRECTORY = "src/ooga/resources/images/pieces";
@@ -49,7 +48,6 @@ public class GameGuiController extends Application {
   private Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
   private double scene_width = primaryScreenBounds.getWidth()*0.9;
   private double scene_height = primaryScreenBounds.getHeight()*0.9;
-
 
   private static String currentLanguage = "English";
   private static String guiLanguage = "English";
@@ -64,10 +62,11 @@ public class GameGuiController extends Application {
 
   private GameController myGameController;
   private GameBoard gameDisplay;
+  private BorderPane controlDisplay = new BorderPane();
   private GUIButtons buttons;
   private VBox buttonGroup;
   private Text gameTitle;
-  private VBox titleBox;
+  private VBox titleBox = new VBox();
 
   private boolean darkEnabled = false;
 
@@ -81,10 +80,7 @@ public class GameGuiController extends Application {
 
   /**
    * Constructor used in Main to begin the program Begins our JavaFX application Starts the
-   * Animation Loop and sets the Border Pane, filling it with a ButtonController, SliderController,
-   * and TurtleHabitat, TerminalView, and VariablesTabPaneView Sets the stage and scene and shows
-   * it
-   *
+   * Animation Loop and sets the Border Pane, filling it with ....
    * @param args is the String[] passed in by main
    */
   public GameGuiController(String[] args) {
@@ -102,6 +98,7 @@ public class GameGuiController extends Application {
     setBorderPane();
     startAnimationLoop();
     initiateGameController();
+    addTitleBox();
     addGameButtons();
     addGameBoardDisplay();
     myScene = new Scene(root, scene_width, scene_height);
@@ -123,17 +120,17 @@ public class GameGuiController extends Application {
   private void addGameButtons() throws FileNotFoundException {
     buttons = new GUIButtons(LANGUAGES_PACKAGE + guiLanguage);
     buttonGroup = buttons.getVBox();
-    titleBox = new VBox();
-    titleBox.setPrefHeight(150);
+    controlDisplay.setCenter(buttonGroup);
+    controlDisplay.setMaxHeight(scene_height);
+    BorderPane.setAlignment(controlDisplay, Pos.CENTER);
+    root.setPadding(new Insets(0, 0 , 0, 30));
+    root.setLeft(controlDisplay);
+  }
+
+  private void addTitleBox(){
     titleBox.getStyleClass().addAll("titleBox");
     BorderPane.setAlignment(titleBox, Pos.CENTER);
-    BorderPane leftSide = new BorderPane();
-    leftSide.setTop(titleBox);
-    leftSide.setCenter(buttonGroup);
-    leftSide.setMaxHeight(scene_height);
-    BorderPane.setAlignment(leftSide, Pos.CENTER);
-    root.setPadding(new Insets(0, 0 , 0, 30));
-    root.setLeft(leftSide);
+    controlDisplay.setTop(titleBox);
   }
 
   private void addGameBoardDisplay(){

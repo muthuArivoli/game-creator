@@ -53,6 +53,7 @@
   -fx-padding: 40;
   -fx-font-family: "Copperplate Gothic Light";
   -fx-font-size: 60;
+  -fx-pref-height: 150;
 }
 
 .label {
