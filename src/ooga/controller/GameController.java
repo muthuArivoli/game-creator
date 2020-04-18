@@ -31,25 +31,30 @@ public class GameController {
     } catch (FileNotFoundException | InvalidGridException | InvalidPieceException e) {
       System.out.println(e.getMessage());
     }
-    pieceSelected(3,4);
+
+    // test code
+//    pieceSelected(3,4);
+
   }
 
   public List<Coordinate> pieceSelected (int x, int y){
-//    this.selectedPiece = piece;
+    this.selectedPiece = myGridModel.getPiece(new Coordinate(x, y));
 
     Set <Coordinate> allValidIndices = new HashSet<>();
-//    for (Movement movement: piece.getNormalAnyMovements()) {
-//      allValidIndices.addAll(movement.getValidIndices(new Coordinate(x, y), 1, myGridModel ));
-//    }
-    try {
-      Movement forward = new MovementFactory().getMovement("fd", -1);
-      allValidIndices.addAll(forward.getValidIndices(new Coordinate(x, y), 1, myGridModel));
-      for (Coordinate c: allValidIndices) {
-        System.out.println(c.getRow() + " " + c.getCol());
-      }
-    } catch (Exception e){
-
+    for (Movement movement: selectedPiece.getNormalAnyMovements()) {
+      allValidIndices.addAll(movement.getValidIndices(new Coordinate(x, y), 1, myGridModel ));
     }
+
+    //test code for fd
+//    try {
+//      Movement forward = new MovementFactory().getMovement("fd", -1);
+//      allValidIndices.addAll(forward.getValidIndices(new Coordinate(x, y), 1, myGridModel));
+//      for (Coordinate c: allValidIndices) {
+//        System.out.println(c.getRow() + " " + c.getCol());
+//      }
+//    } catch (Exception e){
+//
+//    }
 
     return new ArrayList (allValidIndices);
   }
