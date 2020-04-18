@@ -37,7 +37,7 @@ public class GameController {
 
     Set <Coordinate> allPossibleMoves = new HashSet<>();
     for (Movement movement: piece.getNormalAnyMovements()) {
-      allPossibleMoves.addAll(movement.validMoves(new Coordinate(x, y), 1));
+      allPossibleMoves.addAll(movement.getValidIndices(new Coordinate(x, y), 1));
     }
     Set <Coordinate> allValidMoves = validateMoves(removeMovesOutOfBounds(allPossibleMoves));
 

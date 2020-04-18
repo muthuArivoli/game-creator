@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public interface Movement {
-    List<Coordinate> validMoves(Coordinate position, int playerSide);
+    List<Coordinate> getValidIndices(Coordinate position, int playerSide);
 
     @Override
     String toString();

@@ -17,9 +17,6 @@ import org.json.JSONObject;
 
 public class PieceParser {
   private JSONObject myPiecesJSON;
-  private String [] PIECE_FIELDS = {
-      "canPlace"
-  };
   private MovementFactory factory = new MovementFactory();
   public PieceParser (JSONObject piecesJSON){
     this.myPiecesJSON = piecesJSON;

@@ -12,7 +12,7 @@ public class fd implements Movement{
     }
 
     @Override
-    public List<Coordinate> validMoves(Coordinate position, int playerSide) {
+    public List<Coordinate> getValidIndices(Coordinate position, int playerSide) {
         List<Coordinate> moves = new ArrayList<>();
         if(units == -1) {
             for(int i=1;i<=units;i++){

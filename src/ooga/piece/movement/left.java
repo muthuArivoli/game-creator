@@ -12,7 +12,7 @@ public class left implements Movement {
     }
 
     @Override
-    public List<Coordinate> validMoves(Coordinate position, int playerSide) {
+    public List<Coordinate> getValidIndices(Coordinate position, int playerSide) {
         List<Coordinate> moves = new ArrayList<>();
         for(int i=1;i<=units;i++){
             moves.add(new Coordinate(position.getXpos()-i,position.getYpos()));
