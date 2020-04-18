@@ -18,14 +18,14 @@ public class bk implements Movement {
     @Override
     public List<List<Coordinate>> getValidPaths(Coordinate position, int playerSide, Predicate<Coordinate> checkCoordinatesInBound) {
         List<List<Coordinate>> paths = new ArrayList<>();
-        Coordinate nextCoord = new Coordinate(position.getRow()-rangeBegin*playerSide,position.getCol());
+        Coordinate nextCoord = new Coordinate(position.getRow()+rangeBegin*playerSide,position.getCol());
         if(!checkCoordinatesInBound.test(nextCoord)){
             return paths;
         }
         paths.add(new ArrayList<>());
         paths.get(0).add(nextCoord);
         for(int i=rangeBegin+1;i<=rangeEnd;i++){
-            nextCoord = new Coordinate(position.getRow()-i*playerSide,position.getCol());
+            nextCoord = new Coordinate(position.getRow()+i*playerSide,position.getCol());
             if(!checkCoordinatesInBound.test(nextCoord)){
                 return paths;
             }

@@ -36,11 +36,11 @@ public class GameController {
   }
 
   public Collection<Coordinate> pieceSelected (int x, int y) {
-    for (Coordinate c: myGridModel.getValidMoves((new Coordinate(x, y)), -1)) {
-        System.out.println(c.getRow() + " " + c.getCol());
-      }
+//    for (Coordinate c: myGridModel.getValidMoves((new Coordinate(x, y)), 1)) {
+//        System.out.println(c.getRow() + " " + c.getCol());
+//      }
 
-    return myGridModel.getValidMoves((new Coordinate(x, y)), -1);
+    return myGridModel.getValidMoves((new Coordinate(x, y)), 1);
   }
 
     //test code for fd
