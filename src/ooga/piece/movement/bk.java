@@ -1,15 +1,12 @@
 package ooga.piece.movement;
 
 public class bk implements Movement {
-    private int units;
-    public bk(int units){
-        this.units = units;
+    private int rangeBegin;
+    private int rangeEnd;
+
+    public bk(int rangeBegin,int rangeEnd){
+        this.rangeBegin = rangeBegin;
+        this.rangeEnd = rangeEnd;
     }
 
-    @Override
-    public String toString() {
-        return "Backward{" +
-                "units=" + units +
-                '}';
-    }
 }

@@ -5,11 +5,5 @@ public class right implements Movement {
     public right(int units){
         this.units = units;
     }
-
-    @Override
-    public String toString() {
-        return "Rightward{" +
-                "units=" + units +
-                '}';
-    }
+    
 }

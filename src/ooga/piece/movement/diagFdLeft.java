@@ -6,10 +6,4 @@ public class diagFdLeft implements Movement {
     this.units = units;
   }
 
-  @Override
-  public String toString() {
-    return "Forward{" +
-        "units=" + units +
-        '}';
-  }
 }

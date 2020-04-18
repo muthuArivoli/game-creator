@@ -6,10 +6,4 @@ public class left implements Movement {
         this.units = units;
     }
 
-    @Override
-    public String toString() {
-        return "LeftWard{" +
-                "units=" + units +
-                '}';
-    }
 }
