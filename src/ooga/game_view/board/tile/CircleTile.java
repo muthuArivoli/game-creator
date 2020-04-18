@@ -12,9 +12,5 @@ public class CircleTile extends Ellipse {
     relocate(xCoordinate*tileWidth, yCoordinate*tileHeight);
     this.setFill(clr);
     this.setStroke(Color.BLACK);
-
-    setOnMouseClicked(e -> {
-      this.setFill(Color.BLUE);
-    });
   }
 }
