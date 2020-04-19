@@ -9,8 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
 import ooga.controller.GameController;
+import ooga.game_view.board.pieceType.EllipsePiece;
 import ooga.game_view.board.tile.CircleTile;
 import ooga.game_view.board.tile.RectangleTile;
 import ooga.models.GridModel;
@@ -92,11 +92,12 @@ public class GameBoard extends BorderPane {
         }else if (validCoordinates.contains(new Coordinate(row,col))) {
           tile.setFill(Color.LIGHTGREEN);
         }
-        PieceView piece = new PieceView(gameController, tileWidth, tileHeight, row, col);
-        if(grid.getGrid()[row][col]== null){
-          piece.setFillerPiece(true);
-          piece.setStroke(main);
-          piece.setFill(main);
+        EllipsePiece piece;
+        if(grid.getGrid()[row][col]!= null){
+          piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, grid.getGrid()[row][col].getPieceName());
+        }
+        else{
+          piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, main);
         }
         pieceGroup.getChildren().addAll(piece);
         tileGroup.getChildren().addAll(tile);
