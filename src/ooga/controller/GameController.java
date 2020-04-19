@@ -5,14 +5,19 @@ import java.util.*;
 
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
+import ooga.models.GameModel;
 import ooga.models.GridModel;
+import ooga.parser.PieceParser;
 import ooga.parser.TemplateParser;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
+import ooga.piece.movement.Movement;
 
 public class GameController {
   private TemplateParser myTemplateParser;
   private GridModel myGridModel;
+  private GameModel myGameModel = new GameModel();
+
   private int activePlayer = 1;
   private final String READY_TO_VIEW = "readyToView";
   private final String READY_TO_MOVE = "readyToMove";
@@ -20,11 +25,11 @@ public class GameController {
   private Piece selectedPiece;
   private boolean changed = false;
 
-  private Collection<Coordinate> validMoves = new ArrayList<>();
+  private List<Coordinate> validMoves = new ArrayList<>();
 
   public GameController () {
     this.myGridModel = new GridModel();
-    this.myTemplateParser = new TemplateParser(myGridModel);
+    this.myTemplateParser = new TemplateParser(myGridModel, myGameModel);
   }
 
   public void parseFile (String fileName) {
@@ -39,6 +44,14 @@ public class GameController {
 //    System.out.println(row+"."+col);
 
     Coordinate c = new Coordinate(row, col);
+    if (myGameModel.isCanPlace()) {
+      handlePlaceableClick(c);
+    } else {
+      handleNonPlaceableClick(c); // for chess style games
+    };
+  }
+
+  private void handleNonPlaceableClick(Coordinate c) {
     if (activePlayer == 1) {
       switch(playerStage) {
         case READY_TO_VIEW: // get valid moves
@@ -50,7 +63,7 @@ public class GameController {
           if(myGridModel.checkPieceExists(c) && myGridModel.getPiece(c).getSide() == activePlayer){
             selectedPiece = myGridModel.getPiece(c);
             System.out.println("Selected: " + selectedPiece.getPieceName());
-            validMoves = myGridModel.getValidMoves(c,1);
+            validMoves = myGridModel.getValidMoves(c,activePlayer);
             togglePlayerStage(READY_TO_MOVE);
             setChanged(true);
             System.out.println("Valid moves generated:");
@@ -71,8 +84,50 @@ public class GameController {
 
           break;
       }
+    } else { // if it is the AI's turn
+      switch(playerStage) {
+        case READY_TO_VIEW:
+          List<Coordinate> playerPostions = myGridModel.getPositions(activePlayer);
+          while(!playerPostions.isEmpty()){
+            int randomIndex = new Random().nextInt(playerPostions.size());
+            Coordinate coord = playerPostions.get(randomIndex);
+            playerPostions.remove(randomIndex);
+
+            validMoves = myGridModel.getValidMoves(coord, activePlayer);
+            if(!validMoves.isEmpty()) {
+              selectedPiece = myGridModel.getPiece(coord);
+
+//              System.out.println(selectedPiece.getPieceName() + " "+ selectedPiece.getSide()+ " @ "+ selectedPiece.getPosition());
+//              System.out.println("Moving to: " + coord);
+
+              moveSelectedPiece(validMoves.get(new Random().nextInt(validMoves.size())));
+              break;
+            }
+          }
+          setChanged(true);
+          break;
+      }
     }
-  System.out.println(playerStage + "\n");
+    System.out.println("Player " + activePlayer + " is " + playerStage + "\n");
+  }
+
+  private void handlePlaceableClick(Coordinate c) {
+    if (activePlayer == 1) {
+      try {
+        System.out.println(c);
+        selectedPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
+        myGridModel.addPiece(selectedPiece, c.getRow(), c.getCol());
+
+        List<Coordinate> validMoves = myGridModel.getValidMoves(c, 1);
+        myGridModel.movePiece(selectedPiece, Collections.max(validMoves));
+        myGridModel.print();
+        setChanged(true);
+      } catch (InvalidPieceException e) {
+        e.printStackTrace();
+      }
+    } else {
+
+    }
   }
 
   private void togglePlayerStage (String playerStage) {
@@ -93,7 +148,6 @@ public class GameController {
   }
 
   private void resetPlayerStage () {
-//    activePlayer = activePlayer == 1 ? 2 : 1;
     togglePlayerStage(READY_TO_VIEW);
     selectedPiece = null;
     validMoves.clear();
@@ -101,7 +155,8 @@ public class GameController {
 
   private void switchPlayers () {
     resetPlayerStage();
-//    activePlayer = activePlayer == 1 ? 2 : 1;
+
+    activePlayer = activePlayer == 1 ? -1 : 1;
   }
 
   public GridModel getGridModel() {
@@ -116,8 +171,15 @@ public class GameController {
     return this.changed;
   }
 
-  public Collection<Coordinate> getValidMoves() {
+  public List<Coordinate> getValidMoves() {
     return validMoves;
   }
   public String getGameName() {return myTemplateParser.getGameName();}
+
+  public Coordinate getSelectedPiecePosition(){
+    if (selectedPiece != null) {
+      return selectedPiece.getPosition();
+    }
+    return null;
+  }
 }

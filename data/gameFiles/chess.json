@@ -1,10 +1,10 @@
 {
   "title": "chess",
+  "canPlace": false,
   "rows": 8,
   "columns": 8,
   "pieces": {
     "pawn": {
-      "canPlace": 0,
       "canJump": 0,
       "canCaptureJump": 0,
       "normalMoves": {
@@ -21,7 +21,6 @@
         ]
       },
     "knight":{
-      "canPlace": 0,
       "canJump": 1,
       "canCaptureJump": 0,
 
@@ -50,7 +49,6 @@
 
     },
     "rook": {
-      "canPlace": 0,
       "canJump": 0,
       "canCaptureJump": 0,
 
@@ -70,7 +68,6 @@
         ]
     },
     "bishop":{
-      "canPlace": 0,
       "canJump": 0,
       "canCaptureJump": 0,
 
@@ -90,7 +87,6 @@
         ]
     },
     "queen":{
-      "canPlace": 0,
       "canJump": 0,
       "canCaptureJump": 0,
 
@@ -118,7 +114,6 @@
         ]
     },
     "king":{
-      "canPlace": 0,
       "canJump": 0,
       "canCaptureJump": 0,
 
