@@ -8,11 +8,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import ooga.controller.GameController;
 import ooga.game_view.board.tile.CircleTile;
 import ooga.game_view.board.tile.RectangleTile;
 import ooga.models.GridModel;
 
 public class GameBoard extends BorderPane {
+  private GameController gameController;
   private double tileWidth;
   private double tileHeight;
   private double displayWidth;
@@ -28,7 +30,9 @@ public class GameBoard extends BorderPane {
     boardBackground = this.getBackground();
   }
 
-  public void createGameBoard(GridModel gridModel, List<Color> colors, double width, double height){
+  public void createGameBoard(GameController gameController, GridModel gridModel, List<Color> colors, double width, double height){
+    this.gameController = gameController;
+
     everything = new StackPane();
     everything.setBackground(boardBackground);
     everything.setMaxSize(boardSideLength, boardSideLength);
@@ -62,17 +66,16 @@ public class GameBoard extends BorderPane {
   private void createTiles(GridModel grid, int numRow, int numCol, List<Color> colors){
     Group tileGroup = new Group();
     Group pieceGroup = new Group();
-    System.out.println(numRow);
-    System.out.println(numCol);
+
     for (int x = 0; x < numCol; x++){
       for (int y= 0; y < numRow; y++){
-        System.out.println("row:" + x + "col:" + y);
+//        System.out.println("row:" + x + "col:" + y);
         Color main = colors.get(0);
         if ((x+y) % 2 == 0){main = colors.get(1);}
-          RectangleTile tile = new RectangleTile(tileWidth, tileHeight, x, y, main);
+          RectangleTile tile = new RectangleTile(gameController, tileWidth, tileHeight, x, y, main);
         if(grid.getGrid()[y][x]!= null){
           System.out.println(grid.getGrid()[y][x].getPieceName());
-          PieceView piece = new PieceView(tileWidth, tileHeight, x, y);
+          PieceView piece = new PieceView(gameController, tileWidth, tileHeight, x, y);
           pieceGroup.getChildren().addAll(piece);
         }
         tileGroup.getChildren().addAll(tile);

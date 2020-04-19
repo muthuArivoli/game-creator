@@ -106,6 +106,7 @@ public class GameGuiController extends Application {
     myScene.getStylesheets().add(currentStyleSheet);
     myStage.setScene(myScene);
     myStage.show();
+    startGame(new File("./data/gameFiles/chess.json"));
   }
 
   private void setBorderPane() {
@@ -192,7 +193,7 @@ public class GameGuiController extends Application {
       ArrayList<Color> colors = new ArrayList<>();
       colors.add(Color.WHITE);
       colors.add(Color.BLACK);
-      gameDisplay.createGameBoard(myGameController.getGridModel(),colors, scene_width, scene_height);
+      gameDisplay.createGameBoard(myGameController, myGameController.getGridModel(),colors, scene_width, scene_height);
       titleBox.getChildren().add(gameTitle);
     }
   }

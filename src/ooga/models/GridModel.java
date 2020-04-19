@@ -28,6 +28,7 @@ public class GridModel {
   }
 
   public void addPiece(Piece piece, int x, int y) {
+    System.out.println("adding piece");
     myGrid[x][y] = piece;
   }
 
@@ -43,6 +44,13 @@ public class GridModel {
   }
 
   public Piece getPiece(Coordinate coordinate){
+//    System.out.println("Getting coordinate: " + coordinate.getRow() + " " + coordinate.getCol());
+//    for (int i = 0; i < myGrid.length; i++) {
+//      for (int j = 0; j < myGrid[0].length; j++) {
+//        System.out.print(myGrid[i][j]);
+//      }
+//      System.out.println();
+//    }
     return myGrid[coordinate.getRow()][coordinate.getCol()];
   }
 

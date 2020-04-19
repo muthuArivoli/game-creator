@@ -14,7 +14,9 @@ public class GameController {
   private TemplateParser myTemplateParser;
   private GridModel myGridModel;
   private int activePlayer = 1;
-  private String playerStage = "readyToView";
+  private final String READY_TO_VIEW = "readyToView";
+  private final String READY_TO_MOVE = "readyToMove";
+  private String playerStage = READY_TO_VIEW;
   private Piece selectedPiece;
 
   private Collection<Coordinate> validMoves = new ArrayList<>();
@@ -33,30 +35,37 @@ public class GameController {
   }
 
   public void handleClick(int x, int y) {
+    System.out.println(x+":"+y);
+    System.out.println(myGridModel.getGrid());
     if (activePlayer == 1) {
       switch(playerStage) {
-        case "readyToView": // get valid moves
+        case READY_TO_VIEW: // get valid moves
           validMoves = myGridModel.getValidMoves((new Coordinate(x, y)),1);
-          playerStage = "readyToMove";
+          togglePlayerStage();
 
+          System.out.println("Valid moves generated:");
           for (Coordinate move: validMoves) {
             System.out.println(move.getRow() + "" + move.getCol());
           }
           break;
-        case "readyToMove":
+        case READY_TO_MOVE:
           if(myGridModel.getPiece(new Coordinate(x, y)).getSide() == activePlayer){
             validMoves.clear();
+            togglePlayerStage();
           } else {
             moveSelectedPiece(x, y);
-            activePlayer = activePlayer == 1 ? 2 : 1;
           }
-          playerStage = "readyToView";
+
+          System.out.println("Piece moved");
           break;
       }
     }
 
   }
 
+  private void togglePlayerStage () {
+    playerStage = playerStage.equals(READY_TO_MOVE) ? READY_TO_VIEW  : READY_TO_MOVE;
+  }
 
   public void moveSelectedPiece (int x, int y) {
     if(myGridModel.checkPieceExists(new Coordinate(x,y)) && selectedPiece.isCanCaptureJump()) {
@@ -68,9 +77,11 @@ public class GameController {
   }
 
   private void switchPlayers () {
+//    activePlayer = activePlayer == 1 ? 2 : 1;
+    playerStage = READY_TO_MOVE;
+
     selectedPiece = null;
-    activePlayer = 1;
-    activePlayer = activePlayer == 1 ? 2 : 1;
+    validMoves.clear();
   }
 
   public GridModel getGridModel() {
