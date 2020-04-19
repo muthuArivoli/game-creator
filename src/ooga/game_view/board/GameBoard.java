@@ -95,6 +95,8 @@ public class GameBoard extends BorderPane {
         PieceView piece = new PieceView(gameController, tileWidth, tileHeight, row, col);
         if(grid.getGrid()[row][col]== null){
           piece.setFillerPiece(true);
+          piece.setStroke(main);
+          piece.setFill(main);
         }
         pieceGroup.getChildren().addAll(piece);
         tileGroup.getChildren().addAll(tile);
