@@ -9,6 +9,7 @@
       "canCaptureJump": 0,
       "normalMoves": {
         "anyTime": [
+          [{"fd": [0,0]}]
         ]
       },
       "captureMoves": [

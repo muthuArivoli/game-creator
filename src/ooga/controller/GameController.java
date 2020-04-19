@@ -119,7 +119,13 @@ public class GameController {
         myGridModel.addPiece(selectedPiece, c.getRow(), c.getCol());
 
         List<Coordinate> validMoves = myGridModel.getValidMoves(c, 1);
-        myGridModel.movePiece(selectedPiece, Collections.max(validMoves));
+
+        if(validMoves.isEmpty()) {
+          myGridModel.movePiece(selectedPiece, c);
+        } else {
+          myGridModel.movePiece(selectedPiece,  Collections.max(validMoves));
+        }
+
         myGridModel.print();
         setChanged(true);
       } catch (InvalidPieceException e) {
