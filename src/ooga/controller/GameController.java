@@ -120,6 +120,8 @@ public class GameController {
 
         List<Coordinate> validMoves = myGridModel.getValidMoves(c, 1);
         myGridModel.movePiece(selectedPiece, Collections.max(validMoves));
+        myGridModel.print();
+        setChanged(true);
       } catch (InvalidPieceException e) {
         e.printStackTrace();
       }
