@@ -91,10 +91,12 @@ public class GameBoard extends BorderPane {
         }else if (validCoordinates.contains(new Coordinate(row,col))) {
           tile.setFill(Color.LIGHTGREEN);
         }
-        if(grid.getGrid()[row][col]!= null){
-          PieceView piece = new PieceView(gameController, tileWidth, tileHeight, row, col);
-          pieceGroup.getChildren().addAll(piece);
+        PieceView piece = new PieceView(gameController, tileWidth, tileHeight, row, col);
+        if(grid.getGrid()[row][col]== null){
+          piece.setStroke(main);
+          piece.setFill(main);
         }
+        pieceGroup.getChildren().addAll(piece);
         tileGroup.getChildren().addAll(tile);
       }
     }
