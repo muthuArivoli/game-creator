@@ -34,54 +34,71 @@ public class GameController {
     }
   }
 
-  public void handleClick(int x, int y) {
-    System.out.println(x+":"+y);
-    System.out.println(myGridModel.getGrid());
+  public void handleClick(int row, int col) {
+    System.out.println("Selected " + row+":"+col);
+
+    Coordinate c = new Coordinate(row, col);
     if (activePlayer == 1) {
       switch(playerStage) {
         case READY_TO_VIEW: // get valid moves
-          validMoves = myGridModel.getValidMoves((new Coordinate(x, y)),1);
-          togglePlayerStage();
+//          if(myGridModel.checkPieceExists(c)){
+//            System.out.println( myGridModel.getPiece(c).getSide() == activePlayer);
+//          }
+//          System.out.println(myGridModel);
 
-          System.out.println("Valid moves generated:");
-          for (Coordinate move: validMoves) {
-            System.out.println(move.getRow() + "" + move.getCol());
+          if(myGridModel.checkPieceExists(c) && myGridModel.getPiece(c).getSide() == activePlayer){
+            selectedPiece = myGridModel.getPiece(c);
+            validMoves = myGridModel.getValidMoves(c,1);
+            togglePlayerStage(READY_TO_MOVE);
+
+            System.out.println("Valid moves generated:");
+            for (Coordinate move: validMoves) {
+              System.out.println(move.getRow() + "" + move.getCol());
+            }
           }
           break;
         case READY_TO_MOVE:
-          if(myGridModel.getPiece(new Coordinate(x, y)).getSide() == activePlayer){
-            validMoves.clear();
-            togglePlayerStage();
+          if(myGridModel.checkPieceExists(c) && myGridModel.getPiece(c).getSide() == activePlayer){
+            System.out.println("Deactivating selected piece.");
+            resetPlayerStage();
           } else {
-            moveSelectedPiece(x, y);
+            System.out.println("Moved piece");
+            moveSelectedPiece(c);
           }
 
-          System.out.println("Piece moved");
           break;
+      }
+    }
+  System.out.println(playerStage + "\n");
+  }
+
+  private void togglePlayerStage (String playerStage) {
+//    playerStage = playerStage.equals(READY_TO_MOVE) ? READY_TO_VIEW  : READY_TO_MOVE;
+    this.playerStage = playerStage;
+  }
+
+  public void moveSelectedPiece (Coordinate c) {
+    if (validMoves.contains(c)){
+      if(myGridModel.checkPieceExists(c) && selectedPiece.isCanCaptureJump()) {
+        // don't switch sides
+      } else {
+        myGridModel.movePiece(selectedPiece, c);
+        switchPlayers();
       }
     }
 
   }
 
-  private void togglePlayerStage () {
-    playerStage = playerStage.equals(READY_TO_MOVE) ? READY_TO_VIEW  : READY_TO_MOVE;
-  }
-
-  public void moveSelectedPiece (int x, int y) {
-    if(myGridModel.checkPieceExists(new Coordinate(x,y)) && selectedPiece.isCanCaptureJump()) {
-      // don't switch sides
-    } else {
-      myGridModel.movePiece(selectedPiece, x, y);
-      switchPlayers();
-    }
+  private void resetPlayerStage () {
+//    activePlayer = activePlayer == 1 ? 2 : 1;
+    togglePlayerStage(READY_TO_VIEW);
+    selectedPiece = null;
+    validMoves.clear();
   }
 
   private void switchPlayers () {
+    resetPlayerStage();
 //    activePlayer = activePlayer == 1 ? 2 : 1;
-    playerStage = READY_TO_MOVE;
-
-    selectedPiece = null;
-    validMoves.clear();
   }
 
   public GridModel getGridModel() {

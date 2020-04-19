@@ -28,15 +28,14 @@ public class GridModel {
   }
 
   public void addPiece(Piece piece, int x, int y) {
-    System.out.println("adding piece");
     myGrid[x][y] = piece;
   }
 
-  public void movePiece(Piece piece, int x, int y) {
+  public void movePiece(Piece piece, Coordinate c) {
     Coordinate prevCoordinate = piece.getPosition();
     removePiece(prevCoordinate.getRow(), prevCoordinate.getCol());
-    piece.setPosition(x, y);
-    addPiece(piece, x, y);
+    piece.setPosition(c.getRow(), c.getCol());
+    addPiece(piece, c.getRow(), c.getCol());
   }
 
   public void removePiece(int x, int y) {
@@ -80,14 +79,12 @@ public class GridModel {
 
     Set<Coordinate> validMoves = new HashSet<>();
     for(int i=0;i<possiblePaths.size();i++){
-      System.out.println(possiblePaths.get(i));
       validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
     }
     return validMoves;
   }
 
   private void removePieceOverlap(List<List<Coordinate>> possiblePaths, int pieceSide) {
-    System.out.println(possiblePaths);
     for(int i=0;i<possiblePaths.size();i++){
       if(checkPieceExists(possiblePaths.get(i).get(possiblePaths.get(i).size()-1))
               && getPiece(possiblePaths.get(i).get(possiblePaths.get(i).size()-1)).getSide()==pieceSide){

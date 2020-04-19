@@ -12,6 +12,10 @@ public class RectangleTile extends Rectangle {
     relocate(xCoordinate*tileHeight, yCoordinate*tileWidth);
     this.setFill(clr);
     this.setStroke(Color.BLACK);
+
+    this.setOnMouseClicked(e->{
+      gameController.handleClick(yCoordinate, xCoordinate);
+    });
   }
 }
 
