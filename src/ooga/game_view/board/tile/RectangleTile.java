@@ -6,15 +6,15 @@ import ooga.controller.GameController;
 
 public class RectangleTile extends Rectangle {
 
-  public RectangleTile(GameController gameController, double tileWidth, double tileHeight, int xCoordinate, int yCoordinate, Color clr){
+  public RectangleTile(GameController gameController, double tileWidth, double tileHeight, int row, int col, Color clr){
     this.setWidth(tileHeight);
     this.setHeight(tileWidth);
-    relocate(xCoordinate*tileHeight, yCoordinate*tileWidth);
+    relocate(col*tileHeight, row*tileWidth);
     this.setFill(clr);
     this.setStroke(Color.BLACK);
 
     this.setOnMouseClicked(e->{
-      gameController.handleClick(yCoordinate, xCoordinate);
+      gameController.handleClick(row, col);
     });
   }
 }

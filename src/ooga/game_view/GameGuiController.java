@@ -198,7 +198,7 @@ public class GameGuiController extends Application {
       ArrayList<Color> colors = new ArrayList<>();
       colors.add(Color.WHITE);
       colors.add(Color.BLACK);
-      gameDisplay.createGameBoard(myGameController, myGameController.getGridModel(),colors, scene_width, scene_height);
+      gameDisplay.createGameBoard(myGameController,colors, scene_width, scene_height);
       titleBox.getChildren().add(gameTitle);
     }
   }

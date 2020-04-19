@@ -11,16 +11,16 @@ public class PieceView extends Ellipse {
   private int row;
   private int col;
 
-  public PieceView (GameController gameController, double tileX, double tileY, int xCoordinate, int yCoordinate){
+  public PieceView (GameController gameController, double tileX, double tileY, int row, int col){
     this.gameController = gameController;
     setParameters(tileX, tileY);
-    relocate(xCoordinate*tileY, yCoordinate*tileX);
+    relocate(col*tileY, row*tileX);
 
-    this.row = yCoordinate;
-    this.col = xCoordinate;
+    this.row = row;
+    this.col = col;
 
     setOnMouseClicked(e -> {
-      this.gameController.handleClick(yCoordinate, xCoordinate);
+      this.gameController.handleClick(row, col);
     });
   }
 
