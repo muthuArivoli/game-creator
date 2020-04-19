@@ -3,33 +3,33 @@ package ooga.piece;
 import java.util.Objects;
 
 public class Coordinate {
-    private int xpos;
-    private int ypos;
-    public Coordinate(int xpos, int ypos){
-        this.xpos = xpos;
-        this.ypos = ypos;
+    private int row;
+    private int col;
+    public Coordinate(int row, int col){
+        this.row = row;
+        this.col = col;
     }
 
     public int getRow(){
-        return xpos;
+        return row;
     }
 
     public int getCol() {
-        return ypos;
+        return col;
     }
 
-    public void setRow(int xpos) {
-        this.xpos = xpos;
+    public void setRow(int row) {
+        this.row = row;
     }
 
-    public void setCol(int ypos) {
-        this.ypos = ypos;
+    public void setCol(int col) {
+        this.col = col;
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(xpos, ypos);
+        return Objects.hash(row, col);
     }
 
     @Override
@@ -41,7 +41,11 @@ public class Coordinate {
             return false;
         }
         Coordinate that = (Coordinate) o;
-        return xpos == that.xpos &&
-            ypos == that.ypos;
+        return row == that.row &&
+            col == that.col;
+    }
+
+    public String toString(){
+        return row + "" + col;
     }
 }

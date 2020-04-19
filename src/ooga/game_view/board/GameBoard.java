@@ -75,7 +75,7 @@ public class GameBoard extends BorderPane {
   }
 
   private void createTiles(GridModel grid, int numRowTiles, int numColTiles, List<Color> colors){
-    Collection<Coordinate> validCoordinates = gameController.getValidMoves();
+    List<Coordinate> validCoordinates = gameController.getValidMoves();
     Group tileGroup = new Group();
     Group pieceGroup = new Group();
 
