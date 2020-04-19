@@ -75,15 +75,20 @@ public class GameController {
     } else { // if it is the AI's turn
       switch(playerStage) {
         case READY_TO_VIEW:
-          for (Coordinate coord: myGridModel.getPositions(activePlayer)){
+          List<Coordinate> playerPostions = myGridModel.getPositions(activePlayer);
+          while(!playerPostions.isEmpty()){
+            int randomIndex = new Random().nextInt(playerPostions.size());
+            Coordinate coord = playerPostions.get(randomIndex);
+            playerPostions.remove(randomIndex);
+
             validMoves = myGridModel.getValidMoves(coord, activePlayer);
             if(!validMoves.isEmpty()) {
               selectedPiece = myGridModel.getPiece(coord);
 
-              System.out.println(selectedPiece.getPieceName() + " "+ selectedPiece.getSide()+ " @ "+ selectedPiece.getPosition());
-              System.out.println("Moving to: " + coord);
+//              System.out.println(selectedPiece.getPieceName() + " "+ selectedPiece.getSide()+ " @ "+ selectedPiece.getPosition());
+//              System.out.println("Moving to: " + coord);
 
-              moveSelectedPiece(validMoves.get(0));
+              moveSelectedPiece(validMoves.get(new Random().nextInt(validMoves.size())));
               break;
             }
           }
