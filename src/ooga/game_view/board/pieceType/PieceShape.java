@@ -15,7 +15,6 @@ public abstract class PieceShape extends StackPane {
 
   public PieceShape(GameController gameController, double tileX, double tileY, int row, int col, String pieceName) {
     text = new Text(pieceName);
-    text.setFont(new Font(10));
     fillerPiece = false;
     initiatePiece(gameController, tileX, tileY, row, col);
   }
@@ -33,7 +32,7 @@ public abstract class PieceShape extends StackPane {
     shape = createShape(tileX, tileY, row, col);
 
     relocate(col*tileY, row*tileX);
-    getChildren().addAll(text, shape);
+    getChildren().addAll(shape, text);
 
     setOnMouseClicked(e -> {
       this.gameController.handleClick(row, col);
