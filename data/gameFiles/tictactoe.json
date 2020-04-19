@@ -4,23 +4,12 @@
   "rows": 3,
   "columns": 3,
   "pieces": {
-    "X": {
+    "dime": {
       "canJump": 0,
       "canCaptureJump": 0,
       "normalMoves": {
         "anyTime": [
-          []
-        ]
-      },
-      "captureMoves": [
-      ]
-    },
-    "O": {
-      "canJump": 0,
-      "canCaptureJump": 0,
-      "normalMoves": {
-        "anyTime": [
-          [{"bk": [1, -1]}]
+          [{"bk": [1, 1]}]
         ]
       },
       "captureMoves": [
