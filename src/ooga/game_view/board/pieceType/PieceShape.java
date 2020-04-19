@@ -18,6 +18,7 @@ public abstract class PieceShape extends StackPane {
     text = new Text(pieceName);
     shape = createShape(tileX, tileY, row, col);
 
+    relocate(col*tileY, row*tileX);
     getChildren().addAll(text, shape);
 
     if(fillerPiece){
