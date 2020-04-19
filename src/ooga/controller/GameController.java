@@ -5,7 +5,9 @@ import java.util.*;
 
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
+import ooga.models.GameModel;
 import ooga.models.GridModel;
+import ooga.parser.PieceParser;
 import ooga.parser.TemplateParser;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
@@ -14,6 +16,8 @@ import ooga.piece.movement.Movement;
 public class GameController {
   private TemplateParser myTemplateParser;
   private GridModel myGridModel;
+  private GameModel myGameModel = new GameModel();
+
   private int activePlayer = 1;
   private final String READY_TO_VIEW = "readyToView";
   private final String READY_TO_MOVE = "readyToMove";
@@ -25,7 +29,7 @@ public class GameController {
 
   public GameController () {
     this.myGridModel = new GridModel();
-    this.myTemplateParser = new TemplateParser(myGridModel);
+    this.myTemplateParser = new TemplateParser(myGridModel, myGameModel);
   }
 
   public void parseFile (String fileName) {
@@ -40,6 +44,14 @@ public class GameController {
 //    System.out.println(row+"."+col);
 
     Coordinate c = new Coordinate(row, col);
+    if (myGameModel.isCanPlace()) {
+      handlePlaceableClick(c);
+    } else {
+      handleNonPlaceableClick(c); // for chess style games
+    };
+  }
+
+  private void handleNonPlaceableClick(Coordinate c) {
     if (activePlayer == 1) {
       switch(playerStage) {
         case READY_TO_VIEW: // get valid moves
@@ -96,7 +108,20 @@ public class GameController {
           break;
       }
     }
-  System.out.println("Player " + activePlayer + " is " + playerStage + "\n");
+    System.out.println("Player " + activePlayer + " is " + playerStage + "\n");
+  }
+
+  private void handlePlaceableClick(Coordinate c) {
+    if (activePlayer == 1) {
+      try {
+        Piece newPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime", c.getRow(), c.getCol());
+        System.out.println(newPiece.getPosition());
+      } catch (InvalidPieceException e) {
+        e.printStackTrace();
+      }
+    } else {
+
+    }
   }
 
   private void togglePlayerStage (String playerStage) {
@@ -126,7 +151,6 @@ public class GameController {
     resetPlayerStage();
 
     activePlayer = activePlayer == 1 ? -1 : 1;
-    System.out.println(activePlayer + "Sdlkfjlsdfjsdkl");
   }
 
   public GridModel getGridModel() {
