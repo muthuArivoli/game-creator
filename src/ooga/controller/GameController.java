@@ -36,7 +36,7 @@ public class GameController {
   }
 
   public void handleClick(int row, int col) {
-    System.out.println("Selected " + row+":"+col);
+//    System.out.println(row+"."+col);
 
     Coordinate c = new Coordinate(row, col);
     if (activePlayer == 1) {
@@ -49,6 +49,7 @@ public class GameController {
 
           if(myGridModel.checkPieceExists(c) && myGridModel.getPiece(c).getSide() == activePlayer){
             selectedPiece = myGridModel.getPiece(c);
+            System.out.println("Selected: " + selectedPiece.getPieceName());
             validMoves = myGridModel.getValidMoves(c,1);
             togglePlayerStage(READY_TO_MOVE);
             setChanged(true);
@@ -115,5 +116,8 @@ public class GameController {
     return this.changed;
   }
 
+  public Collection<Coordinate> getValidMoves() {
+    return validMoves;
+  }
   public String getGameName() {return myTemplateParser.getGameName();}
 }

@@ -1,5 +1,6 @@
 package ooga.game_view.board;
 
+import java.util.Collection;
 import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -12,6 +13,7 @@ import ooga.controller.GameController;
 import ooga.game_view.board.tile.CircleTile;
 import ooga.game_view.board.tile.RectangleTile;
 import ooga.models.GridModel;
+import ooga.piece.Coordinate;
 import ooga.piece.Piece;
 
 public class GameBoard extends BorderPane {
@@ -73,6 +75,7 @@ public class GameBoard extends BorderPane {
     this.numCol = numCol;
     this.colors = colors;
 
+    Collection<Coordinate> validCoordinates = gameController.getValidMoves();
     Group tileGroup = new Group();
     Group pieceGroup = new Group();
 
@@ -81,7 +84,11 @@ public class GameBoard extends BorderPane {
 //        System.out.println("row:" + x + "col:" + y);
         Color main = colors.get(0);
         if ((x+y) % 2 == 0){main = colors.get(1);}
-          RectangleTile tile = new RectangleTile(gameController, tileWidth, tileHeight, x, y, main);
+
+        RectangleTile tile = new RectangleTile(gameController, tileWidth, tileHeight, x, y, main);
+        if (validCoordinates.contains(new Coordinate(y,x))) {
+          tile.setFill(Color.GREEN);
+        }
         if(grid.getGrid()[y][x]!= null){
           PieceView piece = new PieceView(gameController, tileWidth, tileHeight, x, y);
           pieceGroup.getChildren().addAll(piece);
