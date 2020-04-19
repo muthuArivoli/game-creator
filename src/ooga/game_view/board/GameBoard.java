@@ -78,14 +78,12 @@ public class GameBoard extends BorderPane {
     List<Coordinate> validCoordinates = gameController.getValidMoves();
     Group tileGroup = new Group();
     Group pieceGroup = new Group();
-
     for (int col = 0; col < numColTiles; col++){
       for (int row= 0; row < numRowTiles; row++) {
         Color main = colors.get(0);
         if ((col + row) % 2 == 0) {
           main = colors.get(1);
         }
-
         RectangleTile tile = new RectangleTile(gameController, tileWidth, tileHeight, row, col,
             main);
         if(new Coordinate(row, col).equals(gameController.getSelectedPiecePosition())){
@@ -93,10 +91,12 @@ public class GameBoard extends BorderPane {
         }else if (validCoordinates.contains(new Coordinate(row,col))) {
           tile.setFill(Color.LIGHTGREEN);
         }
-        if(grid.getGrid()[row][col]!= null){
-          PieceView piece = new PieceView(gameController, tileWidth, tileHeight, row, col);
-          pieceGroup.getChildren().addAll(piece);
+        PieceView piece = new PieceView(gameController, tileWidth, tileHeight, row, col);
+        if(grid.getGrid()[row][col]== null){
+          piece.setStroke(main);
+          piece.setFill(main);
         }
+        pieceGroup.getChildren().addAll(piece);
         tileGroup.getChildren().addAll(tile);
       }
     }

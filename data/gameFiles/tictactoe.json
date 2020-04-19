@@ -1,0 +1,38 @@
+{
+  "title": "tic tac toe",
+  "canPlace": true,
+  "rows": 3,
+  "columns": 3,
+  "pieces": {
+    "X": {
+      "canJump": 0,
+      "canCaptureJump": 0,
+      "normalMoves": {
+        "anyTime": [
+          []
+        ]
+      },
+      "captureMoves": [
+      ]
+    },
+    "O": {
+      "canJump": 0,
+      "canCaptureJump": 0,
+      "normalMoves": {
+        "anyTime": [
+          [{"bk": [1, -1]}]
+        ]
+      },
+      "captureMoves": [
+      ]
+    }
+  },
+  "grid": [
+    ["","",""],
+    ["","",""],
+    ["","",""]
+  ],
+  "goals": [
+    {"piecesInRow": 4}
+  ]
+}

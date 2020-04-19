@@ -3,7 +3,6 @@
   "canPlace": false,
   "rows": 8,
   "columns": 8,
-
   "pieces": {
     "pawn": {
       "canJump": 0,
