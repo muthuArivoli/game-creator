@@ -35,6 +35,7 @@ import javafx.util.Duration;
 import ooga.controller.GameController;
 import ooga.game_view.board.GameBoard;
 import ooga.models.GridModel;
+import ooga.piece.Coordinate;
 
 public class GameGuiController extends Application {
   private static final String LIGHT_STYLESHEET = "ooga/resources/styleSheets/lightMode.css";

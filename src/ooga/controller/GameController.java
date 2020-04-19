@@ -120,4 +120,11 @@ public class GameController {
     return validMoves;
   }
   public String getGameName() {return myTemplateParser.getGameName();}
+
+  public Coordinate getSelectedPiecePosition(){
+    if (selectedPiece != null) {
+      return selectedPiece.getPosition();
+    }
+    return null;
+  }
 }

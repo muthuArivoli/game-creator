@@ -80,13 +80,18 @@ public class GameBoard extends BorderPane {
     Group pieceGroup = new Group();
 
     for (int col = 0; col < numColTiles; col++){
-      for (int row= 0; row < numRowTiles; row++){
+      for (int row= 0; row < numRowTiles; row++) {
         Color main = colors.get(0);
-        if ((col+row) % 2 == 0){main = colors.get(1);}
+        if ((col + row) % 2 == 0) {
+          main = colors.get(1);
+        }
 
-        RectangleTile tile = new RectangleTile(gameController, tileWidth, tileHeight, row, col, main);
-        if (validCoordinates.contains(new Coordinate(row,col))) {
-          tile.setFill(Color.GREEN);
+        RectangleTile tile = new RectangleTile(gameController, tileWidth, tileHeight, row, col,
+            main);
+        if(new Coordinate(row, col).equals(gameController.getSelectedPiecePosition())){
+          tile.setFill(Color.LIGHTBLUE);
+        }else if (validCoordinates.contains(new Coordinate(row,col))) {
+          tile.setFill(Color.LIGHTGREEN);
         }
         if(grid.getGrid()[row][col]!= null){
           PieceView piece = new PieceView(gameController, tileWidth, tileHeight, row, col);
