@@ -51,11 +51,10 @@
   -fx-border-color: #000000;
   -fx-border-width: 3px;
   -fx-max-height: 150;
-  -fx-max-width: 280;
+  -fx-max-width: 250;
   -fx-padding: 30;
   -fx-font-family: "Copperplate Gothic Light";
-  -fx-font-size: 40;
-  -fx-pref-height: 150;
+  -fx-font-size: 35;
 }
 
 .label {

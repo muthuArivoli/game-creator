@@ -11,6 +11,8 @@ public class PieceView extends Ellipse {
   private int row;
   private int col;
 
+  private boolean fillerPiece;
+
   public PieceView (GameController gameController, double tileX, double tileY, int row, int col){
     this.gameController = gameController;
     setParameters(tileX, tileY);
@@ -19,9 +21,15 @@ public class PieceView extends Ellipse {
     this.row = row;
     this.col = col;
 
-    setOnMouseClicked(e -> {
-      this.gameController.handleClick(row, col);
-    });
+    if(!fillerPiece){
+      setOnMouseClicked(e -> {
+        this.gameController.handleClick(row, col);
+      });
+    }
+  }
+
+  public void setFillerPiece(boolean fillerPiece) {
+    this.fillerPiece = fillerPiece;
   }
 
   private void setParameters(double tileX, double tileY){

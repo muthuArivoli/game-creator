@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import ooga.controller.GameController;
 import ooga.game_view.board.tile.CircleTile;
 import ooga.game_view.board.tile.RectangleTile;
@@ -93,6 +94,7 @@ public class GameBoard extends BorderPane {
         }
         PieceView piece = new PieceView(gameController, tileWidth, tileHeight, row, col);
         if(grid.getGrid()[row][col]== null){
+          piece.setFillerPiece(true);
           piece.setStroke(main);
           piece.setFill(main);
         }

@@ -108,7 +108,7 @@ public class GameGuiController extends Application {
     myStage.setScene(myScene);
     myStage.show();
     //startGame(new File("./data/gameFiles/chess.json"));
-    startGame(new File("./data/gameFiles/connect4.json"));
+    //startGame(new File("./data/gameFiles/connect4.json"));
   }
 
   private void setBorderPane() {
