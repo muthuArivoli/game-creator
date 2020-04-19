@@ -60,14 +60,15 @@ public class GridModel {
     removePieceOverlap(possiblePaths,getPiece(c).getSide()); //remove paths that results in the final position overlapping with another piece of same side
 
     Set<Coordinate> validMoves = new HashSet<>();
-//    for(int i=0;i<possiblePaths.size();i++){
-//      System.out.println(possiblePaths.get(i));
-//      validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
-//    }
+    for(int i=0;i<possiblePaths.size();i++){
+      System.out.println(possiblePaths.get(i));
+      validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
+    }
     return validMoves;
   }
 
   private void removePieceOverlap(List<List<Coordinate>> possiblePaths, int pieceSide) {
+    System.out.println(possiblePaths);
     for(int i=0;i<possiblePaths.size();i++){
       if(checkPieceExists(possiblePaths.get(i).get(possiblePaths.get(i).size()-1))
               && getPiece(possiblePaths.get(i).get(possiblePaths.get(i).size()-1)).getSide()==pieceSide){

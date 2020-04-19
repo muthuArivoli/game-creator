@@ -31,7 +31,11 @@ public class GameController {
     }
 
     // test code
+<<<<<<< HEAD
     //pieceSelected(6,4);
+=======
+    pieceSelected(7,0);
+>>>>>>> e497327f9311059f117cc7af3140dbbf56688261
 
   }
 
@@ -39,8 +43,11 @@ public class GameController {
 //    for (Coordinate c: myGridModel.getValidMoves((new Coordinate(x, y)), 1)) {
 //        System.out.println(c.getRow() + " " + c.getCol());
 //      }
-
-    return myGridModel.getValidMoves((new Coordinate(x, y)), 1);
+    Collection<Coordinate> validMoves = myGridModel.getValidMoves((new Coordinate(x, y)), 1);
+    for (Coordinate move: validMoves) {
+      System.out.println(move.getRow() + "" + move.getCol());
+    }
+    return validMoves;
   }
 
     //test code for fd
