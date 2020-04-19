@@ -1,0 +1,164 @@
+{
+  "title": "tic tac toe",
+  "rows": 8,
+  "columns": 8,
+  "pieces": {
+    "pawn": {
+      "canPlace": 0,
+      "canJump": 0,
+      "canCaptureJump": 0,
+      "normalMoves": {
+        "firstTime": [
+          [{"fd": [1,2]}]
+        ],
+        "anyTime": [
+          [{"fd": [1,1]}]
+        ]
+      },
+      "captureMoves": [
+        [{"diagFdLeft": [1,1]}],
+        [{"diagFdRight": [1,1]}]
+      ]
+    },
+    "knight":{
+      "canPlace": 0,
+      "canJump": 1,
+      "canCaptureJump": 0,
+
+      "normalMoves": {
+        "anyTime": [
+          [{"fd":  [2,2]},{"left":  [1,1]}],
+          [{"fd":  [2,2]},{"right": [1,1]}],
+          [{"bk":  [2,2]},{"left":  [1,1]}],
+          [{"bk":  [2,2]},{"right": [1,1]}],
+          [{"right":  [2,2]},{"bk": [1,1]}],
+          [{"right":  [2,2]},{"fd": [1,1]}],
+          [{"left":  [2,2]},{"bk":  [1,1]}],
+          [{"left":  [2,2]},{"fd":  [1,1]}]
+        ]
+      },
+      "captureMoves":  [
+        [{"fd":  [2,2]},{"left":  [1,1]}],
+        [{"fd":  [2,2]},{"right":  [1,1]}],
+        [{"bk":  [2,2]},{"left":  [1,1]}],
+        [{"bk":  [2,2]},{"right":  [1,1]}],
+        [{"right":  [2,2]},{"bk":  [1,1]}],
+        [{"right":  [2,2]},{"fd":  [1,1]}],
+        [{"left":  [2,2]},{"bk":  [1,1]}],
+        [{"left":  [2,2]},{"fd":  [1,1]}]
+      ]
+
+    },
+    "rook": {
+      "canPlace": 0,
+      "canJump": 0,
+      "canCaptureJump": 0,
+
+      "normalMoves": {
+        "anyTime": [
+          [{"fd":  [1,-1]}],
+          [{"bk":  [1,-1]}],
+          [{"left":  [1,-1]}],
+          [{"right":  [1,-1]}]
+        ]
+      },
+      "captureMoves": [
+        [{"fd":  [1,-1]}],
+        [{"bk":  [1,-1]}],
+        [{"left":  [1,-1]}],
+        [{"right":  [1,-1]}]
+      ]
+    },
+    "bishop":{
+      "canPlace": 0,
+      "canJump": 0,
+      "canCaptureJump": 0,
+
+      "normalMoves": {
+        "anyTime": [
+          [{"diagFdLeft":  [1,-1]}],
+          [{"diagFdRight":  [1,-1]}],
+          [{"diagBkLeft":  [1,-1]}],
+          [{"diagBkRight":  [1,-1]}]
+        ]
+      },
+      "captureMoves": [
+        [{"diagFdLeft":  [1,-1]}],
+        [{"diagFdRight":  [1,-1]}],
+        [{"diagBkLeft":  [1,-1]}],
+        [{"diagBkRight":  [1,-1]}]
+      ]
+    },
+    "queen":{
+      "canPlace": 0,
+      "canJump": 0,
+      "canCaptureJump": 0,
+
+      "normalMoves": {
+        "anyTime": [
+          [{"fd":  [1,-1]}],
+          [{"bk":  [1,-1]}],
+          [{"left":  [1,-1]}],
+          [{"right":  [1,-1]}],
+          [{"diagFdLeft":  [1,-1]}],
+          [{"diagFdRight":  [1,-1]}],
+          [{"diagBkLeft":  [1,-1]}],
+          [{"diagBkRight":  [1,-1]}]
+        ]
+      },
+      "captureMoves":  [
+        [{"fd":  [1,-1]}],
+        [{"bk":  [1,-1]}],
+        [{"left":  [1,-1]}],
+        [{"right":  [1,-1]}],
+        [{"diagFdLeft":  [1,-1]}],
+        [{"diagFdRight":  [1,-1]}],
+        [{"diagBkLeft":  [1,-1]}],
+        [{"diagBkRight":  [1,-1]}]
+      ]
+    },
+    "king":{
+      "canPlace": 0,
+      "canJump": 0,
+      "canCaptureJump": 0,
+
+      "normalMoves": {
+        "anyTime": [
+          [{"fd":  [1,1]}],
+          [{"bk":  [1,1]}],
+          [{"left":  [1,1]}],
+          [{"right":  [1,1]}],
+          [{"diagFdLeft":  [1,1]}],
+          [{"diagFdRight":  [1,1]}],
+          [{"diagBkLeft":  [1,1]}],
+          [{"diagBkRight":  [1,1]}]
+        ]
+      },
+      "captureMoves": [
+        [{"fd":  [1,1]}],
+        [{"bk":  [1,1]}],
+        [{"left":  [1,1]}],
+        [{"right":  [1,1]}],
+        [{"diagFdLeft":  [1,1]}],
+        [{"diagFdRight":  [1,1]}],
+        [{"diagBkLeft":  [1,1]}],
+        [{"diagBkRight":  [1,1]}]
+      ]
+
+    }
+  },
+  "grid": [
+    ["rook2", "knight2", "bishop2", "queen2", "king2", "bishop2", "knight2", "rook2"],
+    ["pawn2","pawn2","pawn2","pawn2","pawn2","pawn2","pawn2","pawn2"],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["pawn1","pawn1","pawn1","pawn1","pawn1","pawn1","pawn1","pawn1"],
+    ["rook1", "knight1", "bishop1", "queen1", "king1", "bishop1", "knight1", "rook1"]
+  ],
+  "goals": [
+    {"enemyPiecesLeft": 0},
+    {"pieceTaken": "king"}
+  ]
+}
