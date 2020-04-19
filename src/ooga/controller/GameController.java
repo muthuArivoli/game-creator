@@ -18,6 +18,7 @@ public class GameController {
   private final String READY_TO_MOVE = "readyToMove";
   private String playerStage = READY_TO_VIEW;
   private Piece selectedPiece;
+  private boolean changed = false;
 
   private Collection<Coordinate> validMoves = new ArrayList<>();
 
@@ -50,7 +51,7 @@ public class GameController {
             selectedPiece = myGridModel.getPiece(c);
             validMoves = myGridModel.getValidMoves(c,1);
             togglePlayerStage(READY_TO_MOVE);
-
+            setChanged(true);
             System.out.println("Valid moves generated:");
             for (Coordinate move: validMoves) {
               System.out.println(move.getRow() + "" + move.getCol());
@@ -65,6 +66,7 @@ public class GameController {
             System.out.println("Moved piece");
             moveSelectedPiece(c);
           }
+          setChanged(true);
 
           break;
       }
@@ -103,6 +105,14 @@ public class GameController {
 
   public GridModel getGridModel() {
     return myGridModel;
+  }
+
+  public void setChanged (boolean changed) {
+    this.changed = changed;
+  }
+
+  public boolean isChanged() {
+    return this.changed;
   }
 
   public String getGameName() {return myTemplateParser.getGameName();}

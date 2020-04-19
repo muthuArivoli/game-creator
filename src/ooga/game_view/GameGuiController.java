@@ -159,6 +159,11 @@ public class GameGuiController extends Application {
     checkNewGame(buttons.getNewGameStatus());
     checkSettings(buttons.getSettingsStatus());
     checkRestartGame(buttons.getRestartGameStatus());
+
+    if(myGameController.isChanged()) {
+      // call update method
+      myGameController.setChanged(false);
+    }
   }
 
   private void changeLanguage(String language) throws FileNotFoundException {
