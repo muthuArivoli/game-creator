@@ -44,13 +44,6 @@ public class GridModel {
   }
 
   public Piece getPiece(Coordinate coordinate){
-//    System.out.println("Getting coordinate: " + coordinate.getRow() + " " + coordinate.getCol());
-//    for (int i = 0; i < myGrid.length; i++) {
-//      for (int j = 0; j < myGrid[0].length; j++) {
-//        System.out.print(myGrid[i][j]);
-//      }
-//      System.out.println();
-//    }
     return myGrid[coordinate.getRow()][coordinate.getCol()];
   }
 
@@ -82,7 +75,8 @@ public class GridModel {
     for(int i=0;i<possiblePaths.size();i++){
       validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
     }
-    return new ArrayList<>(validMoves);
+    System.out.println(validMoves);
+    return new ArrayList<Coordinate>(validMoves);
   }
 
   public List<Coordinate> getPositions (int playerSide) {
@@ -122,6 +116,14 @@ public class GridModel {
     }
   }
 
+  public void print () {
+    for (int i = 0; i < myGrid.length; i++) {
+      for (int j = 0; j < myGrid[0].length; j++) {
+        System.out.print(myGrid[i][j]);
+      }
+      System.out.println();
+    }
+  }
   public Piece[][] getGrid () {
     return myGrid;
   }

@@ -114,8 +114,12 @@ public class GameController {
   private void handlePlaceableClick(Coordinate c) {
     if (activePlayer == 1) {
       try {
-        Piece newPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime", c.getRow(), c.getCol());
-        System.out.println(newPiece.getPosition());
+        System.out.println(c);
+        selectedPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
+        myGridModel.addPiece(selectedPiece, c.getRow(), c.getCol());
+
+        List<Coordinate> validMoves = myGridModel.getValidMoves(c, 1);
+        myGridModel.movePiece(selectedPiece, Collections.max(validMoves));
       } catch (InvalidPieceException e) {
         e.printStackTrace();
       }

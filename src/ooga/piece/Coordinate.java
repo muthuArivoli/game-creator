@@ -2,7 +2,7 @@ package ooga.piece;
 
 import java.util.Objects;
 
-public class Coordinate {
+public class Coordinate implements Comparable<Coordinate>{
     private int row;
     private int col;
     public Coordinate(int row, int col){
@@ -47,5 +47,10 @@ public class Coordinate {
 
     public String toString(){
         return row + "" + col;
+    }
+
+    @Override
+    public int compareTo(Coordinate o) {
+        return getCol()+getRow() - (o.getCol()+o.getRow());
     }
 }
