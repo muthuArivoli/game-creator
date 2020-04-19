@@ -161,7 +161,7 @@ public class GameGuiController extends Application {
     checkRestartGame(buttons.getRestartGameStatus());
 
     if(myGameController.isChanged()) {
-      // call update method
+      gameDisplay.updateDisplay();
       myGameController.setChanged(false);
     }
   }

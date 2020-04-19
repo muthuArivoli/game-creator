@@ -12,6 +12,7 @@ import ooga.controller.GameController;
 import ooga.game_view.board.tile.CircleTile;
 import ooga.game_view.board.tile.RectangleTile;
 import ooga.models.GridModel;
+import ooga.piece.Piece;
 
 public class GameBoard extends BorderPane {
   private GameController gameController;
@@ -24,6 +25,10 @@ public class GameBoard extends BorderPane {
 
   private HBox displayBox = new HBox();
   private StackPane everything;
+
+  private int numRow;
+  private int numCol;
+  private List<Color>colors;
 
   public GameBoard(){
     this.getStyleClass().add("GameBoard");
@@ -64,6 +69,10 @@ public class GameBoard extends BorderPane {
   }
 
   private void createTiles(GridModel grid, int numRow, int numCol, List<Color> colors){
+    this.numRow = numRow;
+    this.numCol = numCol;
+    this.colors = colors;
+
     Group tileGroup = new Group();
     Group pieceGroup = new Group();
 
@@ -83,4 +92,17 @@ public class GameBoard extends BorderPane {
     everything.getChildren().addAll(tileGroup, pieceGroup);
   }
 
+  public void updateDisplay () {
+    everything.getChildren().clear();
+
+//    Piece[][] myGrid = gameController.getGridModel().getGrid();
+//        for (int i = 0; i < myGrid.length; i++) {
+//      for (int j = 0; j < myGrid[0].length; j++) {
+//        System.out.print(myGrid[i][j]);
+//      }
+//      System.out.println();
+//    }
+
+    createTiles(gameController.getGridModel(), numRow, numCol, colors);
+  }
 }

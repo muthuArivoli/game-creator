@@ -24,7 +24,7 @@ public class Piece {
     public Piece(String name, int side, int row, int column, List<Movement> normalFirstMovements,List<Movement> normalAnyMovements, List<Movement> captureMovements,boolean canJump, boolean canPlace, boolean canCaptureJump) {
         this.name = name;
         this.side = side;
-        position = new Coordinate(column, row);
+        position = new Coordinate(row, column);
 
         this.normalFirstMovements = normalFirstMovements;
         this.normalAnyMovements = normalAnyMovements;
