@@ -31,12 +31,7 @@ public class GameController {
     }
 
     // test code
-<<<<<<< HEAD
-    //pieceSelected(6,4);
-=======
     pieceSelected(7,0);
->>>>>>> e497327f9311059f117cc7af3140dbbf56688261
-
   }
 
   public Collection<Coordinate> pieceSelected (int x, int y) {
