@@ -9,7 +9,6 @@
       "canCaptureJump": 0,
       "normalMoves": {
         "anyTime": [
-          [{"bk": [1, 1]}]
         ]
       },
       "captureMoves": [
