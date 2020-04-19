@@ -1,5 +1,6 @@
 package ooga.game_view.board;
 
+import java.util.Collection;
 import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -8,11 +9,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import ooga.controller.GameController;
 import ooga.game_view.board.tile.CircleTile;
 import ooga.game_view.board.tile.RectangleTile;
 import ooga.models.GridModel;
+import ooga.piece.Coordinate;
+import ooga.piece.Piece;
 
 public class GameBoard extends BorderPane {
+  private GameController gameController;
+  private GridModel gridModel;
   private double tileWidth;
   private double tileHeight;
   private double displayWidth;
@@ -23,19 +29,28 @@ public class GameBoard extends BorderPane {
   private HBox displayBox = new HBox();
   private StackPane everything;
 
+  private int numRowTiles;
+  private int numColTiles;
+  private List<Color>colors;
+
   public GameBoard(){
     this.getStyleClass().add("GameBoard");
     boardBackground = this.getBackground();
   }
 
-  public void createGameBoard(GridModel gridModel, List<Color> colors, double width, double height){
+  public void createGameBoard(GameController gameController, List<Color> colors, double width, double height){
+    this.gameController = gameController;
+    this.gridModel = gameController.getGridModel();
+    this.colors = colors;
+
     everything = new StackPane();
     everything.setBackground(boardBackground);
     everything.setMaxSize(boardSideLength, boardSideLength);
     BorderPane.setAlignment(everything, Pos.TOP_CENTER);
     calculateSize(width, height);
-    int numRowTiles = gridModel.getGrid().length;
-    int numColTiles = gridModel.getGrid()[0].length;
+
+    numRowTiles = gridModel.getGrid().length;
+    numColTiles = gridModel.getGrid()[0].length;
     tileWidth = boardSideLength/numRowTiles;
     tileHeight = boardSideLength/numColTiles;
     createPieceDisplay();
@@ -59,21 +74,39 @@ public class GameBoard extends BorderPane {
     displayBox.getStyleClass().add("displayBox");
   }
 
-  private void createTiles(GridModel grid, int numRow, int numCol, List<Color> colors){
+  private void createTiles(GridModel grid, int numRowTiles, int numColTiles, List<Color> colors){
+    Collection<Coordinate> validCoordinates = gameController.getValidMoves();
     Group tileGroup = new Group();
     Group pieceGroup = new Group();
-    for (int x = 0; x < numCol; x++){
-      for (int y= 0; y < numRow; y++){
+    for (int col = 0; col < numColTiles; col++){
+      for (int row= 0; row < numRowTiles; row++){
         Color main = colors.get(0);
-        if ((x+y) % 2 == 0){main = colors.get(1);}
-          RectangleTile tile = new RectangleTile(tileWidth, tileHeight, x, y, main);
-        if(grid.getGrid()[y][x]!= null){
-          PieceView piece = new PieceView(tileWidth, tileHeight, x, y);
+        if ((col+row) % 2 == 0){main = colors.get(1);}
+        RectangleTile tile = new RectangleTile(gameController, tileWidth, tileHeight, row, col, main);
+        if (validCoordinates.contains(new Coordinate(row,col))) {
+          tile.setFill(Color.GREEN);
+        }
+        if(grid.getGrid()[row][col]!= null){
+          PieceView piece = new PieceView(gameController, tileWidth, tileHeight, row, col);
           pieceGroup.getChildren().addAll(piece);
         }
         tileGroup.getChildren().addAll(tile);
       }
     }
     everything.getChildren().addAll(tileGroup, pieceGroup);
+  }
+
+  public void updateDisplay () {
+    everything.getChildren().clear();
+
+//    Piece[][] myGrid = gameController.getGridModel().getGrid();
+//        for (int i = 0; i < myGrid.length; i++) {
+//      for (int j = 0; j < myGrid[0].length; j++) {
+//        System.out.print(myGrid[i][j]);
+//      }
+//      System.out.println();
+//    }
+
+    createTiles(gridModel, numRowTiles, numColTiles, colors);
   }
 }

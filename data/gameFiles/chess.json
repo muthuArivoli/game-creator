@@ -6,6 +6,7 @@
     "pawn": {
       "canPlace": 0,
       "canJump": 0,
+      "canCaptureJump": 0,
       "normalMoves": {
         "firstTime": [
           [{"fd": [1,2]}]
@@ -22,6 +23,8 @@
     "knight":{
       "canPlace": 0,
       "canJump": 1,
+      "canCaptureJump": 0,
+
       "normalMoves": {
         "anyTime": [
             [{"fd":  [2,2]},{"left":  [1,1]}],
@@ -49,6 +52,8 @@
     "rook": {
       "canPlace": 0,
       "canJump": 0,
+      "canCaptureJump": 0,
+
       "normalMoves": {
         "anyTime": [
             [{"fd":  [1,-1]}],
@@ -67,6 +72,8 @@
     "bishop":{
       "canPlace": 0,
       "canJump": 0,
+      "canCaptureJump": 0,
+
       "normalMoves": {
         "anyTime": [
             [{"diagFdLeft":  [1,-1]}],
@@ -85,6 +92,8 @@
     "queen":{
       "canPlace": 0,
       "canJump": 0,
+      "canCaptureJump": 0,
+
       "normalMoves": {
         "anyTime": [
             [{"fd":  [1,-1]}],
@@ -111,6 +120,8 @@
     "king":{
       "canPlace": 0,
       "canJump": 0,
+      "canCaptureJump": 0,
+
       "normalMoves": {
         "anyTime": [
             [{"fd":  [1,1]}],

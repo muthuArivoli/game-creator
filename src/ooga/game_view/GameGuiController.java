@@ -106,6 +106,7 @@ public class GameGuiController extends Application {
     myScene.getStylesheets().add(currentStyleSheet);
     myStage.setScene(myScene);
     myStage.show();
+    startGame(new File("./data/gameFiles/chess.json"));
   }
 
   private void setBorderPane() {
@@ -158,6 +159,11 @@ public class GameGuiController extends Application {
     checkNewGame(buttons.getNewGameStatus());
     checkSettings(buttons.getSettingsStatus());
     checkRestartGame(buttons.getRestartGameStatus());
+
+    if(myGameController.isChanged()) {
+      gameDisplay.updateDisplay();
+      myGameController.setChanged(false);
+    }
   }
 
   private void changeLanguage(String language) throws FileNotFoundException {
@@ -192,7 +198,7 @@ public class GameGuiController extends Application {
       ArrayList<Color> colors = new ArrayList<>();
       colors.add(Color.WHITE);
       colors.add(Color.BLACK);
-      gameDisplay.createGameBoard(myGameController.getGridModel(),colors, scene_width, scene_height);
+      gameDisplay.createGameBoard(myGameController,colors, scene_width, scene_height);
       titleBox.getChildren().add(gameTitle);
     }
   }

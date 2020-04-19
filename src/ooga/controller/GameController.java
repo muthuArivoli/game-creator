@@ -9,14 +9,18 @@ import ooga.models.GridModel;
 import ooga.parser.TemplateParser;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
-import ooga.piece.movement.Movement;
-import ooga.piece.movement.MovementFactory;
 
 public class GameController {
   private TemplateParser myTemplateParser;
   private GridModel myGridModel;
-  private int playerTurn = 1;
+  private int activePlayer = 1;
+  private final String READY_TO_VIEW = "readyToView";
+  private final String READY_TO_MOVE = "readyToMove";
+  private String playerStage = READY_TO_VIEW;
   private Piece selectedPiece;
+  private boolean changed = false;
+
+  private Collection<Coordinate> validMoves = new ArrayList<>();
 
   public GameController () {
     this.myGridModel = new GridModel();
@@ -29,61 +33,91 @@ public class GameController {
     } catch (FileNotFoundException | InvalidGridException | InvalidPieceException e) {
       System.out.println(e.getMessage());
     }
-
-    // test code
-    pieceSelected(7,0);
   }
 
-  public Collection<Coordinate> pieceSelected (int x, int y) {
-//    for (Coordinate c: myGridModel.getValidMoves((new Coordinate(x, y)), 1)) {
-//        System.out.println(c.getRow() + " " + c.getCol());
-//      }
-    Collection<Coordinate> validMoves = myGridModel.getValidMoves((new Coordinate(x, y)), 1);
-    for (Coordinate move: validMoves) {
-      System.out.println(move.getRow() + "" + move.getCol());
+  public void handleClick(int row, int col) {
+//    System.out.println(row+"."+col);
+
+    Coordinate c = new Coordinate(row, col);
+    if (activePlayer == 1) {
+      switch(playerStage) {
+        case READY_TO_VIEW: // get valid moves
+//          if(myGridModel.checkPieceExists(c)){
+//            System.out.println( myGridModel.getPiece(c).getSide() == activePlayer);
+//          }
+//          System.out.println(myGridModel);
+
+          if(myGridModel.checkPieceExists(c) && myGridModel.getPiece(c).getSide() == activePlayer){
+            selectedPiece = myGridModel.getPiece(c);
+            System.out.println("Selected: " + selectedPiece.getPieceName());
+            validMoves = myGridModel.getValidMoves(c,1);
+            togglePlayerStage(READY_TO_MOVE);
+            setChanged(true);
+            System.out.println("Valid moves generated:");
+            for (Coordinate move: validMoves) {
+              System.out.println(move.getRow() + "" + move.getCol());
+            }
+          }
+          break;
+        case READY_TO_MOVE:
+          if(myGridModel.checkPieceExists(c) && myGridModel.getPiece(c).getSide() == activePlayer){
+            System.out.println("Deactivating selected piece.");
+            resetPlayerStage();
+          } else {
+            System.out.println("Moved piece");
+            moveSelectedPiece(c);
+          }
+          setChanged(true);
+
+          break;
+      }
     }
-    return validMoves;
+  System.out.println(playerStage + "\n");
   }
 
-    //test code for fd
-//    try {
-//      Movement forward = new MovementFactory().getMovement("fd", -1);
-//      allValidIndices.addAll(forward.getValidIndices(new Coordinate(x, y), 1, myGridModel));
-//      for (Coordinate c: allValidIndices) {
-//        System.out.println(c.getRow() + " " + c.getCol());
-//      }
-//    } catch (Exception e){
-//
-//    }
+  private void togglePlayerStage (String playerStage) {
+//    playerStage = playerStage.equals(READY_TO_MOVE) ? READY_TO_VIEW  : READY_TO_MOVE;
+    this.playerStage = playerStage;
+  }
 
-    //return new ArrayList (allValidIndices);
+  public void moveSelectedPiece (Coordinate c) {
+    if (validMoves.contains(c)){
+      if(myGridModel.checkPieceExists(c) && selectedPiece.isCanCaptureJump()) {
+        // don't switch sides
+      } else {
+        myGridModel.movePiece(selectedPiece, c);
+        switchPlayers();
+      }
+    }
 
+  }
 
-//  private Set<Coordinate> validateMoves (Set<Coordinate> indicesToCheck) {
-//    for (Coordinate c: indicesToCheck) {
-//
-//    }
-//  }
-//
-//  private Set<Coordinate> removeMovesOutOfBounds (Set <Coordinate> allPossibleIndices) {
-//    Set <Coordinate> ret = new HashSet<>();
-//    Coordinate bounds = myGridModel.getDimensions();
-//    for (Coordinate c: allPossibleIndices) {
-//      if(c.getXpos() >= 0 && c.getXpos() < bounds.getXpos()
-//          && c.getYpos() >= 0 && c.getYpos() < bounds.getYpos()){
-//        ret.add(c);
-//      }
-//    }
-//    return ret;
-//  }
+  private void resetPlayerStage () {
+//    activePlayer = activePlayer == 1 ? 2 : 1;
+    togglePlayerStage(READY_TO_VIEW);
+    selectedPiece = null;
+    validMoves.clear();
+  }
 
-  public void moveSelectedPiece (int x, int y) {
-
+  private void switchPlayers () {
+    resetPlayerStage();
+//    activePlayer = activePlayer == 1 ? 2 : 1;
   }
 
   public GridModel getGridModel() {
     return myGridModel;
   }
 
+  public void setChanged (boolean changed) {
+    this.changed = changed;
+  }
+
+  public boolean isChanged() {
+    return this.changed;
+  }
+
+  public Collection<Coordinate> getValidMoves() {
+    return validMoves;
+  }
   public String getGameName() {return myTemplateParser.getGameName();}
 }
