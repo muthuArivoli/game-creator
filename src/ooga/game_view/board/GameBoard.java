@@ -2,6 +2,7 @@ package ooga.game_view.board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -24,6 +25,7 @@ import ooga.piece.Coordinate;
 public class GameBoard extends BorderPane {
   private GameController gameController;
   private GridModel gridModel;
+  private String currentStyleSheet;
   private double tileWidth;
   private double tileHeight;
   private double displayWidth;
@@ -31,7 +33,7 @@ public class GameBoard extends BorderPane {
   private double boardSideLength;
   private Background boardBackground;
 
-  private HBox pieceDisplayBox;
+  private ExtraPiecesDisplay pieceDisplayBox;
   private StackPane boardDisplay;
 
   private int numRowTiles;
@@ -44,8 +46,9 @@ public class GameBoard extends BorderPane {
     boardBackground = this.getBackground();
   }
 
-  public void createGameBoard(GameController gameController, List<Color> colors, double width, double height){
+  public void createGameBoard(GameController gameController, String styleSheet, List<Color> colors, double width, double height){
     this.gameController = gameController;
+    this.currentStyleSheet = styleSheet;
     this.gridModel = gameController.getGridModel();
     this.colors = colors;
 
@@ -59,7 +62,7 @@ public class GameBoard extends BorderPane {
     numColTiles = gridModel.getGrid()[0].length;
     tileWidth = boardSideLength/numRowTiles;
     tileHeight = boardSideLength/numColTiles;
-    pieceDisplayBox = new ExtraPiecesDisplay(displayWidth, displayHeight, gameController);
+    pieceDisplayBox = new ExtraPiecesDisplay(displayWidth, displayHeight, gameController, currentStyleSheet);
     populateBoard();
     this.setCenter(boardDisplay);
     this.setBottom(pieceDisplayBox);
@@ -68,6 +71,10 @@ public class GameBoard extends BorderPane {
   public void updateDisplay () {
     boardDisplay.getChildren().clear();
     populateBoard();
+  }
+
+  public ExtraPiecesDisplay getPieceDisplayBox(){
+    return pieceDisplayBox;
   }
 
   private void calculateSize(double dispWidth, double dispHeight) {
