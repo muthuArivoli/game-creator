@@ -59,8 +59,7 @@ public class GameBoard extends BorderPane {
     numColTiles = gridModel.getGrid()[0].length;
     tileWidth = boardSideLength/numRowTiles;
     tileHeight = boardSideLength/numColTiles;
-    pieceDisplayBox = new HBox();
-    createPieceDisplay();
+    pieceDisplayBox = new ExtraPiecesDisplay(displayWidth, displayHeight, gameController);
     populateBoard();
     this.setCenter(boardDisplay);
     this.setBottom(pieceDisplayBox);
@@ -79,36 +78,6 @@ public class GameBoard extends BorderPane {
       boardSideLength = displayWidth * 0.62;
     }
     this.setMaxSize(displayWidth, dispHeight);
-  }
-
-  private void createPieceDisplay() {
-    pieceDisplayBox.setPrefSize(displayWidth, displayHeight);
-    pieceDisplayBox.getStyleClass().add("displayBox");
-    Button choosePiece = new Button("CHOOSE EXTRA PIECE");
-    choosePiece.setPrefSize(displayWidth/2, displayHeight/2);
-    choosePiece.setOnAction(e -> displayExtraPieces());
-    pieceDisplayBox.setAlignment(Pos.CENTER);
-    pieceDisplayBox.getChildren().addAll(choosePiece);
-  }
-
-  private void displayExtraPieces(){
-    PieceNames = new ArrayList<String>();
-    PieceNames.add("dime");
-    PieceNames.add("nickle");
-
-    VBox rt = new VBox();
-    rt.setSpacing(10);
-    rt.setPadding(new Insets(20,0,0, 100));
-    for (String name: PieceNames){
-      Button piece = new Button(name);
-      //piece.setOnAction(e -> gameController.handleClick(name));
-      rt.getChildren().addAll(piece);
-    }
-    Stage s = new Stage();
-    s.setTitle("CHOOSE EXTRA PIECE");
-    Scene temporaryScene = new Scene(rt, 250,250);
-    s.setScene(temporaryScene);
-    s.show();
   }
 
   private void populateBoard(){
