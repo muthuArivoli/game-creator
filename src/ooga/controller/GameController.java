@@ -249,9 +249,10 @@ public class GameController {
 
     List<Coordinate> playerPositions = myGridModel.getPositions(activePlayer);
     Collections.shuffle(playerPositions);
-    while(!playerPositions.isEmpty()) {
+    if(!playerPositions.isEmpty()) {
       for(Coordinate currPiece: playerPositions) {
-        List<Coordinate> currValidMoves = myGridModel.getValidMoves(currPiece, nonActivePlayer);
+        System.out.println(currPiece);
+        List<Coordinate> currValidMoves = myGridModel.getValidMoves(currPiece, activePlayer);
         Collections.shuffle(currValidMoves);
         if(!currValidMoves.isEmpty()) {
           for(Coordinate currMove: currValidMoves) {
@@ -268,7 +269,6 @@ public class GameController {
           }
         }
       }
-      break;
     }
 
     List<Coordinate> returnList = new ArrayList<>();
