@@ -46,6 +46,10 @@
   -fx-border-color: black;
 }
 
+.rt{
+  -fx-background-color: #ffffff;
+}
+
 .titleBox {
   -fx-background-color: #FFFFCC;
   -fx-border-color: #000000;
