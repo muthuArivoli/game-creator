@@ -1,14 +1,24 @@
 package ooga.models;
 
+import org.json.JSONObject;
+
 public class GameModel {
-  private GridModel myGridModel;
+  private boolean canPlace;
+  private JSONObject pieceJSON;
 
-  public GameModel () {
-    this.myGridModel = new GridModel();
-
+  public void setCanPlace (boolean canPlace) {
+    this.canPlace = canPlace;
   }
 
-  public GridModel getMyGridModel() {
-    return myGridModel;
+  public void setPieceJSON (JSONObject pieceJSON) {
+    this.pieceJSON = pieceJSON;
+  }
+
+  public boolean isCanPlace() {
+    return canPlace;
+  }
+
+  public JSONObject getPieceJSON () {
+    return pieceJSON;
   }
 }

@@ -25,7 +25,6 @@ public class CompositeMovement implements Movement {
     @Override
     public List<List<Coordinate>> getValidPaths(Coordinate position, int playerSide, Predicate<Coordinate> checkCoordinatesInBound) {
         List<List<Coordinate>> paths = new ArrayList<>();
-        paths.add(new ArrayList<>());
         paths.addAll(movements.get(0).getValidPaths(position,playerSide,checkCoordinatesInBound));
         for(int i=1;i<movements.size();i++){
             List<List<Coordinate>> newPaths = new ArrayList<>();

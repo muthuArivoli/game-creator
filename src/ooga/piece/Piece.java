@@ -17,20 +17,20 @@ public class Piece {
 
     private List<Movement> captureMovements;
 
-    private boolean canPlace;
-    private  boolean canJump;
+    private boolean canJump;
+    private boolean canCaptureJump;
 
-    public Piece(String name, int side, int row, int column, List<Movement> normalFirstMovements,List<Movement> normalAnyMovements, List<Movement> captureMovements,boolean canJump, boolean canPlace) {
+    public Piece(String name, int side, int row, int column, List<Movement> normalFirstMovements,List<Movement> normalAnyMovements, List<Movement> captureMovements,boolean canJump, boolean canCaptureJump) {
         this.name = name;
-        this.side = side;
-        position = new Coordinate(column, row);
+        this.side = side == 2 ? -1 : 1;
+        position = new Coordinate(row, column);
 
         this.normalFirstMovements = normalFirstMovements;
         this.normalAnyMovements = normalAnyMovements;
         this.captureMovements = captureMovements;
 
         this.canJump = canJump;
-        this.canPlace = canPlace;
+        this.canCaptureJump = canCaptureJump;
     }
 
     public List<Movement> getNormalFirstMovements (){
@@ -55,11 +55,22 @@ public class Piece {
         return side;
     }
 
-    public boolean isCanPlace () {
-        return canPlace;
-    }
 
     public boolean isCanJump() {
         return canJump;
+    }
+
+    public boolean isCanCaptureJump () {
+        return canCaptureJump;
+    }
+
+    public String getPieceName() {return name;}
+
+    public Coordinate getPosition() {
+        return position;
+    }
+
+    public void setPosition (int x, int y) {
+        position = new Coordinate(x, y);
     }
 }

@@ -1,5 +1,6 @@
 package ooga.models;
 
+import java.util.ArrayList;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
 
@@ -31,6 +32,17 @@ public class GridModel {
     myGrid[x][y] = piece;
   }
 
+  public void movePiece(Piece piece, Coordinate c) {
+    removePiece(piece.getPosition());
+    piece.setPosition(c.getRow(), c.getCol());
+    addPiece(piece, c.getRow(), c.getCol());
+  }
+
+  public void removePiece(Coordinate c) {
+    System.out.println("removing " + c.getRow() + " " + c.getCol());
+    myGrid[c.getRow()][c.getCol()] = null;
+  }
+
   public Piece getPiece(Coordinate coordinate){
     return myGrid[coordinate.getRow()][coordinate.getCol()];
   }
@@ -44,22 +56,42 @@ public class GridModel {
         myGrid[c.getRow()][c.getCol()] != null;
   }
 
-  public Set<Coordinate> getValidMoves(Coordinate c, int playerSide){
+  public List<Coordinate> getValidMoves(Coordinate c, int playerSide){
     if(!checkPieceExists(c)){
       //HANDLE EXCEPTION
     }
     Predicate<Coordinate> checkCoordinateInBounds = coord ->(coord.getRow() >=0 && coord.getRow() < rows &&
             coord.getCol() >= 0 && coord.getCol() < cols);
-    List<List<Coordinate>> possiblePaths =  getPiece(c).getValidPaths(c, playerSide, checkCoordinateInBounds);
-    if(!getPiece(c).isCanJump()){
+
+    Piece piece = getPiece(c);
+
+    List<List<Coordinate>> possiblePaths =  piece.getValidPaths(c, playerSide, checkCoordinateInBounds);
+    if(!piece.isCanJump()){
       removeJumps(possiblePaths);
     }
     removePieceOverlap(possiblePaths,getPiece(c).getSide()); //remove paths that results in the final position overlapping with another piece of same side
+
     Set<Coordinate> validMoves = new HashSet<>();
     for(int i=0;i<possiblePaths.size();i++){
       validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
     }
-    return validMoves;
+    System.out.println(validMoves);
+    return new ArrayList<Coordinate>(validMoves);
+  }
+
+  public List<Coordinate> getPositions (int playerSide) {
+    List<Coordinate> positions = new ArrayList<>();
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        Coordinate c = new Coordinate(i, j);
+        if (checkPieceExists(c) && getPiece(c).getSide() == playerSide) {
+          System.out.println(playerSide);
+          positions.add(getPiece(c).getPosition());
+        }
+      }
+    }
+    System.out.println(positions);
+    return positions;
   }
 
   private void removePieceOverlap(List<List<Coordinate>> possiblePaths, int pieceSide) {
@@ -84,6 +116,14 @@ public class GridModel {
     }
   }
 
+  public void print () {
+    for (int i = 0; i < myGrid.length; i++) {
+      for (int j = 0; j < myGrid[0].length; j++) {
+        System.out.print(myGrid[i][j]);
+      }
+      System.out.println();
+    }
+  }
   public Piece[][] getGrid () {
     return myGrid;
   }
