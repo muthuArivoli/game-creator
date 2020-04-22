@@ -1,14 +1,20 @@
 package ooga.game_view.board;
 
+import java.util.ArrayList;
 import java.util.List;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import ooga.controller.GameController;
 import ooga.game_view.board.pieceType.EllipsePiece;
 import ooga.game_view.board.tile.RectangleTile;
@@ -25,12 +31,13 @@ public class GameBoard extends BorderPane {
   private double boardSideLength;
   private Background boardBackground;
 
-  private HBox pieceDisplayBox = new HBox();
+  private HBox pieceDisplayBox;
   private StackPane boardDisplay;
 
   private int numRowTiles;
   private int numColTiles;
   private List<Color>colors;
+  private List<String> PieceNames;
 
   public GameBoard(){
     this.getStyleClass().add("GameBoard");
@@ -52,10 +59,16 @@ public class GameBoard extends BorderPane {
     numColTiles = gridModel.getGrid()[0].length;
     tileWidth = boardSideLength/numRowTiles;
     tileHeight = boardSideLength/numColTiles;
+    pieceDisplayBox = new HBox();
     createPieceDisplay();
     populateBoard();
     this.setCenter(boardDisplay);
     this.setBottom(pieceDisplayBox);
+  }
+
+  public void updateDisplay () {
+    boardDisplay.getChildren().clear();
+    populateBoard();
   }
 
   private void calculateSize(double dispWidth, double dispHeight) {
@@ -73,8 +86,29 @@ public class GameBoard extends BorderPane {
     pieceDisplayBox.getStyleClass().add("displayBox");
     Button choosePiece = new Button("CHOOSE EXTRA PIECE");
     choosePiece.setPrefSize(displayWidth/2, displayHeight/2);
+    choosePiece.setOnAction(e -> displayExtraPieces());
     pieceDisplayBox.setAlignment(Pos.CENTER);
     pieceDisplayBox.getChildren().addAll(choosePiece);
+  }
+
+  private void displayExtraPieces(){
+    PieceNames = new ArrayList<String>();
+    PieceNames.add("dime");
+    PieceNames.add("nickle");
+
+    VBox rt = new VBox();
+    rt.setSpacing(10);
+    rt.setPadding(new Insets(20,0,0, 100));
+    for (String name: PieceNames){
+      Button piece = new Button(name);
+      //piece.setOnAction(e -> gameController.handleClick(name));
+      rt.getChildren().addAll(piece);
+    }
+    Stage s = new Stage();
+    s.setTitle("CHOOSE EXTRA PIECE");
+    Scene temporaryScene = new Scene(rt, 250,250);
+    s.setScene(temporaryScene);
+    s.show();
   }
 
   private void populateBoard(){
@@ -110,19 +144,5 @@ public class GameBoard extends BorderPane {
     }
     pieceGroup.getChildren().addAll(piece);
     tileGroup.getChildren().addAll(tile);
-  }
-
-  public void updateDisplay () {
-    boardDisplay.getChildren().clear();
-
-//    Piece[][] myGrid = gameController.getGridModel().getGrid();
-//        for (int i = 0; i < myGrid.length; i++) {
-//      for (int j = 0; j < myGrid[0].length; j++) {
-//        System.out.print(myGrid[i][j]);
-//      }
-//      System.out.println();
-//    }
-
-    populateBoard();
   }
 }
