@@ -3,6 +3,7 @@ package ooga.game_view.board;
 import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -70,6 +71,10 @@ public class GameBoard extends BorderPane {
   private void createPieceDisplay() {
     pieceDisplayBox.setPrefSize(displayWidth, displayHeight);
     pieceDisplayBox.getStyleClass().add("displayBox");
+    Button choosePiece = new Button("CHOOSE EXTRA PIECE");
+    choosePiece.setPrefSize(displayWidth/2, displayHeight/2);
+    pieceDisplayBox.setAlignment(Pos.CENTER);
+    pieceDisplayBox.getChildren().addAll(choosePiece);
   }
 
   private void populateBoard(){
