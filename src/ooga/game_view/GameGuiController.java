@@ -207,10 +207,7 @@ public class GameGuiController extends Application {
       myGameController = new GameController();
       myGameController.parseFile(currentDataFile.getPath());
       gameTitle = new Text(myGameController.getGameName().toUpperCase());
-      ArrayList<Color> colors = new ArrayList<>();
-      colors.add(Color.WHITE);
-      colors.add(Color.BLACK);
-      gameDisplay.createGameBoard(myGameController, currentStyleSheet, colors, scene_width, scene_height);
+      gameDisplay.createGameBoard(myGameController, currentStyleSheet, scene_width, scene_height);
       gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
       titleBox.getChildren().add(gameTitle);
     }
@@ -224,7 +221,9 @@ public class GameGuiController extends Application {
       rt.setVgap(20);
       Stage newStage = createNewStage(rt, "Settings", 250, 250);
       Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(newStage.getScene()));
-      rt.getChildren().addAll(darkMode);
+      Button changeTile = createButton("Change Tile Attributes", event -> changeTileAttributes(newStage));
+      Button changePiece = createButton("Change Piece Attributes", event -> changePieceAttributes(newStage));
+      rt.getChildren().addAll(darkMode, changeTile, changePiece);
       newStage.show();
     }
   }
@@ -255,5 +254,13 @@ public class GameGuiController extends Application {
     scene.getStylesheets().add(currentStyleSheet);
     myScene.getStylesheets().add(currentStyleSheet);
     gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
+  }
+
+  private void changeTileAttributes(Stage settings){
+    settings.close();
+  }
+
+  private void changePieceAttributes(Stage settings){
+    settings.close();
   }
 }

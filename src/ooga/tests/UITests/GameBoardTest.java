@@ -24,9 +24,6 @@ class GameBoardTest {
     gameDisplay = new GameBoard();
     myGameController = new GameController();
     myGameController.parseFile("C:/Users/Okechukwu/Desktop/College/COMPSCI 308/final_team09/data/gameFiles/chess.json");
-    colors = new ArrayList<>();
-    colors.add(Color.WHITE);
-    colors.add(Color.BLACK);
   }
 
   @Test
@@ -36,7 +33,7 @@ class GameBoardTest {
 
   @Test
   void numberOfTilesCreated(){
-    gameDisplay.createGameBoard(myGameController, lightStyleSheet, colors, 1280,720);
+    gameDisplay.createGameBoard(myGameController, lightStyleSheet, 1280,720);
 
     int numOfRows = myGameController.getGridModel().getGrid().length;
     int numOfCol = myGameController.getGridModel().getGrid()[0].length;
@@ -48,7 +45,7 @@ class GameBoardTest {
 
   @Test
   void displaySizeOfComponents(){
-    gameDisplay.createGameBoard(myGameController, lightStyleSheet, colors, 1280,720);
+    gameDisplay.createGameBoard(myGameController, lightStyleSheet, 1280,720);
     //display Size of actual board
     double boardLength = 720 - (720*0.14);
     StackPane board = (StackPane) gameDisplay.getCenter();

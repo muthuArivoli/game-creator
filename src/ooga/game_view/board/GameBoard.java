@@ -48,7 +48,7 @@ public class GameBoard extends BorderPane {
     availableColors = new ArrayList<Color>(Arrays.asList(Color.WHITE, Color.BLACK, Color.RED, Color.CYAN));
   }
 
-  public void createGameBoard(GameController gameController, String styleSheet, List<Color> colors, double width, double height){
+  public void createGameBoard(GameController gameController, String styleSheet, double width, double height){
     this.gameController = gameController;
     this.currentStyleSheet = styleSheet;
     this.gridModel = gameController.getGridModel();
