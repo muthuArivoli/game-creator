@@ -75,7 +75,7 @@ public class GridModel {
     for(int i=0;i<possiblePaths.size();i++){
       validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
     }
-    System.out.println(validMoves);
+    //System.out.println(validMoves);
     return new ArrayList<Coordinate>(validMoves);
   }
 
