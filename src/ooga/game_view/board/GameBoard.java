@@ -2,6 +2,7 @@ package ooga.game_view.board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -24,6 +25,7 @@ import ooga.piece.Coordinate;
 public class GameBoard extends BorderPane {
   private GameController gameController;
   private GridModel gridModel;
+  private String currentStyleSheet;
   private double tileWidth;
   private double tileHeight;
   private double displayWidth;
@@ -31,7 +33,7 @@ public class GameBoard extends BorderPane {
   private double boardSideLength;
   private Background boardBackground;
 
-  private HBox pieceDisplayBox;
+  private ExtraPiecesDisplay pieceDisplayBox;
   private StackPane boardDisplay;
 
   private int numRowTiles;
@@ -44,8 +46,9 @@ public class GameBoard extends BorderPane {
     boardBackground = this.getBackground();
   }
 
-  public void createGameBoard(GameController gameController, List<Color> colors, double width, double height){
+  public void createGameBoard(GameController gameController, String styleSheet, List<Color> colors, double width, double height){
     this.gameController = gameController;
+    this.currentStyleSheet = styleSheet;
     this.gridModel = gameController.getGridModel();
     this.colors = colors;
 
@@ -59,8 +62,7 @@ public class GameBoard extends BorderPane {
     numColTiles = gridModel.getGrid()[0].length;
     tileWidth = boardSideLength/numRowTiles;
     tileHeight = boardSideLength/numColTiles;
-    pieceDisplayBox = new HBox();
-    createPieceDisplay();
+    pieceDisplayBox = new ExtraPiecesDisplay(displayWidth, displayHeight, gameController, currentStyleSheet);
     populateBoard();
     this.setCenter(boardDisplay);
     this.setBottom(pieceDisplayBox);
@@ -71,6 +73,10 @@ public class GameBoard extends BorderPane {
     populateBoard();
   }
 
+  public ExtraPiecesDisplay getPieceDisplayBox(){
+    return pieceDisplayBox;
+  }
+
   private void calculateSize(double dispWidth, double dispHeight) {
     displayWidth = dispWidth * 0.80;
     displayHeight = dispHeight * 0.14;
@@ -79,36 +85,6 @@ public class GameBoard extends BorderPane {
       boardSideLength = displayWidth * 0.62;
     }
     this.setMaxSize(displayWidth, dispHeight);
-  }
-
-  private void createPieceDisplay() {
-    pieceDisplayBox.setPrefSize(displayWidth, displayHeight);
-    pieceDisplayBox.getStyleClass().add("displayBox");
-    Button choosePiece = new Button("CHOOSE EXTRA PIECE");
-    choosePiece.setPrefSize(displayWidth/2, displayHeight/2);
-    choosePiece.setOnAction(e -> displayExtraPieces());
-    pieceDisplayBox.setAlignment(Pos.CENTER);
-    pieceDisplayBox.getChildren().addAll(choosePiece);
-  }
-
-  private void displayExtraPieces(){
-    PieceNames = new ArrayList<String>();
-    PieceNames.add("dime");
-    PieceNames.add("nickle");
-
-    VBox rt = new VBox();
-    rt.setSpacing(10);
-    rt.setPadding(new Insets(20,0,0, 100));
-    for (String name: PieceNames){
-      Button piece = new Button(name);
-      //piece.setOnAction(e -> gameController.handleClick(name));
-      rt.getChildren().addAll(piece);
-    }
-    Stage s = new Stage();
-    s.setTitle("CHOOSE EXTRA PIECE");
-    Scene temporaryScene = new Scene(rt, 250,250);
-    s.setScene(temporaryScene);
-    s.show();
   }
 
   private void populateBoard(){
@@ -138,6 +114,9 @@ public class GameBoard extends BorderPane {
     EllipsePiece piece;
     if(gridModel.getGrid()[row][col]!= null){
       piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, gridModel.getGrid()[row][col].getPieceName());
+      if(gridModel.getGrid()[row][col].getSide() == -1){
+        piece.setColor(Color.CYAN);
+      }
     }
     else{
       piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, tileColor);

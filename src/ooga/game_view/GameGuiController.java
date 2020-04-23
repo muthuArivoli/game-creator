@@ -176,6 +176,7 @@ public class GameGuiController extends Application {
       gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
       buttonGroup.getChildren().clear();
       root.getChildren().remove(buttonGroup);
+      gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
       addGameButtons();
     }
   }
@@ -200,7 +201,8 @@ public class GameGuiController extends Application {
       ArrayList<Color> colors = new ArrayList<>();
       colors.add(Color.WHITE);
       colors.add(Color.BLACK);
-      gameDisplay.createGameBoard(myGameController,colors, scene_width, scene_height);
+      gameDisplay.createGameBoard(myGameController, currentStyleSheet, colors, scene_width, scene_height);
+      gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
       titleBox.getChildren().add(gameTitle);
     }
   }
@@ -245,5 +247,6 @@ public class GameGuiController extends Application {
     }
     scene.getStylesheets().add(currentStyleSheet);
     myScene.getStylesheets().add(currentStyleSheet);
+    gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
   }
 }
