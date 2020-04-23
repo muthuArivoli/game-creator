@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -189,6 +191,13 @@ public class GameGuiController extends Application {
     }
   }
 
+  private void checkRestartGame(boolean restartStatus){
+    if(restartStatus){
+      buttons.setRestartGamePressedOff();
+      startGame(currentDataFile);
+    }
+  }
+
   private void startGame(File temporaryFile){
     if (temporaryFile == null) { return; }
     else {
@@ -214,18 +223,16 @@ public class GameGuiController extends Application {
       rt.setAlignment(Pos.CENTER);
       rt.setVgap(20);
       Stage newStage = createNewStage(rt, "Settings", 250, 250);
-      Button darkMode = new Button(myResources.getString("DarkSetting"));
-      darkMode.setOnAction(event -> changeLightTheme(newStage.getScene()));
+      Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(newStage.getScene()));
       rt.getChildren().addAll(darkMode);
       newStage.show();
     }
   }
 
-  private void checkRestartGame(boolean restartStatus){
-    if(restartStatus){
-      buttons.setRestartGamePressedOff();
-      startGame(currentDataFile);
-    }
+  private Button createButton(String buttonName, EventHandler event){
+    Button temp = new Button(buttonName);
+    temp.setOnAction(event);
+    return temp;
   }
 
   private Stage createNewStage(Pane rt, String title, double width, double height){

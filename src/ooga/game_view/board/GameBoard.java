@@ -1,6 +1,7 @@
 package ooga.game_view.board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.geometry.Insets;
@@ -38,19 +39,19 @@ public class GameBoard extends BorderPane {
 
   private int numRowTiles;
   private int numColTiles;
-  private List<Color>colors;
+  private List<Color> availableColors;
   private List<String> PieceNames;
 
   public GameBoard(){
     this.getStyleClass().add("GameBoard");
     boardBackground = this.getBackground();
+    availableColors = new ArrayList<Color>(Arrays.asList(Color.WHITE, Color.BLACK, Color.RED, Color.CYAN));
   }
 
   public void createGameBoard(GameController gameController, String styleSheet, List<Color> colors, double width, double height){
     this.gameController = gameController;
     this.currentStyleSheet = styleSheet;
     this.gridModel = gameController.getGridModel();
-    this.colors = colors;
 
     boardDisplay = new StackPane();
     boardDisplay.setBackground(boardBackground);
@@ -73,6 +74,11 @@ public class GameBoard extends BorderPane {
     populateBoard();
   }
 
+  public void updateColors(List<Color> newColors){
+    availableColors = newColors;
+    updateDisplay();
+  }
+
   public ExtraPiecesDisplay getPieceDisplayBox(){
     return pieceDisplayBox;
   }
@@ -92,9 +98,9 @@ public class GameBoard extends BorderPane {
     Group pieceGroup = new Group();
     for (int col = 0; col < numColTiles; col++){
       for (int row= 0; row < numRowTiles; row++) {
-        Color tileColor = colors.get(0);
+        Color tileColor = availableColors.get(0);
         if ((col + row) % 2 == 0) {
-          tileColor = colors.get(1);
+          tileColor = availableColors.get(1);
         }
         createTileAndPiece(tileGroup, pieceGroup, row, col, tileColor);
       }
@@ -111,15 +117,14 @@ public class GameBoard extends BorderPane {
     }else if (validCoordinates.contains(new Coordinate(row,col))) {
       tile.setFill(Color.LIGHTGREEN);
     }
-    EllipsePiece piece;
+    EllipsePiece piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, tileColor);
     if(gridModel.getGrid()[row][col]!= null){
-      piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, gridModel.getGrid()[row][col].getPieceName());
+      piece.setColor(availableColors.get(2));
+      piece.addName(gridModel.getGrid()[row][col].getPieceName());
+      piece.isFiller(false);
       if(gridModel.getGrid()[row][col].getSide() == -1){
-        piece.setColor(Color.CYAN);
+        piece.setColor(availableColors.get(3));
       }
-    }
-    else{
-      piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, tileColor);
     }
     pieceGroup.getChildren().addAll(piece);
     tileGroup.getChildren().addAll(tile);

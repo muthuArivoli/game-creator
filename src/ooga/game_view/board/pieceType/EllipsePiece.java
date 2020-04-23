@@ -7,10 +7,6 @@ import ooga.controller.GameController;
 
 public class EllipsePiece extends PieceShape {
 
-  public EllipsePiece(GameController gameController, double tileX, double tileY, int row, int col, String pieceName){
-    super(gameController, tileX, tileY, row, col, pieceName);
-  }
-
   public EllipsePiece(GameController gameController, double tileX, double tileY, int row, int col, Color tileColor){
     super(gameController, tileX, tileY, row, col, tileColor);
   }
@@ -18,8 +14,6 @@ public class EllipsePiece extends PieceShape {
   @Override
   protected Shape createShape(double tileX, double tileY, int row, int col) {
     Ellipse piece = new Ellipse(tileY*0.95/2, tileX*0.95/2);
-    piece.setFill(Color.RED);
-    piece.setStroke(Color.BLACK);
     return piece;
   }
 }
