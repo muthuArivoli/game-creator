@@ -154,6 +154,6 @@
   ],
   "goals": [
     {"enemyPiecesLeft": 0},
-    {"pieceTaken": "king"}
+    {"pieceTaken": ["king"]}
   ]
 }
