@@ -13,7 +13,7 @@ public class GameController {
     }
 
     /**
-     * adds goals that specify the way the game will end
+     * adds ooga.goals that specify the way the game will end
      */
     public void addGoal;
 

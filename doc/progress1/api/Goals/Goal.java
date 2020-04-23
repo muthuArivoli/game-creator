@@ -13,7 +13,7 @@ public abstract class Goal {
     }
 
     /**
-     * In this genre, most goals are determined by the position of certain pieces
+     * In this genre, most ooga.goals are determined by the position of certain pieces
      * Checks the position of the given piece
      */
     public abstract void checkPiecePosition;
