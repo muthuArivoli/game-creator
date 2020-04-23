@@ -8,13 +8,13 @@ import ooga.exceptions.InvalidPieceException;
 import ooga.piece.Piece;
 import ooga.piece.movement.CompositeMovement;
 import ooga.piece.movement.Movement;
-import ooga.piece.movement.GoalFactory;
+import ooga.piece.movement.MovementFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class PieceParser {
   private JSONObject myPiecesJSON;
-  private GoalFactory factory = new GoalFactory();
+  private MovementFactory factory = new MovementFactory();
   public PieceParser (JSONObject piecesJSON){
     this.myPiecesJSON = piecesJSON;
   }
@@ -24,7 +24,8 @@ public class PieceParser {
    * @param pieceSymbol
    * @throws InvalidPieceException
    */
-  public Piece generatePiece(String pieceSymbol, int row, int column) throws InvalidPieceException {
+  public Piece generatePiece(String pieceSymbol, int row, int column)
+      throws InvalidPieceException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
     String pieceName = pieceSymbol.replaceAll("[\\d]","");
     int pieceSide = Integer.parseInt(pieceSymbol.replaceAll("[a-zA-Z]",""));
 
@@ -53,7 +54,7 @@ public class PieceParser {
   }
 
   private List<Movement> generateMoves(JSONArray movesJSON)
-      throws InvalidPieceException {
+      throws InvalidPieceException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
     List<Movement> moves = new ArrayList<>();
 
     for (int i = 0; i < movesJSON.length(); i++){
@@ -73,11 +74,8 @@ public class PieceParser {
           rbegin = range.getInt(0);
           rend = range.getInt(1);
         }
-        try {
-          moveSet.add(factory.getMovement(moveName, rbegin, rend));
-        } catch (ClassNotFoundException | InstantiationException |NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-          throw new InvalidPieceException("Invalid Move Specified: " + moveName + "..." + rbegin + "," +rend);
-        }
+        moveSet.add(factory.getMovement(moveName, rbegin, rend));
+
       }
       moves.add(moveSet);
     }
