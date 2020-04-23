@@ -1,6 +1,7 @@
 package ooga.controller;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 import ooga.exceptions.InvalidGridException;
@@ -35,7 +36,7 @@ public class GameController {
   public void parseFile (String fileName) {
     try {
       myTemplateParser.parseTemplate(fileName);
-    } catch (FileNotFoundException | InvalidGridException | InvalidPieceException e) {
+    } catch (FileNotFoundException | InvalidGridException | InvalidPieceException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
       System.out.println(e.getMessage());
     }
   }

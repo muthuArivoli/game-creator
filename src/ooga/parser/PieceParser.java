@@ -24,8 +24,7 @@ public class PieceParser {
    * @param pieceSymbol
    * @throws InvalidPieceException
    */
-  public Piece generatePiece(String pieceSymbol, int row, int column)
-      throws InvalidPieceException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+  public Piece generatePiece(String pieceSymbol, int row, int column) throws InvalidPieceException {
     String pieceName = pieceSymbol.replaceAll("[\\d]","");
     int pieceSide = Integer.parseInt(pieceSymbol.replaceAll("[a-zA-Z]",""));
 
@@ -54,7 +53,7 @@ public class PieceParser {
   }
 
   private List<Movement> generateMoves(JSONArray movesJSON)
-      throws InvalidPieceException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+      throws InvalidPieceException {
     List<Movement> moves = new ArrayList<>();
 
     for (int i = 0; i < movesJSON.length(); i++){
@@ -74,8 +73,11 @@ public class PieceParser {
           rbegin = range.getInt(0);
           rend = range.getInt(1);
         }
-        moveSet.add(factory.getMovement(moveName, rbegin, rend));
-
+        try {
+          moveSet.add(factory.getMovement(moveName, rbegin, rend));
+        } catch (ClassNotFoundException | InstantiationException |NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+          throw new InvalidPieceException("Invalid Move Specified: " + moveName + "..." + rbegin + "," +rend);
+        }
       }
       moves.add(moveSet);
     }

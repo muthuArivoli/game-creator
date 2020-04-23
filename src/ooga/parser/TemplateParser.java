@@ -30,7 +30,7 @@ public class TemplateParser {
   }
 
   public void parseTemplate (String fileName)
-      throws FileNotFoundException, InvalidGridException, InvalidPieceException{
+      throws FileNotFoundException, InvalidGridException, InvalidPieceException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
     template = new JSONObject(new JSONTokener(new FileReader(fileName)));
     String title = template.getString("title");
 
@@ -44,9 +44,7 @@ public class TemplateParser {
       String goalName = "";
       while(keys.hasNext()) {
         String key = keys.next();
-
         myGameModel.addGoal(factory.getGoal(key, goalJSON.getInt(key)));
-
       }
     }
 
