@@ -19,6 +19,7 @@ public class Piece {
 
     private boolean canJump;
     private boolean canCaptureJump;
+    private int pointValue;
 
     public Piece(String name, int side, int row, int column, List<Movement> normalFirstMovements,List<Movement> normalAnyMovements, List<Movement> captureMovements,boolean canJump, boolean canCaptureJump) {
         this.name = name;

@@ -98,28 +98,6 @@ public class GameController {
           }
           setChanged(true);
           break;
-
-
-          /* List<Coordinate> playerPositions = myGridModel.getPositions(activePlayer);
-
-          while(!playerPositions.isEmpty()){
-            int randomIndex = new Random().nextInt(playerPositions.size());
-            Coordinate coord = playerPositions.get(randomIndex);
-            playerPositions.remove(randomIndex);
-
-            validMoves = myGridModel.getValidMoves(coord, activePlayer);
-            if(!validMoves.isEmpty()) {
-              selectedPiece = myGridModel.getPiece(coord);
-
-//              System.out.println(selectedPiece.getPieceName() + " "+ selectedPiece.getSide()+ " @ "+ selectedPiece.getPosition());
-//              System.out.println("Moving to: " + coord);
-
-              moveSelectedPiece(validMoves.get(new Random().nextInt(validMoves.size())));
-              break;
-            }
-          }
-          setChanged(true);
-          break; */
       }
     }
     System.out.println("Player " + activePlayer + " is " + playerStage + "\n");
@@ -205,7 +183,6 @@ public class GameController {
 
   private int evaluatePosition() {
     int positionScore = 0;
-
     int nonActivePlayer = activePlayer == 1 ? -1 : 1;
     List<Coordinate> playerPositions = myGridModel.getPositions(activePlayer);
     List<Coordinate> enemyPositions = myGridModel.getPositions(nonActivePlayer);
