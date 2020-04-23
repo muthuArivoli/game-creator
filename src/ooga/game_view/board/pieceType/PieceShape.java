@@ -27,6 +27,10 @@ public abstract class PieceShape extends StackPane {
     shape.setFill(tileColor);
   }
 
+  public void setColor(Color clr){
+    shape.setFill(clr);
+  }
+
   private void initiatePiece(GameController gameController, double tileX, double tileY, int row, int col){
     this.gameController = gameController;
     shape = createShape(tileX, tileY, row, col);

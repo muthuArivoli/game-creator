@@ -114,6 +114,9 @@ public class GameBoard extends BorderPane {
     EllipsePiece piece;
     if(gridModel.getGrid()[row][col]!= null){
       piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, gridModel.getGrid()[row][col].getPieceName());
+      if(gridModel.getGrid()[row][col].getSide() == -1){
+        piece.setColor(Color.CYAN);
+      }
     }
     else{
       piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, tileColor);
