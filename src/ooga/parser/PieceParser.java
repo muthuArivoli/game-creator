@@ -1,12 +1,9 @@
 package ooga.parser;
 
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.piece.Piece;
 import ooga.piece.movement.CompositeMovement;
