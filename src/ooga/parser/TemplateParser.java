@@ -2,6 +2,8 @@ package ooga.parser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.goals.Goal;
@@ -41,10 +43,21 @@ public class TemplateParser {
     for (int i = 0; i < goalsJSON.length(); i++) {
       JSONObject goalJSON = goalsJSON.getJSONObject(i);
       Iterator<String> keys = goalJSON.keys();
-      String goalName = "";
       while(keys.hasNext()) {
         String key = keys.next();
-        myGameModel.addGoal(factory.getGoal(key, goalJSON.getInt(key)));
+
+        Object goalObj = goalJSON.get(key);
+        if(goalObj instanceof Integer){
+          myGameModel.addGoal(factory.getGoal(key, goalJSON.getInt(key)));;
+        } else {
+          JSONArray goalArray = goalJSON.getJSONArray(key);
+          List<String> targets = new ArrayList<>();
+          for(int j = 0; j < goalArray.length(); j++) {
+            targets.add(goalArray.getString(i));
+          }
+          myGameModel.addGoal(factory.getMultiGoal(key, targets));;
+        }
+        System.out.println("done");
       }
     }
 
