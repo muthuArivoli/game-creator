@@ -1,22 +1,17 @@
-package ooga.game_view;
+package ooga.tests.UITests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import ooga.controller.GameController;
 import ooga.game_view.board.GameBoard;
+import ooga.game_view.board.tile.RectangleTile;
 import org.junit.jupiter.api.Test;
 
-class UITest {
+class GameBoardTest {
   private GameController myGameController;
   private GameBoard gameDisplay;
   private ArrayList<Color> colors;
@@ -40,15 +35,6 @@ class UITest {
   }
 
   @Test
-  void checkBackgroundColor(){
-    gameDisplay.getStylesheets().add(lightStyleSheet);
-    gameDisplay.getStyleClass().add("GameBoard");
-
-
-    assertEquals(Color.SILVER, gameDisplay.getBackground());
-  }
-
-  @Test
   void numberOfTilesCreated(){
     gameDisplay.createGameBoard(myGameController, lightStyleSheet, colors, 1280,720);
 
@@ -58,6 +44,25 @@ class UITest {
     StackPane board = (StackPane) gameDisplay.getCenter();
     Group tilesCreated = (Group) board.getChildren().get(0);
     assertEquals(numOfRows*numOfCol,tilesCreated.getChildren().size());
+  }
+
+  @Test
+  void displaySizeOfComponents(){
+    gameDisplay.createGameBoard(myGameController, lightStyleSheet, colors, 1280,720);
+    //display Size of actual board
+    double boardLength = 720 - (720*0.14);
+    StackPane board = (StackPane) gameDisplay.getCenter();
+    Group tilesCreated = (Group) board.getChildren().get(0);
+    RectangleTile tile = (RectangleTile) tilesCreated.getChildren().get(0);
+    int numOfRows = myGameController.getGridModel().getGrid().length;
+    int numOfCol = myGameController.getGridModel().getGrid()[0].length;
+    assertEquals(boardLength, tile.getWidth()*numOfRows);
+    assertEquals(boardLength, tile.getHeight()*numOfCol);
+    //display size of pieceDisplay
+    double displayWidth = 1280 * 0.80;
+    double displayHeight = 720 * 0.14;
+    assertEquals(displayWidth, gameDisplay.getPieceDisplayBox().getPrefWidth());
+    assertEquals(displayHeight, gameDisplay.getPieceDisplayBox().getPrefHeight());
   }
 
   @org.junit.jupiter.api.AfterEach
