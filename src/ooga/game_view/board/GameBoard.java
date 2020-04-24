@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import ooga.controller.GameController;
 import ooga.game_view.board.pieceType.EllipsePiece;
@@ -51,7 +52,7 @@ public class GameBoard extends BorderPane {
     this.getStyleClass().add("GameBoard");
     boardBackground = this.getBackground();
     availableColors = gameColors;
-    pieceShape = "Rectangle";
+    pieceShape = "Ellipse";
     tileShape = "Rectangle";
   }
 
@@ -117,8 +118,7 @@ public class GameBoard extends BorderPane {
 
   private void createTileAndPiece(Group tileGroup, Group pieceGroup, int row, int col, Color tileColor){
     List<Coordinate> validCoordinates = gameController.getValidMoves();
-    RectangleTile tile = new RectangleTile(gameController, tileWidth, tileHeight, row, col,
-        tileColor);
+    Shape tile = createTile(row, col, tileColor);
     if(new Coordinate(row, col).equals(gameController.getSelectedPiecePosition())){
       tile.setFill(Color.LIGHTBLUE);
     }else if (validCoordinates.contains(new Coordinate(row,col))) {
@@ -144,6 +144,20 @@ public class GameBoard extends BorderPane {
       objectPiece = constructor.newInstance(gameController, tileWidth, tileHeight, row, col, tileColor);
       return (PieceShape) objectPiece;
     }catch (ClassNotFoundException| NoSuchMethodException| IllegalAccessException| InvocationTargetException| InstantiationException e) {
+      //Never Reached because user choices are limited under settings
+      return null;
+    }
+  }
+
+  private Shape createTile (int row, int col, Color tileColor) {
+    try {
+      Class<?> cls = Class.forName("ooga.game_view.board.tile."+tileShape+"Tile");
+      Object objectTile;
+      Constructor constructor = cls.getConstructor(GameController.class, double.class, double.class, int.class, int.class, Color.class);
+      objectTile = constructor.newInstance(gameController, tileWidth, tileHeight, row, col, tileColor);
+      return (Shape) objectTile;
+    }catch (ClassNotFoundException| NoSuchMethodException| IllegalAccessException| InvocationTargetException| InstantiationException e) {
+      //Never Reached because user choices are limited under settings
       return null;
     }
   }
