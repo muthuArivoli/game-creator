@@ -8,6 +8,7 @@ import ooga.AI.AI;
 import ooga.AI.PieceCaptureAI;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
+import ooga.goals.Goal;
 import ooga.models.GameModel;
 import ooga.models.GridModel;
 import ooga.parser.PieceParser;
@@ -51,6 +52,16 @@ public class GameController {
     } else {
       handleNonPlaceableClick(c); // for chess style games
     };
+  }
+
+  public int checkGameEnd () {
+    for (Goal goal: myGameModel.getGoals()) {
+      int winner = goal.getWinner(myGridModel, selectedPiece);
+      if(winner != -1) {
+        return winner;
+      }
+    }
+    return -1;
   }
 
   private void handleNonPlaceableClick(Coordinate c) {
