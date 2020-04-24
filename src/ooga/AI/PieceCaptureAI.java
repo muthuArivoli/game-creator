@@ -10,17 +10,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ChessAI {
+public class PieceCaptureAI implements AI{
     private GridModel myGridModel;
     private int activePlayer;
     private int alphaDefault = Integer.MIN_VALUE;
     private int betaDefault = Integer.MAX_VALUE;
 
-    public ChessAI(GridModel myGridModel, int activePlayer) {
+    public PieceCaptureAI(GridModel myGridModel, int activePlayer) {
         this.myGridModel = myGridModel;
         this.activePlayer = activePlayer;
     }
 
+    @Override
     public List<Coordinate> getBestMove(int depthOfAnalysis) {
         if(depthOfAnalysis <= 0) {
             depthOfAnalysis = 1;

@@ -24,5 +24,6 @@
   ],
   "goals": [
     {"piecesInRow": 3}
-  ]
+  ],
+  "typeOfAI": "PiecesInRowAI"
 }
