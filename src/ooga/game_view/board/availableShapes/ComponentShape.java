@@ -1,21 +1,20 @@
-package ooga.game_view.board.pieceType;
+package ooga.game_view.board.availableShapes;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import ooga.controller.GameController;
 
-public abstract class PieceShape extends StackPane {
+public abstract class ComponentShape extends StackPane {
   private GameController gameController;
   private Text text;
   private Shape shape;
-  private boolean fillerPiece;
+  private boolean isPiece;
 
-  public PieceShape(GameController gameController, double tileX, double tileY, int row, int col, Color tileColor){
+  public ComponentShape(GameController gameController, double tileX, double tileY, int row, int col, Color tileColor, boolean isPiece){
     text = new Text("");
-    fillerPiece = true;
+    this.isPiece = isPiece;
     initiatePiece(gameController, tileX, tileY, row, col);
     shape.setStroke(tileColor);
     shape.setFill(tileColor);
@@ -26,17 +25,13 @@ public abstract class PieceShape extends StackPane {
     shape.setStroke(Color.BLACK);
   }
 
-  public void isFiller(boolean state){
-    fillerPiece = state;
-  }
-
   public void addName(String pieceName){
     text.setText(pieceName);
   }
 
   private void initiatePiece(GameController gameController, double tileX, double tileY, int row, int col){
     this.gameController = gameController;
-    shape = createShape(tileX, tileY, row, col);
+    shape = createShape(tileX, tileY, isPiece);
 
     relocate(col*tileY, row*tileX);
     getChildren().addAll(shape, text);
@@ -46,6 +41,6 @@ public abstract class PieceShape extends StackPane {
     });
   }
 
-  abstract protected Shape createShape(double tileX, double tileY, int row, int col);
+  abstract protected Shape createShape(double tileX, double tileY, boolean isPiece);
 
 }
