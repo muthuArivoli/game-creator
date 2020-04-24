@@ -17,6 +17,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -62,6 +63,8 @@ public class GameGuiController extends Application {
   private VBox titleBox = new VBox();
   private List<Color> gameColors = new ArrayList<Color>(
       Arrays.asList(Color.WHITE, Color.BLACK, Color.RED, Color.CYAN));
+  private List<String> availableShapes = new ArrayList<>(Arrays.asList("Rectangular", "Circular"));
+  private List<String> componentShapes = new ArrayList<>(Arrays.asList("Rectangular", "Circular"));
   private boolean darkEnabled = false;
 
   private String currentStyleSheet = LIGHT_STYLESHEET;
@@ -212,7 +215,7 @@ public class GameGuiController extends Application {
       Stage settingsStage = createNewStage(rt, "Settings", 400, 300);
       Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(settingsStage.getScene()));
       Button changeTile = createButton(myResources.getString("ChangeColor"), event -> changeColor(settingsStage));
-      Button changePiece = createButton(myResources.getString("ChangeShape"), event -> changePieceAttributes(settingsStage));
+      Button changePiece = createButton(myResources.getString("ChangeShape"), event -> changeShape(settingsStage));
       rt.getChildren().addAll(darkMode, changeTile, changePiece);
       settingsStage.show();
     }
@@ -251,12 +254,12 @@ public class GameGuiController extends Application {
     VBox rt = new VBox();
     rt.setSpacing(10);
     rt.setAlignment(Pos.CENTER);
-    Stage TilesStage = createNewStage(rt, "ChangeColor", 300, 200);
+    Stage ColorStage = createNewStage(rt, "ChangeColor", 300, 200);
     rt.getChildren().addAll(createButton("TileColor 1", event -> chooseColor(0, rt)),
         createButton("TileColor 2", event -> chooseColor(1, rt)),
         createButton("UserPieceColor", event -> chooseColor(2, rt)),
         createButton("ComputerPieceColor", event -> chooseColor(3, rt)));
-    TilesStage.show();
+    ColorStage.show();
   }
 
   private void chooseColor(int index, VBox root){
@@ -266,13 +269,33 @@ public class GameGuiController extends Application {
     cp.setOnAction(new EventHandler() {
       public void handle(Event t) {
         gameColors.set(index, cp.getValue());
-        gameDisplay.updateColors(gameColors);
+        gameDisplay.updateComponents(gameColors, componentShapes);
       }
     });
     root.getChildren().add(cp);
   }
 
-  private void changePieceAttributes(Stage settings){
+  private void changeShape(Stage settings){
     settings.close();
+    VBox rt = new VBox();
+    rt.setSpacing(10);
+    rt.setAlignment(Pos.CENTER);
+    Stage ShapeStage = createNewStage(rt, "ChangeColor", 300, 200);
+    rt.getChildren().addAll(createButton("Tile Shape", event -> chooseShape(0, rt)),
+        createButton("Piece Shape", event -> chooseShape(1, rt)));
+    ShapeStage.show();
+  }
+
+  private void chooseShape(int index, VBox root){
+    if (root.getChildren().size() == 3) {root.getChildren().remove(2);}
+    ComboBox tempMenu = new ComboBox();
+    tempMenu.getItems().addAll(availableShapes);
+    tempMenu.setOnAction(new EventHandler() {
+      public void handle(Event t) {
+        componentShapes.set(index, (String) tempMenu.getValue());
+        gameDisplay.updateComponents(gameColors, componentShapes);
+      }
+    });
+    root.getChildren().add(tempMenu);
   }
 }

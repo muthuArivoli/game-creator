@@ -10,10 +10,11 @@ public abstract class ComponentShape extends StackPane {
   private GameController gameController;
   private Text text;
   private Shape shape;
-  private boolean isPiece = false;
+  private boolean isPiece;
 
-  public ComponentShape(GameController gameController, double tileX, double tileY, int row, int col, Color tileColor){
+  public ComponentShape(GameController gameController, double tileX, double tileY, int row, int col, Color tileColor, boolean isPiece){
     text = new Text("");
+    this.isPiece = isPiece;
     initiatePiece(gameController, tileX, tileY, row, col);
     shape.setStroke(tileColor);
     shape.setFill(tileColor);
@@ -22,10 +23,6 @@ public abstract class ComponentShape extends StackPane {
   public void setColor(Color clr){
     shape.setFill(clr);
     shape.setStroke(Color.BLACK);
-  }
-
-  public void isPiece(boolean state){
-    isPiece = state;
   }
 
   public void addName(String pieceName){

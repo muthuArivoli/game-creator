@@ -12,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import ooga.controller.GameController;
 import ooga.game_view.board.availableShapes.ComponentShape;
-import ooga.game_view.board.tile.RectangleTile;
 import ooga.models.GridModel;
 import ooga.piece.Coordinate;
 
@@ -41,8 +40,8 @@ public class GameBoard extends BorderPane {
     this.getStyleClass().add("GameBoard");
     boardBackground = this.getBackground();
     availableColors = gameColors;
-    pieceShape = "Ellipse";
-    tileShape = "Circle";
+    pieceShape = "Circular";
+    tileShape = "Rectangular";
   }
 
   public void createGameBoard(GameController gameController, String styleSheet, double width, double height){
@@ -71,8 +70,10 @@ public class GameBoard extends BorderPane {
     populateBoard();
   }
 
-  public void updateColors(List<Color> newColors){
+  public void updateComponents(List<Color> newColors, List<String> shapes){
     availableColors = newColors;
+    tileShape = shapes.get(0);
+    pieceShape = shapes.get(1);
     updateDisplay();
   }
 
@@ -107,13 +108,14 @@ public class GameBoard extends BorderPane {
 
   private void createTileAndPiece(Group tileGroup, Group pieceGroup, int row, int col, Color tileColor){
     List<Coordinate> validCoordinates = gameController.getValidMoves();
-    Shape tile = createTile(row, col, tileColor);
+    ComponentShape tile = createComponent(row, col, tileColor, tileShape, false);
+    tile.setColor(tileColor);
     if(new Coordinate(row, col).equals(gameController.getSelectedPiecePosition())){
-      tile.setFill(Color.LIGHTBLUE);
+      tile.setColor(Color.LIGHTBLUE);
     }else if (validCoordinates.contains(new Coordinate(row,col))) {
-      tile.setFill(Color.LIGHTGREEN);
+      tile.setColor(Color.LIGHTGREEN);
     }
-    ComponentShape piece = createPiece(row, col, tileColor);
+    ComponentShape piece = createComponent(row, col, tileColor, pieceShape, true);
     if(gridModel.getGrid()[row][col]!= null){
       piece.setColor(availableColors.get(2));
       piece.addName(gridModel.getGrid()[row][col].getPieceName());
@@ -125,29 +127,17 @@ public class GameBoard extends BorderPane {
     tileGroup.getChildren().addAll(tile);
   }
 
-  private ComponentShape createPiece(int row, int col, Color tileColor) {
+  private ComponentShape createComponent(int row, int col, Color tileColor, String shp, boolean isPiece) {
     try {
-      Class<?> cls = Class.forName("ooga.game_view.board.pieceType."+pieceShape+"Piece");
-      Object objectPiece;
-      Constructor constructor = cls.getConstructor(GameController.class, double.class, double.class, int.class, int.class, Color.class);
-      objectPiece = constructor.newInstance(gameController, tileWidth, tileHeight, row, col, tileColor);
-      return (ComponentShape) objectPiece;
+      Class<?> cls = Class.forName("ooga.game_view.board.availableShapes."+shp);
+      Object object;
+      Constructor constructor = cls.getConstructor(GameController.class, double.class, double.class, int.class, int.class, Color.class, boolean.class);
+      object = constructor.newInstance(gameController, tileWidth, tileHeight, row, col, tileColor, isPiece);
+      return (ComponentShape) object;
     }catch (ClassNotFoundException| NoSuchMethodException| IllegalAccessException| InvocationTargetException| InstantiationException e) {
       //Never Reached because user choices are limited under settings
       return null;
     }
   }
 
-  private Shape createTile (int row, int col, Color tileColor) {
-    try {
-      Class<?> cls = Class.forName("ooga.game_view.board.tile."+tileShape+"Tile");
-      Object objectTile;
-      Constructor constructor = cls.getConstructor(GameController.class, double.class, double.class, int.class, int.class, Color.class);
-      objectTile = constructor.newInstance(gameController, tileWidth, tileHeight, row, col, tileColor);
-      return (Shape) objectTile;
-    }catch (ClassNotFoundException| NoSuchMethodException| IllegalAccessException| InvocationTargetException| InstantiationException e) {
-      //Never Reached because user choices are limited under settings
-      return null;
-    }
-  }
 }

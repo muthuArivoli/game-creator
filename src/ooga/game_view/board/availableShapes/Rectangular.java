@@ -7,8 +7,8 @@ import ooga.controller.GameController;
 
 public class Rectangular extends ComponentShape {
 
-  public Rectangular(GameController gameController, double tileX, double tileY, int row, int col, Color tileColor){
-    super(gameController, tileX, tileY, row, col, tileColor);
+  public Rectangular(GameController gameController, double tileX, double tileY, int row, int col, Color tileColor, boolean isPiece){
+    super(gameController, tileX, tileY, row, col, tileColor, isPiece);
   }
 
   @Override

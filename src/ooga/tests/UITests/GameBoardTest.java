@@ -8,10 +8,13 @@ import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import ooga.controller.GameController;
 import ooga.game_view.board.GameBoard;
-import ooga.game_view.board.tile.RectangleTile;
+import ooga.game_view.board.availableShapes.ComponentShape;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.css.Rect;
 
 class GameBoardTest {
   private GameController myGameController;
@@ -54,7 +57,8 @@ class GameBoardTest {
     double boardLength = 720 - (720*0.14);
     StackPane board = (StackPane) gameDisplay.getCenter();
     Group tilesCreated = (Group) board.getChildren().get(0);
-    RectangleTile tile = (RectangleTile) tilesCreated.getChildren().get(0);
+    ComponentShape stack = (ComponentShape) tilesCreated.getChildren().get(0);
+    Rectangle tile = (Rectangle) stack.getChildren().get(0);
     int numOfRows = myGameController.getGridModel().getGrid().length;
     int numOfCol = myGameController.getGridModel().getGrid()[0].length;
     assertEquals(boardLength, tile.getWidth()*numOfRows);
