@@ -1,5 +1,7 @@
 package ooga.game_view.board;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ooga.controller.GameController;
 import ooga.game_view.board.pieceType.EllipsePiece;
+import ooga.game_view.board.pieceType.PieceShape;
 import ooga.game_view.board.tile.RectangleTile;
 import ooga.models.GridModel;
 import ooga.piece.Coordinate;
@@ -48,6 +51,8 @@ public class GameBoard extends BorderPane {
     this.getStyleClass().add("GameBoard");
     boardBackground = this.getBackground();
     availableColors = gameColors;
+    pieceShape = "Rectangle";
+    tileShape = "Rectangle";
   }
 
   public void createGameBoard(GameController gameController, String styleSheet, double width, double height){
@@ -119,7 +124,7 @@ public class GameBoard extends BorderPane {
     }else if (validCoordinates.contains(new Coordinate(row,col))) {
       tile.setFill(Color.LIGHTGREEN);
     }
-    EllipsePiece piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, tileColor);
+    PieceShape piece = createPiece(row, col, tileColor);
     if(gridModel.getGrid()[row][col]!= null){
       piece.setColor(availableColors.get(2));
       piece.addName(gridModel.getGrid()[row][col].getPieceName());
@@ -129,5 +134,17 @@ public class GameBoard extends BorderPane {
     }
     pieceGroup.getChildren().addAll(piece);
     tileGroup.getChildren().addAll(tile);
+  }
+
+  private PieceShape createPiece(int row, int col, Color tileColor) {
+    try {
+      Class<?> cls = Class.forName("ooga.game_view.board.pieceType."+pieceShape+"Piece");
+      Object objectPiece;
+      Constructor constructor = cls.getConstructor(GameController.class, double.class, double.class, int.class, int.class, Color.class);
+      objectPiece = constructor.newInstance(gameController, tileWidth, tileHeight, row, col, tileColor);
+      return (PieceShape) objectPiece;
+    }catch (ClassNotFoundException| NoSuchMethodException| IllegalAccessException| InvocationTargetException| InstantiationException e) {
+      return null;
+    }
   }
 }

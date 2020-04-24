@@ -13,7 +13,7 @@ public class EllipsePiece extends PieceShape {
 
   @Override
   protected Shape createShape(double tileX, double tileY) {
-    Ellipse piece = new Ellipse(tileY*0.95/2, tileX*0.95/2);
+    Ellipse piece = new Ellipse(tileY*0.9/2, tileX*0.9/2);
     return piece;
   }
 }

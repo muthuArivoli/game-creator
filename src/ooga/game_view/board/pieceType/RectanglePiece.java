@@ -14,7 +14,7 @@ public class RectanglePiece extends PieceShape {
 
   @Override
   protected Shape createShape(double tileX, double tileY) {
-    Rectangle piece = new Rectangle(tileY*0.95, tileX*0.95);
+    Rectangle piece = new Rectangle(tileY*0.9, tileX*0.9);
     return piece;
   }
 }
