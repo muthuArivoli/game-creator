@@ -28,6 +28,7 @@ public class GameController {
   private Piece selectedPiece;
   private boolean changed = false;
   private boolean aiEnabled = true;
+  private boolean gameOver = false;
 
   private List<Coordinate> validMoves = new ArrayList<>();
 
@@ -45,24 +46,25 @@ public class GameController {
   }
 
   public void handleClick(int row, int col) {
-//    System.out.println(row+"."+col);
-
-    Coordinate c = new Coordinate(row, col);
-    if (myGameModel.isCanPlace()) {
-      handlePlaceableClick(c);
-    } else {
-      handleNonPlaceableClick(c); // for chess style games
-    };
+    if(!gameOver) {
+      Coordinate c = new Coordinate(row, col);
+      if (myGameModel.isCanPlace()) {
+        handlePlaceableClick(c);
+      } else {
+        handleNonPlaceableClick(c); // for chess style games
+      }
+    }
   }
 
   public int checkGameEnd () {
     for (Goal goal: myGameModel.getGoals()) {
       int winner = goal.getWinner(myGridModel, selectedPiece);
-      if(winner != -1) {
+      if(winner != 0) {
+        gameOver = true;
         return winner;
       }
     }
-    return -1;
+    return 0;
   }
 
   private void handleNonPlaceableClick(Coordinate c) {
