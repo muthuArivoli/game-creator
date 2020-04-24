@@ -159,6 +159,7 @@ public class GameGuiController extends Application {
     if(myGameController.isChanged()) {
       gameDisplay.updateDisplay();
       myGameController.setChanged(false);
+      System.out.println(myGameController.checkGameEnd());
     }
   }
 
