@@ -26,8 +26,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ooga.controller.GameController;
-import ooga.exceptions.GameExceptions;
 import ooga.game_view.FileSelect;
 import ooga.game_view.GUIButtons;
 import ooga.game_view.board.GameBoard;
@@ -142,7 +140,7 @@ public class GameGuiController extends Application {
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
       try {
         step();
-      } catch (GameExceptions ex) {
+      } catch (Exception ex) {
         //Do Nothing
       }
     });
@@ -152,7 +150,7 @@ public class GameGuiController extends Application {
     animation.play();
   }
 
-  private void step() throws GameExceptions {
+  private void step() {
     changeLanguage(buttons.getLanguageStatus());
     checkNewGame(buttons.getNewGameStatus());
     checkSettings(buttons.getSettingsStatus());
