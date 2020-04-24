@@ -4,7 +4,8 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-import ooga.AI.ChessAI;
+import ooga.AI.AI;
+import ooga.AI.PieceCaptureAI;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.goals.Goal;
@@ -14,7 +15,6 @@ import ooga.parser.PieceParser;
 import ooga.parser.TemplateParser;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
-import ooga.piece.movement.Movement;
 
 public class GameController {
   private TemplateParser myTemplateParser;
@@ -105,18 +105,22 @@ public class GameController {
     } else { // if it is the AI's turn
       switch(playerStage) {
         case READY_TO_VIEW:
-          ChessAI myChessAI = new ChessAI(myGridModel, activePlayer);
-          List<Coordinate> bestMove = myChessAI.getBestMove(3);
-          Coordinate currPiece = bestMove.get(0);
-          Coordinate currMove = bestMove.get(1);
+          try {
+            AI newAI = myGameModel.getNewGameAI(myGridModel, activePlayer);
+            List<Coordinate> bestMove = newAI.getBestMove(4);
+            Coordinate currPiece = bestMove.get(0);
+            Coordinate currMove = bestMove.get(1);
 
-          validMoves = myGridModel.getValidMoves(currPiece, activePlayer);
-          if(!validMoves.isEmpty()) {
-            selectedPiece = myGridModel.getPiece(currPiece);
-            moveSelectedPiece(currMove);
-          }
-          setChanged(true);
-          break;
+            validMoves = myGridModel.getValidMoves(currPiece, activePlayer);
+            if (!validMoves.isEmpty()) {
+              selectedPiece = myGridModel.getPiece(currPiece);
+              moveSelectedPiece(currMove);
+            }
+            setChanged(true);
+            break;
+          } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
       }
     }
     System.out.println("Player " + activePlayer + " is " + playerStage + "\n");
@@ -145,7 +149,16 @@ public class GameController {
         e.printStackTrace();
       }
     } else {
+      try {
+        if(aiEnabled) {
+          AI newAI = myGameModel.getNewGameAI(myGridModel, activePlayer);
+          newAI.getBestMove(8);
 
+        }
+
+      } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | ClassNotFoundException e) {
+        System.out.println(e.getMessage());
+      }
     }
   }
 

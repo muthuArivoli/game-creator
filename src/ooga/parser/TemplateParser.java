@@ -4,6 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+
+import ooga.AI.AI;
+import ooga.AI.AIFactory;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.goals.Goal;
@@ -24,6 +27,7 @@ public class TemplateParser {
   private GridModel myGridModel;
   private GameModel myGameModel;
   private GoalFactory factory;
+  private String typeOfAI;
 
   public TemplateParser(GridModel gridModel, GameModel myGameModel) {
     this.myGridModel = gridModel;
@@ -38,6 +42,7 @@ public class TemplateParser {
 
     myGameModel.setCanPlace(template.getBoolean("canPlace"));
     myGameModel.setPieceJSON(template.getJSONObject("pieces"));
+    myGameModel.setAiType(template.getString("typeOfAI"));
 
     JSONArray goalsJSON = template.getJSONArray("goals");
     for (int i = 0; i < goalsJSON.length(); i++) {
@@ -66,6 +71,7 @@ public class TemplateParser {
         template.getJSONArray("grid"),
         template.getJSONObject("pieces")
     );
+
   }
 
   public String getGameName(){

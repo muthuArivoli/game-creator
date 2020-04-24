@@ -10,40 +10,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ChessAI {
+public class PieceCaptureAI implements AI{
     private GridModel myGridModel;
     private int activePlayer;
+    private int alphaDefault = Integer.MIN_VALUE;
+    private int betaDefault = Integer.MAX_VALUE;
 
-    public ChessAI(GridModel myGridModel, int activePlayer) {
+    public PieceCaptureAI(GridModel myGridModel, int activePlayer) {
         this.myGridModel = myGridModel;
         this.activePlayer = activePlayer;
     }
 
+    @Override
     public List<Coordinate> getBestMove(int depthOfAnalysis) {
         if(depthOfAnalysis <= 0) {
             depthOfAnalysis = 1;
         }
-        Pair<Integer, List<Coordinate>> resultList = recursiveMoveFinder(depthOfAnalysis, true);
+        Pair<Integer, List<Coordinate>> resultList = recursiveMoveFinder(depthOfAnalysis, true, alphaDefault, betaDefault);
         List<Coordinate> returnMove = resultList.getValue();
+        System.out.println("Best Move Value: " + resultList.getKey());
         return returnMove;
-    }
-
-    private int getChessPieceValue(String pieceName) {
-        if(pieceName.equals("pawn")) {
-            return 100;
-        } else if(pieceName.equals("knight")) {
-            return 350;
-        } else if(pieceName.equals("rook")) {
-            return 525;
-        } else if(pieceName.equals("bishop")) {
-            return 350;
-        } else if(pieceName.equals("queen")) {
-            return 1000;
-        } else if(pieceName.equals("king")) {
-            return 10000;
-        } else {
-            return 0;
-        }
     }
 
     private int evaluatePosition() {
@@ -54,23 +40,25 @@ public class ChessAI {
 
         for(Coordinate currCoord: playerPositions) {
             Piece currPiece = myGridModel.getPiece(currCoord);
-            positionScore += getChessPieceValue(currPiece.getPieceName());
+            positionScore += currPiece.getPointValue();
         }
         for(Coordinate enemyCurrCoord: enemyPositions) {
             Piece enemyCurrPiece = myGridModel.getPiece(enemyCurrCoord);
-            positionScore -= getChessPieceValue(enemyCurrPiece.getPieceName());
+            positionScore -= enemyCurrPiece.getPointValue();
         }
         return positionScore;
     }
 
-    private Pair<Integer, List<Coordinate>> recursiveMoveFinder(int depth, boolean isMaximizing) {
+    private Pair<Integer, List<Coordinate>> recursiveMoveFinder(int depth, boolean isMaximizing, int alphaValue, int betaValue) {
         // base case
         if(depth == 0) {
-            return new Pair<Integer, List<Coordinate>>(evaluatePosition(), null);
+            return new Pair<>(evaluatePosition(), null);
         }
 
         // recursive case
         int bestMoveValue, tempActivePlayer;
+        int tempAlpha = alphaValue;
+        int tempBeta = betaValue;
         Coordinate currentBestMove = null;
         Coordinate currentBestPiece = null;
         if(isMaximizing) {
@@ -90,21 +78,26 @@ public class ChessAI {
                 if(!currValidMoves.isEmpty()) {
                     for(Coordinate currMove: currValidMoves) {
                         myGridModel.movePiece(myGridModel.getPiece(currPiece), currMove);
-                        int newPositionScore = recursiveMoveFinder(depth-1, !isMaximizing).getKey();
+                        int newPositionScore = recursiveMoveFinder(depth-1, !isMaximizing, tempAlpha, tempBeta).getKey();
                         if(isMaximizing) {
                             if(newPositionScore > bestMoveValue) {
                                 currentBestMove = currMove;
                                 currentBestPiece = currPiece;
                                 bestMoveValue = newPositionScore;
                             }
+                            tempAlpha = Math.max(tempAlpha, newPositionScore);
                         } else {
                             if (newPositionScore < bestMoveValue) {
                                 currentBestMove = currMove;
                                 currentBestPiece = currPiece;
                                 bestMoveValue = newPositionScore;
                             }
+                            tempBeta = Math.min(tempBeta, newPositionScore);
                         }
                         myGridModel.undoLastMove();
+                        if(tempBeta <= tempAlpha) {
+                            break;
+                        }
                     }
                 }
             }
