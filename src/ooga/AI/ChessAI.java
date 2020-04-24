@@ -13,6 +13,8 @@ import java.util.Map;
 public class ChessAI {
     private GridModel myGridModel;
     private int activePlayer;
+    private int alphaDefault = Integer.MIN_VALUE;
+    private int betaDefault = Integer.MAX_VALUE;
 
     public ChessAI(GridModel myGridModel, int activePlayer) {
         this.myGridModel = myGridModel;
@@ -23,8 +25,9 @@ public class ChessAI {
         if(depthOfAnalysis <= 0) {
             depthOfAnalysis = 1;
         }
-        Pair<Integer, List<Coordinate>> resultList = recursiveMoveFinder(depthOfAnalysis, true);
+        Pair<Integer, List<Coordinate>> resultList = recursiveMoveFinder(depthOfAnalysis, true, alphaDefault, betaDefault);
         List<Coordinate> returnMove = resultList.getValue();
+        System.out.println("Best Move Value: " + resultList.getKey());
         return returnMove;
     }
 
@@ -63,14 +66,16 @@ public class ChessAI {
         return positionScore;
     }
 
-    private Pair<Integer, List<Coordinate>> recursiveMoveFinder(int depth, boolean isMaximizing) {
+    private Pair<Integer, List<Coordinate>> recursiveMoveFinder(int depth, boolean isMaximizing, int alphaValue, int betaValue) {
         // base case
         if(depth == 0) {
-            return new Pair<Integer, List<Coordinate>>(evaluatePosition(), null);
+            return new Pair<>(evaluatePosition(), null);
         }
 
         // recursive case
         int bestMoveValue, tempActivePlayer;
+        int tempAlpha = alphaValue;
+        int tempBeta = betaValue;
         Coordinate currentBestMove = null;
         Coordinate currentBestPiece = null;
         if(isMaximizing) {
@@ -90,21 +95,26 @@ public class ChessAI {
                 if(!currValidMoves.isEmpty()) {
                     for(Coordinate currMove: currValidMoves) {
                         myGridModel.movePiece(myGridModel.getPiece(currPiece), currMove);
-                        int newPositionScore = recursiveMoveFinder(depth-1, !isMaximizing).getKey();
+                        int newPositionScore = recursiveMoveFinder(depth-1, !isMaximizing, tempAlpha, tempBeta).getKey();
                         if(isMaximizing) {
                             if(newPositionScore > bestMoveValue) {
                                 currentBestMove = currMove;
                                 currentBestPiece = currPiece;
                                 bestMoveValue = newPositionScore;
                             }
+                            tempAlpha = Math.max(tempAlpha, newPositionScore);
                         } else {
                             if (newPositionScore < bestMoveValue) {
                                 currentBestMove = currMove;
                                 currentBestPiece = currPiece;
                                 bestMoveValue = newPositionScore;
                             }
+                            tempBeta = Math.min(tempBeta, newPositionScore);
                         }
                         myGridModel.undoLastMove();
+                        if(tempBeta <= tempAlpha) {
+                            break;
+                        }
                     }
                 }
             }

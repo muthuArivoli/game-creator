@@ -90,7 +90,7 @@ public class GameController {
       switch(playerStage) {
         case READY_TO_VIEW:
           ChessAI myChessAI = new ChessAI(myGridModel, activePlayer);
-          List<Coordinate> bestMove = myChessAI.getBestMove(3);
+          List<Coordinate> bestMove = myChessAI.getBestMove(4);
           Coordinate currPiece = bestMove.get(0);
           Coordinate currMove = bestMove.get(1);
 
