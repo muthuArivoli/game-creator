@@ -9,7 +9,7 @@ public class enemyPiecesLeft extends NumericGoal implements Goal {
   }
 
   @Override
-  public boolean checkGoal(GridModel gridModel) {
-    return false;
+  public int checkGoal(GridModel gridModel) {
+    return -1;
   }
 }
