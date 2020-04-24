@@ -10,6 +10,7 @@ import ooga.piece.movement.Movement;
 public class Piece {
     private String name;
     private int side;
+    private  int moveNumber;
     private Coordinate position;
 
     private List<Movement> normalFirstMovements;
@@ -32,6 +33,7 @@ public class Piece {
 
         this.canJump = canJump;
         this.canCaptureJump = canCaptureJump;
+        this.moveNumber = 0;
     }
 
     public List<Movement> getNormalFirstMovements (){
@@ -44,9 +46,9 @@ public class Piece {
         return this.captureMovements;
     }
 
-    public List<List<Coordinate>> getValidPaths(Coordinate c, int playerSide, Predicate<Coordinate> checkCoordinateInBounds){
+    public List<List<Coordinate>> getValidPaths(Coordinate c, int playerSide, Predicate<Coordinate> checkCoordinateInBounds, List<Movement> movementList){
         List<List<Coordinate>> validPaths = new ArrayList<>();
-        for(Movement m:normalAnyMovements){
+        for(Movement m:movementList){
             validPaths.addAll(m.getValidPaths(c,playerSide,checkCoordinateInBounds));
         }
         return validPaths;
@@ -56,6 +58,13 @@ public class Piece {
         return side;
     }
 
+    public int getOppositeSide(){
+        return (side==1) ? -1 : 1;
+    }
+
+    public int getMoveNumber(){
+        return this.moveNumber;
+    }
 
     public boolean isCanJump() {
         return canJump;
@@ -73,5 +82,9 @@ public class Piece {
 
     public void setPosition (int x, int y) {
         position = new Coordinate(x, y);
+    }
+
+    public void incrementMove(){
+        moveNumber++;
     }
 }

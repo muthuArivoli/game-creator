@@ -40,6 +40,7 @@ public class GridModel {
       removePiece(piece.getPosition());
       piece.setPosition(c.getRow(), c.getCol());
       addPiece(piece, c.getRow(), c.getCol());
+      piece.incrementMove();
     }
   }
 
@@ -69,13 +70,27 @@ public class GridModel {
             coord.getCol() >= 0 && coord.getCol() < cols);
 
     Piece piece = getPiece(c);
-
-    List<List<Coordinate>> possiblePaths =  piece.getValidPaths(c, playerSide, checkCoordinateInBounds);
+    List<List<Coordinate>> possiblePaths;
+    if(piece.getMoveNumber() == 1){
+      possiblePaths = piece.getValidPaths(c, playerSide, checkCoordinateInBounds,piece.getNormalFirstMovements());
+    }
+    else {
+      possiblePaths = piece.getValidPaths(c, playerSide, checkCoordinateInBounds,piece.getNormalAnyMovements());
+    }
     if(!piece.isCanJump()){
       removeJumps(possiblePaths);
     }
-    removePieceOverlap(possiblePaths,getPiece(c).getSide()); //remove paths that results in the final position overlapping with another piece of same side
+    removePieceOverlap(possiblePaths,piece.getSide()); //remove paths that results in the final position overlapping with another piece of same side
+    removePieceOverlap(possiblePaths,piece.getOppositeSide());
 
+    List<List<Coordinate>> possibleCapturePaths = piece.getValidPaths(c,playerSide,checkCoordinateInBounds,piece.getCaptureMovements());
+    if(!piece.isCanJump()){
+      removeJumps(possibleCapturePaths);
+    }
+    removePieceOverlap(possibleCapturePaths,piece.getSide());
+    keepPieceOverlap(possibleCapturePaths);
+
+    possiblePaths.addAll(possibleCapturePaths);
     Set<Coordinate> validMoves = new HashSet<>();
     for(int i=0;i<possiblePaths.size();i++){
       validMoves.add(possiblePaths.get(i).get(possiblePaths.get(i).size()-1));
@@ -103,6 +118,15 @@ public class GridModel {
     for(int i=0;i<possiblePaths.size();i++){
       if(checkPieceExists(possiblePaths.get(i).get(possiblePaths.get(i).size()-1))
               && getPiece(possiblePaths.get(i).get(possiblePaths.get(i).size()-1)).getSide()==pieceSide){
+        possiblePaths.remove(i);
+        i--;
+      }
+    }
+  }
+
+  private void keepPieceOverlap(List<List<Coordinate>> possiblePaths){
+    for(int i=0;i<possiblePaths.size();i++){
+      if(!checkPieceExists(possiblePaths.get(i).get(possiblePaths.get(i).size()-1))){
         possiblePaths.remove(i);
         i--;
       }
