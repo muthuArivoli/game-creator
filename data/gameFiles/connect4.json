@@ -14,7 +14,8 @@
         ]
       },
       "captureMoves": [
-      ]
+      ],
+      "pieceAIValue": 0
     }
   },
   "grid": [

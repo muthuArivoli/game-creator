@@ -31,24 +31,6 @@ public class ChessAI {
         return returnMove;
     }
 
-    private int getChessPieceValue(String pieceName) {
-        if(pieceName.equals("pawn")) {
-            return 100;
-        } else if(pieceName.equals("knight")) {
-            return 350;
-        } else if(pieceName.equals("rook")) {
-            return 525;
-        } else if(pieceName.equals("bishop")) {
-            return 350;
-        } else if(pieceName.equals("queen")) {
-            return 1000;
-        } else if(pieceName.equals("king")) {
-            return 10000;
-        } else {
-            return 0;
-        }
-    }
-
     private int evaluatePosition() {
         int positionScore = 0;
         int nonActivePlayer = activePlayer == 1 ? -1 : 1;
@@ -57,11 +39,11 @@ public class ChessAI {
 
         for(Coordinate currCoord: playerPositions) {
             Piece currPiece = myGridModel.getPiece(currCoord);
-            positionScore += getChessPieceValue(currPiece.getPieceName());
+            positionScore += currPiece.getPointValue();
         }
         for(Coordinate enemyCurrCoord: enemyPositions) {
             Piece enemyCurrPiece = myGridModel.getPiece(enemyCurrCoord);
-            positionScore -= getChessPieceValue(enemyCurrPiece.getPieceName());
+            positionScore -= enemyCurrPiece.getPointValue();
         }
         return positionScore;
     }

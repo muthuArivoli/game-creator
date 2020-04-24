@@ -48,7 +48,8 @@ public class PieceParser {
         normalMovesJSON.has("anyTime") ? generateMoves(normalMovesJSON.getJSONArray("anyTime")) : new ArrayList<Movement>(),
         generateMoves(pieceJSON.getJSONArray("captureMoves")),
         pieceJSON.getInt("canJump") > 0,
-        pieceJSON.getInt("canCaptureJump") > 0
+        pieceJSON.getInt("canCaptureJump") > 0,
+            pieceJSON.getInt("pieceAIValue")
     );
   }
 
