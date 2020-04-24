@@ -138,14 +138,24 @@ public class GameController {
         } else {
           myGridModel.movePiece(selectedPiece,  Collections.max(validMoves));
         }
-
+        switchPlayers();
         myGridModel.print();
         setChanged(true);
+
       } catch (InvalidPieceException e) {
         e.printStackTrace();
       }
     } else {
+      try {
+        if(aiEnabled) {
+          AI newAI = myGameModel.getNewGameAI(myGridModel, activePlayer);
+          newAI.getBestMove(8);
 
+        }
+
+      } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | ClassNotFoundException e) {
+        System.out.println(e.getMessage());
+      }
     }
   }
 

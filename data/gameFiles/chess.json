@@ -47,7 +47,7 @@
           [{"left":  [2,2]},{"bk":  [1,1]}],
           [{"left":  [2,2]},{"fd":  [1,1]}]
         ],
-      "pieceAIValue": 360
+      "pieceAIValue": 350
     },
     "rook": {
       "canJump": 0,
