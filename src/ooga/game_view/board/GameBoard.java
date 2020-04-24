@@ -1,25 +1,16 @@
 package ooga.game_view.board;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.ResourceBundle;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import ooga.controller.GameController;
-import ooga.game_view.board.pieceType.EllipsePiece;
-import ooga.game_view.board.tile.RectangleTile;
+import ooga.game_view.board.availableShapes.ComponentShape;
 import ooga.models.GridModel;
 import ooga.piece.Coordinate;
 
@@ -27,6 +18,8 @@ public class GameBoard extends BorderPane {
   private GameController gameController;
   private GridModel gridModel;
   private String currentStyleSheet;
+  private String pieceShape;
+  private String tileShape;
   private double tileWidth;
   private double tileHeight;
   private double displayWidth;
@@ -46,6 +39,8 @@ public class GameBoard extends BorderPane {
     this.getStyleClass().add("GameBoard");
     boardBackground = this.getBackground();
     availableColors = gameColors;
+    pieceShape = "Circular";
+    tileShape = "Rectangular";
   }
 
   public void createGameBoard(GameController gameController, String styleSheet, double width, double height){
@@ -70,12 +65,19 @@ public class GameBoard extends BorderPane {
   }
 
   public void updateDisplay () {
-    boardDisplay.getChildren().clear();
-    populateBoard();
+    try{
+      boardDisplay.getChildren().clear();
+      populateBoard();
+    }
+    catch(NullPointerException e){
+      //do nothing. Game board will be loaded after user loads game
+    }
   }
 
-  public void updateColors(List<Color> newColors){
+  public void updateComponents(List<Color> newColors, List<String> shapes){
     availableColors = newColors;
+    tileShape = shapes.get(0);
+    pieceShape = shapes.get(1);
     updateDisplay();
   }
 
@@ -110,18 +112,17 @@ public class GameBoard extends BorderPane {
 
   private void createTileAndPiece(Group tileGroup, Group pieceGroup, int row, int col, Color tileColor){
     List<Coordinate> validCoordinates = gameController.getValidMoves();
-    RectangleTile tile = new RectangleTile(gameController, tileWidth, tileHeight, row, col,
-        tileColor);
+    ComponentShape tile = createComponent(row, col, tileColor, tileShape, false);
+    tile.setColor(tileColor);
     if(new Coordinate(row, col).equals(gameController.getSelectedPiecePosition())){
-      tile.setFill(Color.LIGHTBLUE);
+      tile.setColor(Color.LIGHTBLUE);
     }else if (validCoordinates.contains(new Coordinate(row,col))) {
-      tile.setFill(Color.LIGHTGREEN);
+      tile.setColor(Color.LIGHTGREEN);
     }
-    EllipsePiece piece = new EllipsePiece(gameController, tileWidth, tileHeight, row, col, tileColor);
+    ComponentShape piece = createComponent(row, col, tileColor, pieceShape, true);
     if(gridModel.getGrid()[row][col]!= null){
       piece.setColor(availableColors.get(2));
       piece.addName(gridModel.getGrid()[row][col].getPieceName());
-      piece.isFiller(false);
       if(gridModel.getGrid()[row][col].getSide() == -1){
         piece.setColor(availableColors.get(3));
       }
@@ -129,4 +130,18 @@ public class GameBoard extends BorderPane {
     pieceGroup.getChildren().addAll(piece);
     tileGroup.getChildren().addAll(tile);
   }
+
+  private ComponentShape createComponent(int row, int col, Color tileColor, String shp, boolean isPiece) {
+    try {
+      Class<?> cls = Class.forName("ooga.game_view.board.availableShapes."+shp);
+      Object object;
+      Constructor constructor = cls.getConstructor(GameController.class, double.class, double.class, int.class, int.class, Color.class, boolean.class);
+      object = constructor.newInstance(gameController, tileWidth, tileHeight, row, col, tileColor, isPiece);
+      return (ComponentShape) object;
+    }catch (ClassNotFoundException| NoSuchMethodException| IllegalAccessException| InvocationTargetException| InstantiationException e) {
+      //Never Reached because user choices are limited under settings
+      return null;
+    }
+  }
+
 }

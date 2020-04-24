@@ -1,4 +1,4 @@
-package ooga.game_view;
+package ooga.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +17,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -25,13 +26,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ooga.controller.GameController;
+import ooga.game_view.FileSelect;
+import ooga.game_view.GUIButtons;
 import ooga.game_view.board.GameBoard;
 
 public class GameGuiController extends Application {
   private static final String LIGHT_STYLESHEET = "ooga/resources/styleSheets/lightMode.css";
   private static final String DARK_STYLESHEET = "ooga/resources/styleSheets/darkMode.css";
-  private static final String PIECES_DIRECTORY = "src/ooga/resources/images/pieces";
   private static final String LANGUAGES_PACKAGE = "ooga.resources.languages.";
   private static final String GAME_DIRECTORY = "data/gameFiles";
   private static final String GAME_FILE_EXTENSIONS = "*.json";
@@ -62,6 +63,8 @@ public class GameGuiController extends Application {
   private VBox titleBox = new VBox();
   private List<Color> gameColors = new ArrayList<Color>(
       Arrays.asList(Color.WHITE, Color.BLACK, Color.RED, Color.CYAN));
+  private List<String> availableShapes = new ArrayList<>(Arrays.asList("Rectangular", "Circular"));
+  private List<String> componentShapes = new ArrayList<>(Arrays.asList("Rectangular", "Circular"));
   private boolean darkEnabled = false;
 
   private String currentStyleSheet = LIGHT_STYLESHEET;
@@ -99,8 +102,6 @@ public class GameGuiController extends Application {
     myScene.getStylesheets().add(currentStyleSheet);
     myStage.setScene(myScene);
     myStage.show();
-    //startGame(new File("./data/gameFiles/chess.json"));
-    //startGame(new File("./data/gameFiles/connect4.json"));
   }
 
   private void setBorderPane() {
@@ -139,7 +140,8 @@ public class GameGuiController extends Application {
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
       try {
         step();
-      } catch (FileNotFoundException ex) {
+      } catch (Exception ex) {
+        //Do Nothing
       }
     });
     animation = new Timeline();
@@ -148,7 +150,7 @@ public class GameGuiController extends Application {
     animation.play();
   }
 
-  private void step() throws FileNotFoundException {
+  private void step() {
     changeLanguage(buttons.getLanguageStatus());
     checkNewGame(buttons.getNewGameStatus());
     checkSettings(buttons.getSettingsStatus());
@@ -160,16 +162,22 @@ public class GameGuiController extends Application {
     }
   }
 
-  private void changeLanguage(String language) throws FileNotFoundException {
+  private void changeLanguage(String language) {
     guiLanguage = myResources.getString(language);
     if (!guiLanguage.contains(currentLanguage)) {
-      currentLanguage = guiLanguage;
-      myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
-      gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
-      buttonGroup.getChildren().clear();
-      root.getChildren().remove(buttonGroup);
-      gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
-      addGameButtons();
+      try{
+        currentLanguage = guiLanguage;
+        myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
+        gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
+        buttonGroup.getChildren().clear();
+        root.getChildren().remove(buttonGroup);
+        gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
+        addGameButtons();
+      }catch(NullPointerException | FileNotFoundException e ){
+        checkNewGame(true);
+        currentLanguage = "English";
+        changeLanguage(buttons.getLanguageStatus());
+      }
     }
   }
 
@@ -212,10 +220,78 @@ public class GameGuiController extends Application {
       Stage settingsStage = createNewStage(rt, "Settings", 400, 300);
       Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(settingsStage.getScene()));
       Button changeTile = createButton(myResources.getString("ChangeColor"), event -> changeColor(settingsStage));
-      Button changePiece = createButton(myResources.getString("ChangeShape"), event -> changePieceAttributes(settingsStage));
+      Button changePiece = createButton(myResources.getString("ChangeShape"), event -> changeShape(settingsStage));
       rt.getChildren().addAll(darkMode, changeTile, changePiece);
       settingsStage.show();
     }
+  }
+
+  private void changeLightTheme(Scene scene){
+    darkEnabled = !darkEnabled;
+    scene.getStylesheets().removeAll(currentStyleSheet);
+    myScene.getStylesheets().removeAll(currentStyleSheet);
+    currentStyleSheet = LIGHT_STYLESHEET;
+    if(darkEnabled) {
+      currentStyleSheet = DARK_STYLESHEET;
+    }
+    scene.getStylesheets().add(currentStyleSheet);
+    myScene.getStylesheets().add(currentStyleSheet);
+    try{
+      gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
+    }
+    catch (NullPointerException e){
+      //do Nothing
+    }
+  }
+
+  private void changeColor(Stage settings){
+    settings.close();
+    VBox rt = new VBox();
+    rt.setSpacing(10);
+    rt.setAlignment(Pos.CENTER);
+    Stage ColorStage = createNewStage(rt, "ChangeColor", 300, 200);
+    rt.getChildren().addAll(createButton("TileColor 1", event -> chooseColor(0, rt)),
+        createButton("TileColor 2", event -> chooseColor(1, rt)),
+        createButton("UserPieceColor", event -> chooseColor(2, rt)),
+        createButton("ComputerPieceColor", event -> chooseColor(3, rt)));
+    ColorStage.show();
+  }
+
+  private void chooseColor(int index, VBox root){
+    if (root.getChildren().size() == 5) {root.getChildren().remove(4);}
+    ColorPicker cp = new ColorPicker();
+    cp.setValue(gameColors.get(index));
+    cp.setOnAction(new EventHandler() {
+      public void handle(Event t) {
+        gameColors.set(index, cp.getValue());
+        gameDisplay.updateComponents(gameColors, componentShapes);
+      }
+    });
+    root.getChildren().add(cp);
+  }
+
+  private void changeShape(Stage settings){
+    settings.close();
+    VBox rt = new VBox();
+    rt.setSpacing(10);
+    rt.setAlignment(Pos.CENTER);
+    Stage ShapeStage = createNewStage(rt, "ChangeShape", 300, 200);
+    rt.getChildren().addAll(createButton("Tile Shape", event -> chooseShape(0, rt)),
+        createButton("Piece Shape", event -> chooseShape(1, rt)));
+    ShapeStage.show();
+  }
+
+  private void chooseShape(int index, VBox root){
+    if (root.getChildren().size() == 3) {root.getChildren().remove(2);}
+    ComboBox tempMenu = new ComboBox();
+    tempMenu.getItems().addAll(availableShapes);
+    tempMenu.setOnAction(new EventHandler() {
+      public void handle(Event t) {
+        componentShapes.set(index, (String) tempMenu.getValue());
+        gameDisplay.updateComponents(gameColors, componentShapes);
+      }
+    });
+    root.getChildren().add(tempMenu);
   }
 
   private Button createButton(String buttonName, EventHandler event){
@@ -231,48 +307,5 @@ public class GameGuiController extends Application {
     temporaryScene.getStylesheets().add(currentStyleSheet);
     s.setScene(temporaryScene);
     return s;
-  }
-
-  private void changeLightTheme(Scene scene){
-    darkEnabled = !darkEnabled;
-    scene.getStylesheets().removeAll(currentStyleSheet);
-    myScene.getStylesheets().removeAll(currentStyleSheet);
-    currentStyleSheet = LIGHT_STYLESHEET;
-    if(darkEnabled) {
-      currentStyleSheet = DARK_STYLESHEET;
-    }
-    scene.getStylesheets().add(currentStyleSheet);
-    myScene.getStylesheets().add(currentStyleSheet);
-    gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
-  }
-
-  private void changeColor(Stage settings){
-    settings.close();
-    VBox rt = new VBox();
-    rt.setSpacing(10);
-    rt.setAlignment(Pos.CENTER);
-    Stage TilesStage = createNewStage(rt, "ChangeColor", 300, 200);
-    rt.getChildren().addAll(createButton("TileColor 1", event -> chooseColor(0, rt)),
-        createButton("TileColor 2", event -> chooseColor(1, rt)),
-        createButton("UserPieceColor", event -> chooseColor(2, rt)),
-        createButton("ComputerPieceColor", event -> chooseColor(3, rt)));
-    TilesStage.show();
-  }
-
-  private void chooseColor(int index, VBox root){
-    if (root.getChildren().size() == 5) {root.getChildren().remove(4);}
-    ColorPicker cp = new ColorPicker();
-    cp.setValue(gameColors.get(index));
-    cp.setOnAction(new EventHandler() {
-      public void handle(Event t) {
-        gameColors.set(index, cp.getValue());
-        gameDisplay.updateColors(gameColors);
-      }
-    });
-    root.getChildren().add(cp);
-  }
-
-  private void changePieceAttributes(Stage settings){
-    settings.close();
   }
 }
