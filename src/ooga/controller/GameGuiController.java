@@ -1,4 +1,4 @@
-package ooga.game_view;
+package ooga.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,12 +27,13 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.controller.GameController;
+import ooga.game_view.FileSelect;
+import ooga.game_view.GUIButtons;
 import ooga.game_view.board.GameBoard;
 
 public class GameGuiController extends Application {
   private static final String LIGHT_STYLESHEET = "ooga/resources/styleSheets/lightMode.css";
   private static final String DARK_STYLESHEET = "ooga/resources/styleSheets/darkMode.css";
-  private static final String PIECES_DIRECTORY = "src/ooga/resources/images/pieces";
   private static final String LANGUAGES_PACKAGE = "ooga.resources.languages.";
   private static final String GAME_DIRECTORY = "data/gameFiles";
   private static final String GAME_FILE_EXTENSIONS = "*.json";
@@ -102,8 +103,6 @@ public class GameGuiController extends Application {
     myScene.getStylesheets().add(currentStyleSheet);
     myStage.setScene(myScene);
     myStage.show();
-    //startGame(new File("./data/gameFiles/chess.json"));
-    //startGame(new File("./data/gameFiles/connect4.json"));
   }
 
   private void setBorderPane() {
@@ -221,21 +220,6 @@ public class GameGuiController extends Application {
     }
   }
 
-  private Button createButton(String buttonName, EventHandler event){
-    Button temp = new Button(buttonName);
-    temp.setOnAction(event);
-    return temp;
-  }
-
-  private Stage createNewStage(Pane rt, String title, double width, double height){
-    Stage s = new Stage();
-    s.setTitle(myResources.getString(title));
-    Scene temporaryScene = new Scene(rt,width,height);
-    temporaryScene.getStylesheets().add(currentStyleSheet);
-    s.setScene(temporaryScene);
-    return s;
-  }
-
   private void changeLightTheme(Scene scene){
     darkEnabled = !darkEnabled;
     scene.getStylesheets().removeAll(currentStyleSheet);
@@ -297,5 +281,20 @@ public class GameGuiController extends Application {
       }
     });
     root.getChildren().add(tempMenu);
+  }
+
+  private Button createButton(String buttonName, EventHandler event){
+    Button temp = new Button(buttonName);
+    temp.setOnAction(event);
+    return temp;
+  }
+
+  private Stage createNewStage(Pane rt, String title, double width, double height){
+    Stage s = new Stage();
+    s.setTitle(myResources.getString(title));
+    Scene temporaryScene = new Scene(rt,width,height);
+    temporaryScene.getStylesheets().add(currentStyleSheet);
+    s.setScene(temporaryScene);
+    return s;
   }
 }
