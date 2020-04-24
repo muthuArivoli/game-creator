@@ -3,6 +3,8 @@ package ooga.tests.UITests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -21,7 +23,9 @@ class GameBoardTest {
 
   @org.junit.jupiter.api.BeforeEach
   void setUp() {
-    gameDisplay = new GameBoard();
+    List<Color> gameColors = new ArrayList<Color>(
+        Arrays.asList(Color.WHITE, Color.BLACK, Color.RED, Color.CYAN));
+    gameDisplay = new GameBoard(gameColors);
     myGameController = new GameController();
     myGameController.parseFile("C:/Users/Okechukwu/Desktop/College/COMPSCI 308/final_team09/data/gameFiles/chess.json");
   }

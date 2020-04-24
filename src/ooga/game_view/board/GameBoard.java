@@ -42,10 +42,10 @@ public class GameBoard extends BorderPane {
   private List<Color> availableColors;
   private List<String> PieceNames;
 
-  public GameBoard(){
+  public GameBoard(List<Color> gameColors){
     this.getStyleClass().add("GameBoard");
     boardBackground = this.getBackground();
-    availableColors = new ArrayList<Color>(Arrays.asList(Color.WHITE, Color.BLACK, Color.RED, Color.CYAN));
+    availableColors = gameColors;
   }
 
   public void createGameBoard(GameController gameController, String styleSheet, double width, double height){

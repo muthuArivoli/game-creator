@@ -3,6 +3,8 @@ package ooga.game_view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -71,7 +73,8 @@ public class GameGuiController extends Application {
   private VBox buttonGroup;
   private Text gameTitle;
   private VBox titleBox = new VBox();
-
+  private List<Color> gameColors = new ArrayList<Color>(
+      Arrays.asList(Color.WHITE, Color.BLACK, Color.RED, Color.CYAN));
   private boolean darkEnabled = false;
 
   private String currentStyleSheet = LIGHT_STYLESHEET;
@@ -140,7 +143,7 @@ public class GameGuiController extends Application {
   }
 
   private void addGameBoardDisplay(){
-    gameDisplay = new GameBoard();
+    gameDisplay = new GameBoard(gameColors);
     BorderPane.setAlignment(gameDisplay, Pos.CENTER);
     root.setRight(gameDisplay);
   }
@@ -216,15 +219,15 @@ public class GameGuiController extends Application {
   private void checkSettings(boolean settingsStatus){
     if (settingsStatus){
       buttons.setSettingsPressedOff();
-      FlowPane rt = new FlowPane();
+      VBox rt = new VBox();
       rt.setAlignment(Pos.CENTER);
-      rt.setVgap(20);
-      Stage newStage = createNewStage(rt, "Settings", 250, 250);
-      Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(newStage.getScene()));
-      Button changeTile = createButton("Change Tile Attributes", event -> changeTileAttributes(newStage));
-      Button changePiece = createButton("Change Piece Attributes", event -> changePieceAttributes(newStage));
+      rt.setSpacing(20);
+      Stage settingsStage = createNewStage(rt, "Settings", 400, 300);
+      Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(settingsStage.getScene()));
+      Button changeTile = createButton(myResources.getString("ChangeTileAttributes"), event -> changeTileAttributes(settingsStage));
+      Button changePiece = createButton(myResources.getString("ChangePieceAttributes"), event -> changePieceAttributes(settingsStage));
       rt.getChildren().addAll(darkMode, changeTile, changePiece);
-      newStage.show();
+      settingsStage.show();
     }
   }
 
