@@ -11,11 +11,9 @@ public abstract class PieceShape extends StackPane {
   private GameController gameController;
   private Text text;
   private Shape shape;
-  private boolean fillerPiece;
 
   public PieceShape(GameController gameController, double tileX, double tileY, int row, int col, Color tileColor){
     text = new Text("");
-    fillerPiece = true;
     initiatePiece(gameController, tileX, tileY, row, col);
     shape.setStroke(tileColor);
     shape.setFill(tileColor);
@@ -26,17 +24,13 @@ public abstract class PieceShape extends StackPane {
     shape.setStroke(Color.BLACK);
   }
 
-  public void isFiller(boolean state){
-    fillerPiece = state;
-  }
-
   public void addName(String pieceName){
     text.setText(pieceName);
   }
 
   private void initiatePiece(GameController gameController, double tileX, double tileY, int row, int col){
     this.gameController = gameController;
-    shape = createShape(tileX, tileY, row, col);
+    shape = createShape(tileX, tileY);
 
     relocate(col*tileY, row*tileX);
     getChildren().addAll(shape, text);
@@ -46,6 +40,6 @@ public abstract class PieceShape extends StackPane {
     });
   }
 
-  abstract protected Shape createShape(double tileX, double tileY, int row, int col);
+  abstract protected Shape createShape(double tileX, double tileY);
 
 }

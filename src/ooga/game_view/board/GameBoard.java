@@ -27,6 +27,8 @@ public class GameBoard extends BorderPane {
   private GameController gameController;
   private GridModel gridModel;
   private String currentStyleSheet;
+  private String pieceShape;
+  private String tileShape;
   private double tileWidth;
   private double tileHeight;
   private double displayWidth;
@@ -121,7 +123,6 @@ public class GameBoard extends BorderPane {
     if(gridModel.getGrid()[row][col]!= null){
       piece.setColor(availableColors.get(2));
       piece.addName(gridModel.getGrid()[row][col].getPieceName());
-      piece.isFiller(false);
       if(gridModel.getGrid()[row][col].getSide() == -1){
         piece.setColor(availableColors.get(3));
       }
