@@ -17,6 +17,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -28,6 +29,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -261,6 +263,23 @@ public class GameGuiController extends Application {
 
   private void changeTileAttributes(Stage settings){
     settings.close();
+    VBox rt = new VBox();
+    rt.setSpacing(10);
+    rt.setAlignment(Pos.CENTER);
+    Stage TilesStage = createNewStage(rt, "ChangeTileAttributes", 300, 200);
+    rt.getChildren().addAll(createButton("TileColor 1", event -> chooseColor(0, rt)),
+        createButton("TileColor 2", event -> chooseColor(1, rt)),
+        createButton("UserPieceColor", event -> chooseColor(2, rt)),
+        createButton("ComputerPieceColor", event -> chooseColor(3, rt)));
+    TilesStage.show();
+  }
+
+  private void chooseColor(int index, VBox root){
+    if (root.getChildren().size() == 5) {root.getChildren().remove(4);}
+    ColorPicker cp = new ColorPicker();
+    cp.setValue(gameColors.get(index));
+    cp.setOnAction(event -> gameColors.set(index, cp.getValue()));
+    root.getChildren().add(cp);
   }
 
   private void changePieceAttributes(Stage settings){
