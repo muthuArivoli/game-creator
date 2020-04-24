@@ -33,7 +33,7 @@ public class Piece {
 
         this.canJump = canJump;
         this.canCaptureJump = canCaptureJump;
-        this.moveNumber = 0;
+        this.moveNumber = 1;
         this.pointValue = pieceValue;
     }
 
