@@ -1,5 +1,6 @@
 package ooga.AI;
 
+import javafx.util.Pair;
 import ooga.models.GridModel;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
@@ -7,6 +8,7 @@ import ooga.piece.Piece;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class ChessAI {
     private GridModel myGridModel;
@@ -17,38 +19,13 @@ public class ChessAI {
         this.activePlayer = activePlayer;
     }
 
-    public List<Coordinate> getBestMove() {
-        Coordinate currentBestMove = null;
-        Coordinate currentBestPiece = null;
-        int currPositionScore = evaluatePosition();
-        int bestMoveValue = Integer.MIN_VALUE;
-        int nonActivePlayer = activePlayer == 1 ? -1 : 1;
-
-        List<Coordinate> playerPositions = myGridModel.getPositions(activePlayer);
-        Collections.shuffle(playerPositions);
-        if(!playerPositions.isEmpty()) {
-            for (Coordinate currPiece : playerPositions) {
-                List<Coordinate> currValidMoves = myGridModel.getValidMoves(currPiece, activePlayer);
-                Collections.shuffle(currValidMoves);
-                if (!currValidMoves.isEmpty()) {
-                    for (Coordinate currMove : currValidMoves) {
-                        myGridModel.movePiece(myGridModel.getPiece(currPiece), currMove);
-                        int newPositionScore = evaluatePosition();
-                        if (newPositionScore > bestMoveValue) {
-                            currentBestMove = currMove;
-                            currentBestPiece = currPiece;
-                            bestMoveValue = newPositionScore;
-                        }
-                        myGridModel.undoLastMove();
-                    }
-                }
-            }
+    public List<Coordinate> getBestMove(int depthOfAnalysis) {
+        if(depthOfAnalysis <= 0) {
+            depthOfAnalysis = 1;
         }
-
-        List<Coordinate> returnList = new ArrayList<>();
-        returnList.add(currentBestPiece);
-        returnList.add(currentBestMove);
-        return returnList;
+        Pair<Integer, List<Coordinate>> resultList = recursiveMoveFinder(depthOfAnalysis, true);
+        List<Coordinate> returnMove = resultList.getValue();
+        return returnMove;
     }
 
     private int getChessPieceValue(String pieceName) {
@@ -84,5 +61,58 @@ public class ChessAI {
             positionScore -= getChessPieceValue(enemyCurrPiece.getPieceName());
         }
         return positionScore;
+    }
+
+    private Pair<Integer, List<Coordinate>> recursiveMoveFinder(int depth, boolean isMaximizing) {
+        // base case
+        if(depth == 0) {
+            return new Pair<Integer, List<Coordinate>>(evaluatePosition(), null);
+        }
+
+        // recursive case
+        int bestMoveValue, tempActivePlayer;
+        Coordinate currentBestMove = null;
+        Coordinate currentBestPiece = null;
+        if(isMaximizing) {
+            bestMoveValue = Integer.MIN_VALUE;
+            tempActivePlayer = activePlayer;
+        } else {
+            bestMoveValue = Integer.MAX_VALUE;
+            tempActivePlayer = activePlayer == 1 ? -1 : 1;
+        }
+
+        List<Coordinate> playerPositions = myGridModel.getPositions(tempActivePlayer);
+        Collections.shuffle(playerPositions);
+        if(!playerPositions.isEmpty()) {
+            for(Coordinate currPiece: playerPositions) {
+                List<Coordinate> currValidMoves = myGridModel.getValidMoves(currPiece, tempActivePlayer);
+                Collections.shuffle(currValidMoves);
+                if(!currValidMoves.isEmpty()) {
+                    for(Coordinate currMove: currValidMoves) {
+                        myGridModel.movePiece(myGridModel.getPiece(currPiece), currMove);
+                        int newPositionScore = recursiveMoveFinder(depth-1, !isMaximizing).getKey();
+                        if(isMaximizing) {
+                            if(newPositionScore > bestMoveValue) {
+                                currentBestMove = currMove;
+                                currentBestPiece = currPiece;
+                                bestMoveValue = newPositionScore;
+                            }
+                        } else {
+                            if (newPositionScore < bestMoveValue) {
+                                currentBestMove = currMove;
+                                currentBestPiece = currPiece;
+                                bestMoveValue = newPositionScore;
+                            }
+                        }
+                        myGridModel.undoLastMove();
+                    }
+                }
+            }
+        }
+        List<Coordinate> returnList = new ArrayList<>();
+        returnList.add(currentBestPiece);
+        returnList.add(currentBestMove);
+
+        return new Pair<>(bestMoveValue, returnList);
     }
 }

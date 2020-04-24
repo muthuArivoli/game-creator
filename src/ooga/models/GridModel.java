@@ -1,6 +1,7 @@
 package ooga.models;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
 
@@ -10,7 +11,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class GridModel {
-  private MoveRecord previousMove;
+  private LinkedList<MoveRecord> previousMove = new LinkedList<MoveRecord>();
   private Piece [][] myGrid;
   private int rows;
   private int cols;
@@ -34,10 +35,12 @@ public class GridModel {
   }
 
   public void movePiece(Piece piece, Coordinate c) {
-    previousMove = new MoveRecord(piece.getPosition(), c);
-    removePiece(piece.getPosition());
-    piece.setPosition(c.getRow(), c.getCol());
-    addPiece(piece, c.getRow(), c.getCol());
+    if(piece != null) {
+      previousMove.push(new MoveRecord(piece.getPosition(), c));
+      removePiece(piece.getPosition());
+      piece.setPosition(c.getRow(), c.getCol());
+      addPiece(piece, c.getRow(), c.getCol());
+    }
   }
 
   public void removePiece(Coordinate c) {
@@ -131,7 +134,7 @@ public class GridModel {
   }
 
   public void undoLastMove() {
-    previousMove.undoThisMove();
+    previousMove.pop().undoThisMove();
   }
 
   class MoveRecord {
