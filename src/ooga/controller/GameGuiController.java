@@ -27,6 +27,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.controller.GameController;
+import ooga.exceptions.GameExceptions;
 import ooga.game_view.FileSelect;
 import ooga.game_view.GUIButtons;
 import ooga.game_view.board.GameBoard;
@@ -141,7 +142,8 @@ public class GameGuiController extends Application {
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
       try {
         step();
-      } catch (FileNotFoundException ex) {
+      } catch (GameExceptions ex) {
+        //Do Nothing
       }
     });
     animation = new Timeline();
@@ -150,7 +152,7 @@ public class GameGuiController extends Application {
     animation.play();
   }
 
-  private void step() throws FileNotFoundException {
+  private void step() throws GameExceptions {
     changeLanguage(buttons.getLanguageStatus());
     checkNewGame(buttons.getNewGameStatus());
     checkSettings(buttons.getSettingsStatus());
@@ -162,16 +164,22 @@ public class GameGuiController extends Application {
     }
   }
 
-  private void changeLanguage(String language) throws FileNotFoundException {
+  private void changeLanguage(String language) {
     guiLanguage = myResources.getString(language);
     if (!guiLanguage.contains(currentLanguage)) {
-      currentLanguage = guiLanguage;
-      myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
-      gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
-      buttonGroup.getChildren().clear();
-      root.getChildren().remove(buttonGroup);
-      gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
-      addGameButtons();
+      try{
+        currentLanguage = guiLanguage;
+        myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
+        gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
+        buttonGroup.getChildren().clear();
+        root.getChildren().remove(buttonGroup);
+        gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
+        addGameButtons();
+      }catch(NullPointerException | FileNotFoundException e ){
+        checkNewGame(true);
+        currentLanguage = "English";
+        changeLanguage(buttons.getLanguageStatus());
+      }
     }
   }
 
@@ -264,7 +272,7 @@ public class GameGuiController extends Application {
     VBox rt = new VBox();
     rt.setSpacing(10);
     rt.setAlignment(Pos.CENTER);
-    Stage ShapeStage = createNewStage(rt, "ChangeColor", 300, 200);
+    Stage ShapeStage = createNewStage(rt, "Change Shape", 300, 200);
     rt.getChildren().addAll(createButton("Tile Shape", event -> chooseShape(0, rt)),
         createButton("Piece Shape", event -> chooseShape(1, rt)));
     ShapeStage.show();
