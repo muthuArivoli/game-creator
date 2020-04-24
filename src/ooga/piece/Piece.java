@@ -91,4 +91,8 @@ public class Piece {
     public int getPointValue() {
         return pointValue;
     }
+
+    public void decrementMove() {
+        moveNumber--;
+    }
 }

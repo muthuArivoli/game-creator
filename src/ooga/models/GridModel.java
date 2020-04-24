@@ -36,10 +36,10 @@ public class GridModel {
 
   public void movePiece(Piece piece, Coordinate c) {
       previousMove.push(new MoveRecord(piece.getPosition(), c));
+      piece.incrementMove();
       removePiece(piece.getPosition());
       piece.setPosition(c.getRow(), c.getCol());
       addPiece(piece, c.getRow(), c.getCol());
-      piece.incrementMove();
   }
 
   public void removePiece(Coordinate c) {
@@ -69,7 +69,7 @@ public class GridModel {
 
     Piece piece = getPiece(c);
     List<List<Coordinate>> possiblePaths;
-    if(piece.getMoveNumber() == 1){
+    if(piece.getMoveNumber() == 1 && !piece.getNormalFirstMovements().isEmpty()){
       possiblePaths = piece.getValidPaths(c, playerSide, checkCoordinateInBounds,piece.getNormalFirstMovements());
     }
     else {
@@ -179,6 +179,7 @@ public class GridModel {
       if(movedPiece != null) {
         movedPiece.setPosition(originalLocation.getRow(), originalLocation.getCol());
         addPiece(movedPiece, originalLocation.getRow(), originalLocation.getCol());
+        movedPiece.decrementMove();
       }
       if(removedPiece != null) {
         removedPiece.setPosition(newLocation.getRow(), newLocation.getCol());
