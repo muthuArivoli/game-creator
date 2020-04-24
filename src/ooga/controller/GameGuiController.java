@@ -220,11 +220,16 @@ public class GameGuiController extends Application {
       rt.setSpacing(20);
       Stage settingsStage = createNewStage(rt, "Settings", 400, 300);
       Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(settingsStage.getScene()));
+      Button playerMode = createButton(myResources.getString(myGameController.isAiEnabled() ? "DisableAi" : "EnableAi"), event -> toggleAI());
       Button changeTile = createButton(myResources.getString("ChangeColor"), event -> changeColor(settingsStage));
       Button changePiece = createButton(myResources.getString("ChangeShape"), event -> changeShape(settingsStage));
-      rt.getChildren().addAll(darkMode, changeTile, changePiece);
+      rt.getChildren().addAll(darkMode, playerMode, changeTile, changePiece);
       settingsStage.show();
     }
+  }
+
+  private void toggleAI () {
+    myGameController.toggleAI();
   }
 
   private void changeLightTheme(Scene scene){

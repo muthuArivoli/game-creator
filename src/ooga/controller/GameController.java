@@ -27,6 +27,7 @@ public class GameController {
   private String playerStage = READY_TO_VIEW;
   private Piece selectedPiece;
   private boolean changed = false;
+  private boolean aiEnabled = true;
 
   private List<Coordinate> validMoves = new ArrayList<>();
 
@@ -65,7 +66,7 @@ public class GameController {
   }
 
   private void handleNonPlaceableClick(Coordinate c) {
-    if (activePlayer == 1) {
+    if (!aiEnabled) {
       switch(playerStage) {
         case READY_TO_VIEW: // get valid moves
 //          if(myGridModel.checkPieceExists(c)){
@@ -118,7 +119,7 @@ public class GameController {
   }
 
   private void handlePlaceableClick(Coordinate c) {
-    if (activePlayer == 1) {
+    if (!aiEnabled) {
       try {
         System.out.println(c);
         selectedPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
@@ -193,5 +194,13 @@ public class GameController {
       return selectedPiece.getPosition();
     }
     return null;
+  }
+
+  public void toggleAI () {
+    aiEnabled = !aiEnabled;
+  }
+
+  public boolean isAiEnabled () {
+    return aiEnabled;
   }
 }
