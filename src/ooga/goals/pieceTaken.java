@@ -30,7 +30,7 @@ public class pieceTaken extends MultiGoal implements Goal{
     }
 
     if (!side1Exists) return 1;
-    if (!side2Exists) return 2;
-    return -1;
+    if (!side2Exists) return -1;
+    return 0;
   }
 }

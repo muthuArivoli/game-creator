@@ -30,8 +30,8 @@ public class enemyPiecesLeft extends NumericGoal implements Goal {
     }
 
     if (player2Count <= myTarget) return 1;
-    if (player1Count <= myTarget) return 2;
+    if (player1Count <= myTarget) return -1;
 
-    return -1;
+    return 0;
   }
 }
