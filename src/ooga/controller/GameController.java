@@ -4,7 +4,8 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-import ooga.AI.ChessAI;
+import ooga.AI.AI;
+import ooga.AI.PieceCaptureAI;
 import ooga.exceptions.InvalidGridException;
 import ooga.exceptions.InvalidPieceException;
 import ooga.goals.Goal;
@@ -14,7 +15,6 @@ import ooga.parser.PieceParser;
 import ooga.parser.TemplateParser;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
-import ooga.piece.movement.Movement;
 
 public class GameController {
   private TemplateParser myTemplateParser;
@@ -59,11 +59,13 @@ public class GameController {
   public int checkGameEnd () {
     for (Goal goal: myGameModel.getGoals()) {
       int winner = goal.getWinner(myGridModel, selectedPiece);
+
       if(winner != 0) {
         gameOver = true;
         return winner;
       }
     }
+    System.out.println("goal not achieved");
     return 0;
   }
 
@@ -103,18 +105,22 @@ public class GameController {
     } else { // if it is the AI's turn
       switch(playerStage) {
         case READY_TO_VIEW:
-          ChessAI myChessAI = new ChessAI(myGridModel, activePlayer);
-          List<Coordinate> bestMove = myChessAI.getBestMove(3);
-          Coordinate currPiece = bestMove.get(0);
-          Coordinate currMove = bestMove.get(1);
+          try {
+            AI newAI = myGameModel.getNewGameAI(myGridModel, activePlayer);
+            List<Coordinate> bestMove = newAI.getBestMove(4);
+            Coordinate currPiece = bestMove.get(0);
+            Coordinate currMove = bestMove.get(1);
 
-          validMoves = myGridModel.getValidMoves(currPiece, activePlayer);
-          if(!validMoves.isEmpty()) {
-            selectedPiece = myGridModel.getPiece(currPiece);
-            moveSelectedPiece(currMove);
-          }
-          setChanged(true);
-          break;
+            validMoves = myGridModel.getValidMoves(currPiece, activePlayer);
+            if (!validMoves.isEmpty()) {
+              selectedPiece = myGridModel.getPiece(currPiece);
+              moveSelectedPiece(currMove);
+            }
+            setChanged(true);
+            break;
+          } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
       }
     }
     System.out.println("Player " + activePlayer + " is " + playerStage + "\n");
@@ -123,25 +129,36 @@ public class GameController {
   private void handlePlaceableClick(Coordinate c) {
     if (activePlayer == 1 || !aiEnabled) {
       try {
-        System.out.println(c);
-        selectedPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
-        myGridModel.addPiece(selectedPiece, c.getRow(), c.getCol());
+        if(!myGridModel.checkPieceExists(c)) {
+          selectedPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
+          myGridModel.addPiece(selectedPiece, c.getRow(), c.getCol());
 
-        List<Coordinate> validMoves = myGridModel.getValidMoves(c, 1);
+          List<Coordinate> validMoves = myGridModel.getValidMoves(c, 1);
 
-        if(validMoves.isEmpty()) {
-          myGridModel.movePiece(selectedPiece, c);
-        } else {
-          myGridModel.movePiece(selectedPiece,  Collections.max(validMoves));
+          if(validMoves.isEmpty()) {
+            myGridModel.movePiece(selectedPiece, c);
+          } else {
+            myGridModel.movePiece(selectedPiece,  Collections.max(validMoves));
+          }
+
+//        myGridModel.print();
+          setChanged(true);
+          activePlayer = activePlayer == 1 ? -1 : 1;
         }
-
-        myGridModel.print();
-        setChanged(true);
       } catch (InvalidPieceException e) {
         e.printStackTrace();
       }
     } else {
+      try {
+        if(aiEnabled) {
+          AI newAI = myGameModel.getNewGameAI(myGridModel, activePlayer);
+          newAI.getBestMove(8);
 
+        }
+
+      } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | ClassNotFoundException e) {
+        System.out.println(e.getMessage());
+      }
     }
   }
 

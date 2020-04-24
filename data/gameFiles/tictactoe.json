@@ -13,7 +13,8 @@
         ]
       },
       "captureMoves": [
-      ]
+      ],
+      "pieceAIValue": 0
     }
   },
   "grid": [
@@ -23,5 +24,6 @@
   ],
   "goals": [
     {"piecesInRow": 3}
-  ]
+  ],
+  "typeOfAI": "PiecesInRowAI"
 }

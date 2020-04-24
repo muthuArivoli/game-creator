@@ -35,17 +35,15 @@ public class GridModel {
   }
 
   public void movePiece(Piece piece, Coordinate c) {
-    if(piece != null) {
       previousMove.push(new MoveRecord(piece.getPosition(), c));
       removePiece(piece.getPosition());
       piece.setPosition(c.getRow(), c.getCol());
       addPiece(piece, c.getRow(), c.getCol());
       piece.incrementMove();
-    }
   }
 
   public void removePiece(Coordinate c) {
-    System.out.println("removing " + c.getRow() + " " + c.getCol());
+   // System.out.println("removing " + c.getRow() + " " + c.getCol());
     myGrid[c.getRow()][c.getCol()] = null;
   }
 
@@ -105,12 +103,12 @@ public class GridModel {
       for (int j = 0; j < cols; j++) {
         Coordinate c = new Coordinate(i, j);
         if (checkPieceExists(c) && getPiece(c).getSide() == playerSide) {
-          System.out.println(playerSide);
+          // System.out.println(playerSide);
           positions.add(getPiece(c).getPosition());
         }
       }
     }
-    System.out.println(positions);
+    // System.out.println(positions);
     return positions;
   }
 

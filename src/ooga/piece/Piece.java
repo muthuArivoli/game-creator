@@ -22,7 +22,7 @@ public class Piece {
     private boolean canCaptureJump;
     private int pointValue;
 
-    public Piece(String name, int side, int row, int column, List<Movement> normalFirstMovements,List<Movement> normalAnyMovements, List<Movement> captureMovements,boolean canJump, boolean canCaptureJump) {
+    public Piece(String name, int side, int row, int column, List<Movement> normalFirstMovements,List<Movement> normalAnyMovements, List<Movement> captureMovements,boolean canJump, boolean canCaptureJump, int pieceValue) {
         this.name = name;
         this.side = side == 2 ? -1 : 1;
         position = new Coordinate(row, column);
@@ -34,6 +34,7 @@ public class Piece {
         this.canJump = canJump;
         this.canCaptureJump = canCaptureJump;
         this.moveNumber = 0;
+        this.pointValue = pieceValue;
     }
 
     public List<Movement> getNormalFirstMovements (){
@@ -84,7 +85,10 @@ public class Piece {
         position = new Coordinate(x, y);
     }
 
-    public void incrementMove(){
+    public void incrementMove() {
         moveNumber++;
+    }
+    public int getPointValue() {
+        return pointValue;
     }
 }
