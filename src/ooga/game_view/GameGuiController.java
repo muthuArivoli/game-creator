@@ -14,32 +14,19 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.controller.GameController;
 import ooga.game_view.board.GameBoard;
-import ooga.models.GridModel;
-import ooga.piece.Coordinate;
 
 public class GameGuiController extends Application {
   private static final String LIGHT_STYLESHEET = "ooga/resources/styleSheets/lightMode.css";
@@ -224,8 +211,8 @@ public class GameGuiController extends Application {
       rt.setSpacing(20);
       Stage settingsStage = createNewStage(rt, "Settings", 400, 300);
       Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(settingsStage.getScene()));
-      Button changeTile = createButton(myResources.getString("ChangeTileAttributes"), event -> changeTileAttributes(settingsStage));
-      Button changePiece = createButton(myResources.getString("ChangePieceAttributes"), event -> changePieceAttributes(settingsStage));
+      Button changeTile = createButton(myResources.getString("ChangeColor"), event -> changeColor(settingsStage));
+      Button changePiece = createButton(myResources.getString("ChangeShape"), event -> changePieceAttributes(settingsStage));
       rt.getChildren().addAll(darkMode, changeTile, changePiece);
       settingsStage.show();
     }
@@ -259,8 +246,30 @@ public class GameGuiController extends Application {
     gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
   }
 
-  private void changeTileAttributes(Stage settings){
+  private void changeColor(Stage settings){
     settings.close();
+    VBox rt = new VBox();
+    rt.setSpacing(10);
+    rt.setAlignment(Pos.CENTER);
+    Stage TilesStage = createNewStage(rt, "ChangeColor", 300, 200);
+    rt.getChildren().addAll(createButton("TileColor 1", event -> chooseColor(0, rt)),
+        createButton("TileColor 2", event -> chooseColor(1, rt)),
+        createButton("UserPieceColor", event -> chooseColor(2, rt)),
+        createButton("ComputerPieceColor", event -> chooseColor(3, rt)));
+    TilesStage.show();
+  }
+
+  private void chooseColor(int index, VBox root){
+    if (root.getChildren().size() == 5) {root.getChildren().remove(4);}
+    ColorPicker cp = new ColorPicker();
+    cp.setValue(gameColors.get(index));
+    cp.setOnAction(new EventHandler() {
+      public void handle(Event t) {
+        gameColors.set(index, cp.getValue());
+        gameDisplay.updateColors(gameColors);
+      }
+    });
+    root.getChildren().add(cp);
   }
 
   private void changePieceAttributes(Stage settings){
