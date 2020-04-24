@@ -23,7 +23,7 @@ public class enemyPiecesLeft extends NumericGoal implements Goal {
           if (gridModel.getPiece(c).getSide() == 1) {
             player1Count += 1;
           } else {
-            player2Count += 2;
+            player2Count += 1;
           }
         }
       }
