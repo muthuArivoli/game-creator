@@ -3,10 +3,14 @@ package ooga.game_view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -69,7 +73,8 @@ public class GameGuiController extends Application {
   private VBox buttonGroup;
   private Text gameTitle;
   private VBox titleBox = new VBox();
-
+  private List<Color> gameColors = new ArrayList<Color>(
+      Arrays.asList(Color.WHITE, Color.BLACK, Color.RED, Color.CYAN));
   private boolean darkEnabled = false;
 
   private String currentStyleSheet = LIGHT_STYLESHEET;
@@ -138,7 +143,7 @@ public class GameGuiController extends Application {
   }
 
   private void addGameBoardDisplay(){
-    gameDisplay = new GameBoard();
+    gameDisplay = new GameBoard(gameColors);
     BorderPane.setAlignment(gameDisplay, Pos.CENTER);
     root.setRight(gameDisplay);
   }
@@ -189,6 +194,13 @@ public class GameGuiController extends Application {
     }
   }
 
+  private void checkRestartGame(boolean restartStatus){
+    if(restartStatus){
+      buttons.setRestartGamePressedOff();
+      startGame(currentDataFile);
+    }
+  }
+
   private void startGame(File temporaryFile){
     if (temporaryFile == null) { return; }
     else {
@@ -198,10 +210,7 @@ public class GameGuiController extends Application {
       myGameController = new GameController();
       myGameController.parseFile(currentDataFile.getPath());
       gameTitle = new Text(myGameController.getGameName().toUpperCase());
-      ArrayList<Color> colors = new ArrayList<>();
-      colors.add(Color.WHITE);
-      colors.add(Color.BLACK);
-      gameDisplay.createGameBoard(myGameController, currentStyleSheet, colors, scene_width, scene_height);
+      gameDisplay.createGameBoard(myGameController, currentStyleSheet, scene_width, scene_height);
       gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
       titleBox.getChildren().add(gameTitle);
     }
@@ -210,22 +219,22 @@ public class GameGuiController extends Application {
   private void checkSettings(boolean settingsStatus){
     if (settingsStatus){
       buttons.setSettingsPressedOff();
-      FlowPane rt = new FlowPane();
+      VBox rt = new VBox();
       rt.setAlignment(Pos.CENTER);
-      rt.setVgap(20);
-      Stage newStage = createNewStage(rt, "Settings", 250, 250);
-      Button darkMode = new Button(myResources.getString("DarkSetting"));
-      darkMode.setOnAction(event -> changeLightTheme(newStage.getScene()));
-      rt.getChildren().addAll(darkMode);
-      newStage.show();
+      rt.setSpacing(20);
+      Stage settingsStage = createNewStage(rt, "Settings", 400, 300);
+      Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(settingsStage.getScene()));
+      Button changeTile = createButton(myResources.getString("ChangeTileAttributes"), event -> changeTileAttributes(settingsStage));
+      Button changePiece = createButton(myResources.getString("ChangePieceAttributes"), event -> changePieceAttributes(settingsStage));
+      rt.getChildren().addAll(darkMode, changeTile, changePiece);
+      settingsStage.show();
     }
   }
 
-  private void checkRestartGame(boolean restartStatus){
-    if(restartStatus){
-      buttons.setRestartGamePressedOff();
-      startGame(currentDataFile);
-    }
+  private Button createButton(String buttonName, EventHandler event){
+    Button temp = new Button(buttonName);
+    temp.setOnAction(event);
+    return temp;
   }
 
   private Stage createNewStage(Pane rt, String title, double width, double height){
@@ -248,5 +257,13 @@ public class GameGuiController extends Application {
     scene.getStylesheets().add(currentStyleSheet);
     myScene.getStylesheets().add(currentStyleSheet);
     gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
+  }
+
+  private void changeTileAttributes(Stage settings){
+    settings.close();
+  }
+
+  private void changePieceAttributes(Stage settings){
+    settings.close();
   }
 }
