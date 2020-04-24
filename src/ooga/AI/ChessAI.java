@@ -27,22 +27,19 @@ public class ChessAI {
         List<Coordinate> playerPositions = myGridModel.getPositions(activePlayer);
         Collections.shuffle(playerPositions);
         if(!playerPositions.isEmpty()) {
-            for(Coordinate currPiece: playerPositions) {
-                System.out.println(currPiece);
+            for (Coordinate currPiece : playerPositions) {
                 List<Coordinate> currValidMoves = myGridModel.getValidMoves(currPiece, activePlayer);
                 Collections.shuffle(currValidMoves);
-                if(!currValidMoves.isEmpty()) {
-                    for(Coordinate currMove: currValidMoves) {
-                        int currMoveValueChange = 0;
-                        if(myGridModel.getPiece(currMove) != null && myGridModel.getPiece(currMove).getSide() == nonActivePlayer) {
-                            currMoveValueChange = getChessPieceValue(myGridModel.getPiece(currMove).getPieceName());
-                        }
-                        int newPositionScore = currPositionScore + currMoveValueChange;
-                        if(newPositionScore > bestMoveValue) {
+                if (!currValidMoves.isEmpty()) {
+                    for (Coordinate currMove : currValidMoves) {
+                        myGridModel.movePiece(myGridModel.getPiece(currPiece), currMove);
+                        int newPositionScore = evaluatePosition();
+                        if (newPositionScore > bestMoveValue) {
                             currentBestMove = currMove;
                             currentBestPiece = currPiece;
                             bestMoveValue = newPositionScore;
                         }
+                        myGridModel.undoLastMove();
                     }
                 }
             }
@@ -51,9 +48,6 @@ public class ChessAI {
         List<Coordinate> returnList = new ArrayList<>();
         returnList.add(currentBestPiece);
         returnList.add(currentBestMove);
-        System.out.println("Best Piece:" + currentBestPiece);
-        System.out.println("Best Move:" + currentBestMove);
-        System.out.println("Best Score:" + bestMoveValue);
         return returnList;
     }
 
