@@ -7,4 +7,5 @@ public class MultiGoal {
   public MultiGoal(List<String>targets) {
     this.myTargets = targets;
   }
+  
 }

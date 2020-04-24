@@ -1,0 +1,31 @@
+{
+  "title": "connect4",
+  "canPlace": true,
+  "rows": 6,
+  "columns": 7,
+
+  "pieces": {
+    "dime": {
+      "canJump": 0,
+      "canCaptureJump": 0,
+      "normalMoves": {
+        "anyTime": [
+          [{"bk": [1, -1]}]
+        ]
+      },
+      "captureMoves": [
+      ]
+    }
+  },
+  "grid": [
+    ["","","","","","",""],
+    ["","","","","","",""],
+    ["","","","","","",""],
+    ["","","","","","",""],
+    ["","","","","","",""],
+    ["","dime1","dime1","dime1","dime1","",""]
+  ],
+  "goals": [
+    {"piecesInRow": 4}
+  ]
+}
