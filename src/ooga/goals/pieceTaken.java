@@ -18,7 +18,7 @@ public class pieceTaken extends MultiGoal implements Goal{
 
     List<String> side1Targets = cloneTargets();
     List<String> side2Targets = cloneTargets();
-
+    
     for (int i = 0; i < bounds.getRow(); i++) {
       for (int j = 0; j < bounds.getCol(); j++) {
         Coordinate c = new Coordinate(i, j);

@@ -52,12 +52,11 @@ public class TemplateParser {
         } else {
           JSONArray goalArray = goalJSON.getJSONArray(key);
           List<String> targets = new ArrayList<>();
-          for(int j = 0; j < targets.size(); j++) {
-            targets.add(goalArray.getString(i));
+          for(int j = 0; j < goalArray.length(); j++) {
+            targets.add(goalArray.getString(j));
           }
           myGameModel.addGoal(factory.getMultiGoal(key, targets));;
         }
-        System.out.println("done");
       }
     }
 
