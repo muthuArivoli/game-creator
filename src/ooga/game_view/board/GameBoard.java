@@ -65,8 +65,13 @@ public class GameBoard extends BorderPane {
   }
 
   public void updateDisplay () {
-    boardDisplay.getChildren().clear();
-    populateBoard();
+    try{
+      boardDisplay.getChildren().clear();
+      populateBoard();
+    }
+    catch(NullPointerException e){
+      //do nothing. Game board will be loaded after user loads game
+    }
   }
 
   public void updateComponents(List<Color> newColors, List<String> shapes){

@@ -238,7 +238,12 @@ public class GameGuiController extends Application {
     }
     scene.getStylesheets().add(currentStyleSheet);
     myScene.getStylesheets().add(currentStyleSheet);
-    gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
+    try{
+      gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
+    }
+    catch (NullPointerException e){
+      //do Nothing
+    }
   }
 
   private void changeColor(Stage settings){
@@ -272,7 +277,7 @@ public class GameGuiController extends Application {
     VBox rt = new VBox();
     rt.setSpacing(10);
     rt.setAlignment(Pos.CENTER);
-    Stage ShapeStage = createNewStage(rt, "Change Shape", 300, 200);
+    Stage ShapeStage = createNewStage(rt, "ChangeShape", 300, 200);
     rt.getChildren().addAll(createButton("Tile Shape", event -> chooseShape(0, rt)),
         createButton("Piece Shape", event -> chooseShape(1, rt)));
     ShapeStage.show();
