@@ -16,7 +16,6 @@ public class piecesInRow extends NumericGoal implements Goal{
     int r = pos.getRow();
     int c = pos.getCol();
 
-
     boolean ret =  checkRow(gridModel, side, r, c) || checkCol(gridModel, side, r, c) || checkDiag1(gridModel, side, r, c) || checkDiag2(gridModel, side, r, c);
     if(ret){
      return side;

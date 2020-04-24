@@ -160,21 +160,26 @@ public class GameGuiController extends Application {
     if(myGameController.isChanged()) {
       gameDisplay.updateDisplay();
       myGameController.setChanged(false);
-      int gameWinner = myGameController.checkGameEnd();
-      if (gameWinner != 0) {
-        System.out.println("Winner");
-        Text winMsg = new Text();
-        winMsg.setFont(new Font(20));
-        winMsg.setText("Player " + (gameWinner == 1 ? "1" : "2") + "wins!");
+      handleGameEnd();
+    }
+  }
 
-        final Stage winModal = new Stage();
-        VBox rt = new VBox(20);
-        rt.setAlignment(Pos.CENTER);
-        rt.getChildren().add(winMsg);
-        Scene dialogScene = new Scene(rt, 300, 200);
-        winModal.setScene(dialogScene);
-        winModal.show();
-      }
+  private void handleGameEnd() {
+    int gameWinner = myGameController.checkGameEnd();
+    System.out.println("here");
+    if (gameWinner != 0) {
+      System.out.println("Winner");
+      Text winMsg = new Text();
+      winMsg.setFont(new Font(20));
+      winMsg.setText("Player " + (gameWinner == 1 ? "1" : "2") + "wins!");
+
+      final Stage winModal = new Stage();
+      VBox rt = new VBox(20);
+      rt.setAlignment(Pos.CENTER);
+      rt.getChildren().add(winMsg);
+      Scene dialogScene = new Scene(rt, 300, 200);
+      winModal.setScene(dialogScene);
+      winModal.show();
     }
   }
 

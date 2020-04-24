@@ -1,5 +1,6 @@
 package ooga.goals;
 
+import java.util.ArrayList;
 import java.util.List;
 import ooga.models.GridModel;
 import ooga.piece.Coordinate;
@@ -14,23 +15,39 @@ public class pieceTaken extends MultiGoal implements Goal{
   @Override
   public int getWinner(GridModel gridModel, Piece lastPiece) {
     Coordinate bounds = gridModel.getDimensions();
-    boolean side1Exists = false;
-    boolean side2Exists = false;
+
+    List<String> side1Targets = cloneTargets();
+    List<String> side2Targets = cloneTargets();
+    
     for (int i = 0; i < bounds.getRow(); i++) {
       for (int j = 0; j < bounds.getCol(); j++) {
         Coordinate c = new Coordinate(i, j);
         if (gridModel.checkPieceExists(c) && myTargets.contains(gridModel.getPiece(c).getPieceName())) {
-          if (gridModel.getPiece(c).getSide() == 1) {
-            side1Exists = true;
+          Piece piece = gridModel.getPiece(c);
+          if (piece.getSide() == 1) {
+            int ix = side1Targets.indexOf(piece.getPieceName());
+            if (ix!=-1) side1Targets.remove(ix);
           } else {
-            side2Exists = true;
+            int ix = side2Targets.indexOf(piece.getPieceName());
+            if (ix!=-1) side2Targets.remove(ix);
           }
         }
       }
     }
 
-    if (!side1Exists) return 1;
-    if (!side2Exists) return -1;
+    System.out.println(side1Targets);
+    System.out.println(side2Targets);
+    if (side1Targets.size() != 0) return -1;
+    if (side2Targets.size() != 0) return 1;
     return 0;
+  }
+
+  private List<String> cloneTargets () {
+    List<String> clone = new ArrayList<>();
+    for (String t: myTargets) {
+      System.out.println(t);
+      clone.add(t);
+    }
+    return clone;
   }
 }

@@ -59,11 +59,13 @@ public class GameController {
   public int checkGameEnd () {
     for (Goal goal: myGameModel.getGoals()) {
       int winner = goal.getWinner(myGridModel, selectedPiece);
+
       if(winner != 0) {
         gameOver = true;
         return winner;
       }
     }
+    System.out.println("goal not achieved");
     return 0;
   }
 
@@ -127,21 +129,22 @@ public class GameController {
   private void handlePlaceableClick(Coordinate c) {
     if (activePlayer == 1 || !aiEnabled) {
       try {
-        System.out.println(c);
-        selectedPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
-        myGridModel.addPiece(selectedPiece, c.getRow(), c.getCol());
+        if(!myGridModel.checkPieceExists(c)) {
+          selectedPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
+          myGridModel.addPiece(selectedPiece, c.getRow(), c.getCol());
 
-        List<Coordinate> validMoves = myGridModel.getValidMoves(c, 1);
+          List<Coordinate> validMoves = myGridModel.getValidMoves(c, 1);
 
-        if(validMoves.isEmpty()) {
-          myGridModel.movePiece(selectedPiece, c);
-        } else {
-          myGridModel.movePiece(selectedPiece,  Collections.max(validMoves));
+          if(validMoves.isEmpty()) {
+            myGridModel.movePiece(selectedPiece, c);
+          } else {
+            myGridModel.movePiece(selectedPiece,  Collections.max(validMoves));
+          }
+
+//        myGridModel.print();
+          setChanged(true);
+          activePlayer = activePlayer == 1 ? -1 : 1;
         }
-        switchPlayers();
-        myGridModel.print();
-        setChanged(true);
-
       } catch (InvalidPieceException e) {
         e.printStackTrace();
       }
