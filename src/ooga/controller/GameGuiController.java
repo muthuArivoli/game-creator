@@ -1,4 +1,4 @@
-package ooga.game_view;
+package ooga.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,13 +26,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ooga.controller.GameController;
+import ooga.game_view.FileSelect;
+import ooga.game_view.GUIButtons;
 import ooga.game_view.board.GameBoard;
 
 public class GameGuiController extends Application {
   private static final String LIGHT_STYLESHEET = "ooga/resources/styleSheets/lightMode.css";
   private static final String DARK_STYLESHEET = "ooga/resources/styleSheets/darkMode.css";
-  private static final String PIECES_DIRECTORY = "src/ooga/resources/images/pieces";
   private static final String LANGUAGES_PACKAGE = "ooga.resources.languages.";
   private static final String GAME_DIRECTORY = "data/gameFiles";
   private static final String GAME_FILE_EXTENSIONS = "*.json";
@@ -102,8 +102,6 @@ public class GameGuiController extends Application {
     myScene.getStylesheets().add(currentStyleSheet);
     myStage.setScene(myScene);
     myStage.show();
-    //startGame(new File("./data/gameFiles/chess.json"));
-    //startGame(new File("./data/gameFiles/connect4.json"));
   }
 
   private void setBorderPane() {
@@ -142,7 +140,8 @@ public class GameGuiController extends Application {
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
       try {
         step();
-      } catch (FileNotFoundException ex) {
+      } catch (Exception ex) {
+        //Do Nothing
       }
     });
     animation = new Timeline();
@@ -151,7 +150,7 @@ public class GameGuiController extends Application {
     animation.play();
   }
 
-  private void step() throws FileNotFoundException {
+  private void step() {
     changeLanguage(buttons.getLanguageStatus());
     checkNewGame(buttons.getNewGameStatus());
     checkSettings(buttons.getSettingsStatus());
@@ -163,16 +162,22 @@ public class GameGuiController extends Application {
     }
   }
 
-  private void changeLanguage(String language) throws FileNotFoundException {
+  private void changeLanguage(String language) {
     guiLanguage = myResources.getString(language);
     if (!guiLanguage.contains(currentLanguage)) {
-      currentLanguage = guiLanguage;
-      myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
-      gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
-      buttonGroup.getChildren().clear();
-      root.getChildren().remove(buttonGroup);
-      gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
-      addGameButtons();
+      try{
+        currentLanguage = guiLanguage;
+        myResources = ResourceBundle.getBundle(LANGUAGES_PACKAGE + currentLanguage);
+        gameFile = new FileSelect(GAME_FILE_EXTENSIONS, GAME_DIRECTORY, myResources.getString("FileType"), LANGUAGES_PACKAGE + currentLanguage);
+        buttonGroup.getChildren().clear();
+        root.getChildren().remove(buttonGroup);
+        gameDisplay.getPieceDisplayBox().addMainButton(myResources.getString("ExtraPiecesButton"));
+        addGameButtons();
+      }catch(NullPointerException | FileNotFoundException e ){
+        checkNewGame(true);
+        currentLanguage = "English";
+        changeLanguage(buttons.getLanguageStatus());
+      }
     }
   }
 
@@ -221,21 +226,6 @@ public class GameGuiController extends Application {
     }
   }
 
-  private Button createButton(String buttonName, EventHandler event){
-    Button temp = new Button(buttonName);
-    temp.setOnAction(event);
-    return temp;
-  }
-
-  private Stage createNewStage(Pane rt, String title, double width, double height){
-    Stage s = new Stage();
-    s.setTitle(myResources.getString(title));
-    Scene temporaryScene = new Scene(rt,width,height);
-    temporaryScene.getStylesheets().add(currentStyleSheet);
-    s.setScene(temporaryScene);
-    return s;
-  }
-
   private void changeLightTheme(Scene scene){
     darkEnabled = !darkEnabled;
     scene.getStylesheets().removeAll(currentStyleSheet);
@@ -246,7 +236,12 @@ public class GameGuiController extends Application {
     }
     scene.getStylesheets().add(currentStyleSheet);
     myScene.getStylesheets().add(currentStyleSheet);
-    gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
+    try{
+      gameDisplay.getPieceDisplayBox().updateStyleSheet(currentStyleSheet);
+    }
+    catch (NullPointerException e){
+      //do Nothing
+    }
   }
 
   private void changeColor(Stage settings){
@@ -280,7 +275,7 @@ public class GameGuiController extends Application {
     VBox rt = new VBox();
     rt.setSpacing(10);
     rt.setAlignment(Pos.CENTER);
-    Stage ShapeStage = createNewStage(rt, "ChangeColor", 300, 200);
+    Stage ShapeStage = createNewStage(rt, "ChangeShape", 300, 200);
     rt.getChildren().addAll(createButton("Tile Shape", event -> chooseShape(0, rt)),
         createButton("Piece Shape", event -> chooseShape(1, rt)));
     ShapeStage.show();
@@ -297,5 +292,20 @@ public class GameGuiController extends Application {
       }
     });
     root.getChildren().add(tempMenu);
+  }
+
+  private Button createButton(String buttonName, EventHandler event){
+    Button temp = new Button(buttonName);
+    temp.setOnAction(event);
+    return temp;
+  }
+
+  private Stage createNewStage(Pane rt, String title, double width, double height){
+    Stage s = new Stage();
+    s.setTitle(myResources.getString(title));
+    Scene temporaryScene = new Scene(rt,width,height);
+    temporaryScene.getStylesheets().add(currentStyleSheet);
+    s.setScene(temporaryScene);
+    return s;
   }
 }

@@ -1,6 +1,7 @@
 package ooga.models;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class GridModel {
+  private LinkedList<MoveRecord> previousMove = new LinkedList<MoveRecord>();
   private Piece [][] myGrid;
   private int rows;
   private int cols;
@@ -33,9 +35,12 @@ public class GridModel {
   }
 
   public void movePiece(Piece piece, Coordinate c) {
-    removePiece(piece.getPosition());
-    piece.setPosition(c.getRow(), c.getCol());
-    addPiece(piece, c.getRow(), c.getCol());
+    if(piece != null) {
+      previousMove.push(new MoveRecord(piece.getPosition(), c));
+      removePiece(piece.getPosition());
+      piece.setPosition(c.getRow(), c.getCol());
+      addPiece(piece, c.getRow(), c.getCol());
+    }
   }
 
   public void removePiece(Coordinate c) {
@@ -126,5 +131,37 @@ public class GridModel {
   }
   public Piece[][] getGrid () {
     return myGrid;
+  }
+
+  public void undoLastMove() {
+    previousMove.pop().undoThisMove();
+  }
+
+  class MoveRecord {
+    Piece movedPiece;
+    Piece removedPiece;
+    Coordinate originalLocation;
+    Coordinate newLocation;
+
+    MoveRecord(Coordinate originalLocation, Coordinate newLocation) {
+      this.originalLocation = originalLocation;
+      this.newLocation = newLocation;
+      this.movedPiece = getPiece(originalLocation);
+      this.removedPiece = getPiece(newLocation);
+    }
+
+    public void undoThisMove() {
+      removePiece(originalLocation);
+      removePiece(newLocation);
+
+      if(movedPiece != null) {
+        movedPiece.setPosition(originalLocation.getRow(), originalLocation.getCol());
+        addPiece(movedPiece, originalLocation.getRow(), originalLocation.getCol());
+      }
+      if(removedPiece != null) {
+        removedPiece.setPosition(newLocation.getRow(), newLocation.getCol());
+        addPiece(removedPiece, newLocation.getRow(), newLocation.getCol());
+      }
+    }
   }
 }

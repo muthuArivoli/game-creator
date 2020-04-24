@@ -1,9 +1,6 @@
 package ooga.game_view.board;
 
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
