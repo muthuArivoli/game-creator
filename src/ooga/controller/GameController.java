@@ -66,7 +66,7 @@ public class GameController {
   }
 
   private void handleNonPlaceableClick(Coordinate c) {
-    if (!aiEnabled) {
+    if (activePlayer == 1 || !aiEnabled) {
       switch(playerStage) {
         case READY_TO_VIEW: // get valid moves
 //          if(myGridModel.checkPieceExists(c)){
@@ -119,7 +119,7 @@ public class GameController {
   }
 
   private void handlePlaceableClick(Coordinate c) {
-    if (!aiEnabled) {
+    if (activePlayer == -1 || !aiEnabled) {
       try {
         System.out.println(c);
         selectedPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
