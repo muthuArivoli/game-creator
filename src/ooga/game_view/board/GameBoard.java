@@ -2,27 +2,16 @@ package ooga.game_view.board;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import javafx.stage.Stage;
 import ooga.controller.GameController;
-import ooga.game_view.board.pieceType.EllipsePiece;
-import ooga.game_view.board.pieceType.PieceShape;
+import ooga.game_view.board.availableShapes.ComponentShape;
 import ooga.game_view.board.tile.RectangleTile;
 import ooga.models.GridModel;
 import ooga.piece.Coordinate;
@@ -53,7 +42,7 @@ public class GameBoard extends BorderPane {
     boardBackground = this.getBackground();
     availableColors = gameColors;
     pieceShape = "Ellipse";
-    tileShape = "Rectangle";
+    tileShape = "Circle";
   }
 
   public void createGameBoard(GameController gameController, String styleSheet, double width, double height){
@@ -124,7 +113,7 @@ public class GameBoard extends BorderPane {
     }else if (validCoordinates.contains(new Coordinate(row,col))) {
       tile.setFill(Color.LIGHTGREEN);
     }
-    PieceShape piece = createPiece(row, col, tileColor);
+    ComponentShape piece = createPiece(row, col, tileColor);
     if(gridModel.getGrid()[row][col]!= null){
       piece.setColor(availableColors.get(2));
       piece.addName(gridModel.getGrid()[row][col].getPieceName());
@@ -136,13 +125,13 @@ public class GameBoard extends BorderPane {
     tileGroup.getChildren().addAll(tile);
   }
 
-  private PieceShape createPiece(int row, int col, Color tileColor) {
+  private ComponentShape createPiece(int row, int col, Color tileColor) {
     try {
       Class<?> cls = Class.forName("ooga.game_view.board.pieceType."+pieceShape+"Piece");
       Object objectPiece;
       Constructor constructor = cls.getConstructor(GameController.class, double.class, double.class, int.class, int.class, Color.class);
       objectPiece = constructor.newInstance(gameController, tileWidth, tileHeight, row, col, tileColor);
-      return (PieceShape) objectPiece;
+      return (ComponentShape) objectPiece;
     }catch (ClassNotFoundException| NoSuchMethodException| IllegalAccessException| InvocationTargetException| InstantiationException e) {
       //Never Reached because user choices are limited under settings
       return null;
