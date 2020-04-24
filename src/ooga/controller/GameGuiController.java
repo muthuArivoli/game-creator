@@ -22,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -159,7 +160,21 @@ public class GameGuiController extends Application {
     if(myGameController.isChanged()) {
       gameDisplay.updateDisplay();
       myGameController.setChanged(false);
-      System.out.println(myGameController.checkGameEnd());
+      int gameWinner = myGameController.checkGameEnd();
+      if (gameWinner != 0) {
+        System.out.println("Winner");
+        Text winMsg = new Text();
+        winMsg.setFont(new Font(20));
+        winMsg.setText("Player " + (gameWinner == 1 ? "1" : "2") + "wins!");
+
+        final Stage winModal = new Stage();
+        VBox rt = new VBox(20);
+        rt.setAlignment(Pos.CENTER);
+        rt.getChildren().add(winMsg);
+        Scene dialogScene = new Scene(rt, 300, 200);
+        winModal.setScene(dialogScene);
+        winModal.show();
+      }
     }
   }
 
@@ -220,11 +235,16 @@ public class GameGuiController extends Application {
       rt.setSpacing(20);
       Stage settingsStage = createNewStage(rt, "Settings", 400, 300);
       Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(settingsStage.getScene()));
+      Button playerMode = createButton(myResources.getString(myGameController.isAiEnabled() ? "DisableAi" : "EnableAi"), event -> toggleAI());
       Button changeTile = createButton(myResources.getString("ChangeColor"), event -> changeColor(settingsStage));
       Button changePiece = createButton(myResources.getString("ChangeShape"), event -> changeShape(settingsStage));
-      rt.getChildren().addAll(darkMode, changeTile, changePiece);
+      rt.getChildren().addAll(darkMode, playerMode, changeTile, changePiece);
       settingsStage.show();
     }
+  }
+
+  private void toggleAI () {
+    myGameController.toggleAI();
   }
 
   private void changeLightTheme(Scene scene){

@@ -21,7 +21,7 @@ public class piecesInRow extends NumericGoal implements Goal{
     if(ret){
      return side;
     }
-    return -1;
+    return 0;
   }
 
   private boolean checkDiag1(GridModel gridModel, int side, int r, int c) {

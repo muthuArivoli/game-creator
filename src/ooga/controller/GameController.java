@@ -27,6 +27,8 @@ public class GameController {
   private String playerStage = READY_TO_VIEW;
   private Piece selectedPiece;
   private boolean changed = false;
+  private boolean aiEnabled = true;
+  private boolean gameOver = false;
 
   private List<Coordinate> validMoves = new ArrayList<>();
 
@@ -44,28 +46,29 @@ public class GameController {
   }
 
   public void handleClick(int row, int col) {
-//    System.out.println(row+"."+col);
-
-    Coordinate c = new Coordinate(row, col);
-    if (myGameModel.isCanPlace()) {
-      handlePlaceableClick(c);
-    } else {
-      handleNonPlaceableClick(c); // for chess style games
-    };
+    if(!gameOver) {
+      Coordinate c = new Coordinate(row, col);
+      if (myGameModel.isCanPlace()) {
+        handlePlaceableClick(c);
+      } else {
+        handleNonPlaceableClick(c); // for chess style games
+      }
+    }
   }
 
   public int checkGameEnd () {
     for (Goal goal: myGameModel.getGoals()) {
       int winner = goal.getWinner(myGridModel, selectedPiece);
-      if(winner != -1) {
+      if(winner != 0) {
+        gameOver = true;
         return winner;
       }
     }
-    return -1;
+    return 0;
   }
 
   private void handleNonPlaceableClick(Coordinate c) {
-    if (activePlayer == 1) {
+    if (activePlayer == 1 || !aiEnabled) {
       switch(playerStage) {
         case READY_TO_VIEW: // get valid moves
 //          if(myGridModel.checkPieceExists(c)){
@@ -122,7 +125,7 @@ public class GameController {
   }
 
   private void handlePlaceableClick(Coordinate c) {
-    if (activePlayer == 1) {
+    if (activePlayer == 1 || !aiEnabled) {
       try {
         System.out.println(c);
         selectedPiece = new PieceParser(myGameModel.getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
@@ -197,5 +200,13 @@ public class GameController {
       return selectedPiece.getPosition();
     }
     return null;
+  }
+
+  public void toggleAI () {
+    aiEnabled = !aiEnabled;
+  }
+
+  public boolean isAiEnabled () {
+    return aiEnabled;
   }
 }
