@@ -10,7 +10,10 @@ public class enemyPiecesLeft extends NumericGoal implements Goal {
   }
 
   @Override
-  public int checkGoal(GridModel gridModel, Piece lastPiece) {
+  public int getWinner(GridModel gridModel, Piece lastPiece) {
+    int side = lastPiece.getSide();
+
+
     return -1;
   }
 }

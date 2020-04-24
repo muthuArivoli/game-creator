@@ -11,7 +11,7 @@ public class pieceTaken extends MultiGoal implements Goal{
   }
 
   @Override
-  public int checkGoal(GridModel gridModel, Piece lastPiece) {
+  public int getWinner(GridModel gridModel, Piece lastPiece) {
     return -1;
   }
 }

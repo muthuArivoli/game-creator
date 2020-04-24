@@ -5,5 +5,5 @@ import ooga.piece.Piece;
 
 
 public interface Goal {
-    int checkGoal(GridModel gridModel, Piece lastPiece);
+    int getWinner(GridModel gridModel, Piece lastPiece);
 }
