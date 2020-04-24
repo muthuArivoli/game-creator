@@ -9,7 +9,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 import ooga.controller.GameController;
 import ooga.game_view.board.availableShapes.ComponentShape;
 import ooga.models.GridModel;
@@ -66,8 +65,13 @@ public class GameBoard extends BorderPane {
   }
 
   public void updateDisplay () {
-    boardDisplay.getChildren().clear();
-    populateBoard();
+    try{
+      boardDisplay.getChildren().clear();
+      populateBoard();
+    }
+    catch(NullPointerException e){
+      //do nothing. Game board will be loaded after user loads game
+    }
   }
 
   public void updateComponents(List<Color> newColors, List<String> shapes){

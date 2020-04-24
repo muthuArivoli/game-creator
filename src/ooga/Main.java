@@ -1,11 +1,7 @@
 package ooga;
 
 import java.io.FileNotFoundException;
-import ooga.controller.GameController;
-import ooga.game_view.GameGuiController;
-
-import java.io.FileNotFoundException;
-import ooga.parser.TemplateParser;
+import ooga.controller.GameGuiController;
 
 /**
  * Feel free to completely change this code or delete it entirely.
