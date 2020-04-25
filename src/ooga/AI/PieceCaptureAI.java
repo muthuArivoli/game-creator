@@ -1,6 +1,8 @@
 package ooga.AI;
 
 import javafx.util.Pair;
+import ooga.goals.Goal;
+import ooga.models.GameModel;
 import ooga.models.GridModel;
 import ooga.piece.Coordinate;
 import ooga.piece.Piece;
@@ -12,9 +14,11 @@ import java.util.Map;
 
 public class PieceCaptureAI implements AI{
     private GridModel myGridModel;
+    private GameModel myGameModel;
     private int activePlayer;
     private int alphaDefault = Integer.MIN_VALUE;
     private int betaDefault = Integer.MAX_VALUE;
+    private Goal myGoal;
 
     public PieceCaptureAI(GridModel myGridModel, int activePlayer) {
         this.myGridModel = myGridModel;
@@ -30,6 +34,16 @@ public class PieceCaptureAI implements AI{
         List<Coordinate> returnMove = resultList.getValue();
         System.out.println("Best Move Value: " + resultList.getKey());
         return returnMove;
+    }
+
+    @Override
+    public void setMyGoal(Goal myGoal) {
+        this.myGoal = myGoal;
+    }
+
+    @Override
+    public void setMyGameModel(GameModel myGameModel) {
+        this.myGameModel = myGameModel;
     }
 
     private int evaluatePosition() {

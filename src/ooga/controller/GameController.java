@@ -107,7 +107,7 @@ public class GameController {
         case READY_TO_VIEW:
           try {
             AI newAI = myGameModel.getNewGameAI(myGridModel, activePlayer);
-            List<Coordinate> bestMove = newAI.getBestMove(4);
+            List<Coordinate> bestMove = newAI.getBestMove(4); //change to be user inputted difficulty level
             Coordinate currPiece = bestMove.get(0);
             Coordinate currMove = bestMove.get(1);
 
@@ -152,10 +152,13 @@ public class GameController {
       try {
         if(aiEnabled) {
           AI newAI = myGameModel.getNewGameAI(myGridModel, activePlayer);
+          newAI.setMyGoal(myGameModel.getGoals().get(0));
+          newAI.setMyGameModel(myGameModel);
           newAI.getBestMove(8);
 
+          setChanged(true);
+          activePlayer = activePlayer == 1 ? -1 : 1;
         }
-
       } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | ClassNotFoundException e) {
         System.out.println(e.getMessage());
       }
