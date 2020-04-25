@@ -1,6 +1,7 @@
 package ooga.game_view.board;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -32,6 +33,10 @@ public class ExtraPiecesDisplay extends HBox {
 
   public void addPieces(String pieceName){
     pieceList.add(pieceName);
+  }
+
+  public Collection<String> getPieces(){
+    return pieceList;
   }
 
   public void updateStyleSheet(String stylesheet){

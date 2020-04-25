@@ -19,6 +19,10 @@ import javafx.scene.layout.VBox;
 public class GUIButtons {
 
   private static final String SUPPORTED_LANGUAGES = "src/ooga/resources/languages/LanguageList.txt";
+  public static final int BUTTONWIDTH = 250;
+  public static final int BUTTONHEIGHT = 60;
+  public static final int VSPACING = 10;
+  public static final int BUTTONPREFHEIGHT = 350;
 
   private ResourceBundle myResources;
   private List<String> languages;
@@ -128,9 +132,9 @@ public class GUIButtons {
     Button settingsButton = makeButton("Settings", event -> settingsPressed = true);
     Button rulesButton = makeButton("Rules", event -> rulesPressed = true);
     ComboBox langMenu = makeDropDown("LanguageButton", languages);
-    myButtons.setPrefSize(280, 350);
+    myButtons.setPrefSize(BUTTONWIDTH+30, BUTTONPREFHEIGHT);
     myButtons.setPadding(new Insets(30));
-    myButtons.setSpacing(10);
+    myButtons.setSpacing(VSPACING);
 
     formatButton(newGameButton);
     formatButton(restartGameButton);
@@ -158,10 +162,10 @@ public class GUIButtons {
     return tempMenu;
   }
 
-  private void formatButton(Button tempButton) {tempButton.setPrefSize(250, 60);}
+  private void formatButton(Button tempButton) {tempButton.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);}
 
   private void formatBox(ComboBox tempMenu) {
-    tempMenu.setPrefSize(250,60);
+    tempMenu.setPrefSize(BUTTONWIDTH,BUTTONHEIGHT);
   }
 
   private List<String> text2Regex(File dataFile) throws FileNotFoundException {

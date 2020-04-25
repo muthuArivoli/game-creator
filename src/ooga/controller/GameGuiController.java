@@ -32,6 +32,7 @@ import ooga.game_view.GUIButtons;
 import ooga.game_view.board.GameBoard;
 
 public class GameGuiController extends Application {
+
   private static final String LIGHT_STYLESHEET = "ooga/resources/styleSheets/lightMode.css";
   private static final String DARK_STYLESHEET = "ooga/resources/styleSheets/darkMode.css";
   private static final String LANGUAGES_PACKAGE = "ooga.resources.languages.";
@@ -39,6 +40,9 @@ public class GameGuiController extends Application {
   private static final String GAME_FILE_EXTENSIONS = "*.json";
   private static final double FRAMES_PER_SECOND = 60;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+  public static final int NEWSTAGEWIDTH_1 = 400;
+  public static final int NEWSTAGEHEIGHT = 200;
+  public static final int VGAP_SPACING = 10;
 
   private Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
   private double scene_width = primaryScreenBounds.getWidth()*0.9;
@@ -174,10 +178,10 @@ public class GameGuiController extends Application {
       winMsg.setText("Player " + (gameWinner == 1 ? "1" : "2") + "wins!");
 
       final Stage winModal = new Stage();
-      VBox rt = new VBox(20);
+      VBox rt = new VBox(VGAP_SPACING);
       rt.setAlignment(Pos.CENTER);
       rt.getChildren().add(winMsg);
-      Scene dialogScene = new Scene(rt, 300, 200);
+      Scene dialogScene = new Scene(rt, NEWSTAGEWIDTH_1, NEWSTAGEHEIGHT);
       winModal.setScene(dialogScene);
       winModal.show();
     }
@@ -237,8 +241,8 @@ public class GameGuiController extends Application {
       buttons.setSettingsPressedOff();
       VBox rt = new VBox();
       rt.setAlignment(Pos.CENTER);
-      rt.setSpacing(20);
-      Stage settingsStage = createNewStage(rt, "Settings", 400, 300);
+      rt.setSpacing(VGAP_SPACING);
+      Stage settingsStage = createNewStage(rt, "Settings", NEWSTAGEWIDTH_1, NEWSTAGEHEIGHT +100);
       Button darkMode = createButton(myResources.getString("DarkSetting"), event -> changeLightTheme(settingsStage.getScene()));
       Button playerMode = createButton(myResources.getString(myGameController.isAiEnabled() ? "DisableAi" : "EnableAi"), event -> toggleAI());
       Button changeTile = createButton(myResources.getString("ChangeColor"), event -> changeColor(settingsStage));
@@ -273,9 +277,9 @@ public class GameGuiController extends Application {
   private void changeColor(Stage settings){
     settings.close();
     VBox rt = new VBox();
-    rt.setSpacing(10);
+    rt.setSpacing(VGAP_SPACING);
     rt.setAlignment(Pos.CENTER);
-    Stage ColorStage = createNewStage(rt, "ChangeColor", 300, 200);
+    Stage ColorStage = createNewStage(rt, "ChangeColor", NEWSTAGEWIDTH_1, NEWSTAGEHEIGHT);
     rt.getChildren().addAll(createButton("TileColor 1", event -> chooseColor(0, rt)),
         createButton("TileColor 2", event -> chooseColor(1, rt)),
         createButton("UserPieceColor", event -> chooseColor(2, rt)),
@@ -299,9 +303,9 @@ public class GameGuiController extends Application {
   private void changeShape(Stage settings){
     settings.close();
     VBox rt = new VBox();
-    rt.setSpacing(10);
+    rt.setSpacing(VGAP_SPACING);
     rt.setAlignment(Pos.CENTER);
-    Stage ShapeStage = createNewStage(rt, "ChangeShape", 300, 200);
+    Stage ShapeStage = createNewStage(rt, "ChangeShape", NEWSTAGEWIDTH_1, NEWSTAGEHEIGHT);
     rt.getChildren().addAll(createButton("Tile Shape", event -> chooseShape(0, rt)),
         createButton("Piece Shape", event -> chooseShape(1, rt)));
     ShapeStage.show();
