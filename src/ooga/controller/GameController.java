@@ -194,7 +194,7 @@ public class GameController {
   public GridModel getGridModel() {
     return myGridModel;
   }
-
+  public GameModel getGameModel () {return myGameModel;}
   public void setChanged (boolean changed) {
     this.changed = changed;
   }
