@@ -90,7 +90,7 @@ class GameBoardTest {
 
     gameDisplay.createGameBoard(myGameController, lightStyleSheet, 1280,720);
     assertNotNull((StackPane) gameDisplay.getCenter());
-    
+
     List<Color> newColors = new ArrayList<Color>(Arrays.asList(Color.YELLOW, Color.MIDNIGHTBLUE, Color.GREEN, Color.CYAN));
     gameDisplay.updateComponents(newColors, shapes);
     StackPane board = (StackPane) gameDisplay.getCenter();
