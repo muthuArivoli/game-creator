@@ -6,7 +6,11 @@ import java.util.List;
 
 import ooga.AI.AI;
 import ooga.AI.AIFactory;
+import ooga.exceptions.InvalidPieceException;
 import ooga.goals.Goal;
+import ooga.parser.PieceParser;
+import ooga.piece.Coordinate;
+import ooga.piece.Piece;
 import org.json.JSONObject;
 
 public class GameModel {
@@ -49,5 +53,10 @@ public class GameModel {
 
   public AI getNewGameAI(GridModel myGridModel, int activePlayer) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
     return myAIFactory.getAIClass(aiType, myGridModel, activePlayer);
+  }
+
+  public Piece generateNewPiece(int activePlayer, Coordinate c) throws InvalidPieceException {
+    Piece selectedPiece = new PieceParser(getPieceJSON()).generatePiece("dime" + (activePlayer == -1 ? 2 : 1), c.getRow(), c.getCol());
+    return selectedPiece;
   }
 }
