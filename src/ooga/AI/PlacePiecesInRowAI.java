@@ -61,7 +61,7 @@ public class PlacePiecesInRowAI implements AI{
             Piece selectedPiece = myGameModel.generateNewPiece(activePlayer, coord);
             myGridModel.addPiece(selectedPiece, coord.getRow(), coord.getCol());
 
-            List<Coordinate> validMoves = myGridModel.getValidMoves(coord, activePlayer);
+            List<Coordinate> validMoves = myGridModel.getValidMoves(coord, 1);
 
             if (validMoves.isEmpty()) {
                 myGridModel.movePiece(selectedPiece, coord);

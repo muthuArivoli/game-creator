@@ -151,6 +151,7 @@ public class GameController {
     } else {
       try {
         if(aiEnabled) {
+          // need to include selected piece
           AI newAI = myGameModel.getNewGameAI(myGridModel, activePlayer);
           newAI.setMyGoal(myGameModel.getGoals().get(0));
           newAI.setMyGameModel(myGameModel);
