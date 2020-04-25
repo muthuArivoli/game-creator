@@ -41,7 +41,7 @@ public class GameController {
     try {
       myTemplateParser.parseTemplate(fileName);
     } catch (FileNotFoundException | InvalidGridException | InvalidPieceException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
-      System.out.println(e.getMessage());
+      //System.out.println(e.getMessage());
     }
   }
 
@@ -65,7 +65,7 @@ public class GameController {
         return winner;
       }
     }
-    System.out.println("goal not achieved");
+    //System.out.println("goal not achieved");
     return 0;
   }
 
@@ -80,22 +80,22 @@ public class GameController {
 
           if(myGridModel.checkPieceExists(c) && myGridModel.getPiece(c).getSide() == activePlayer){
             selectedPiece = myGridModel.getPiece(c);
-            System.out.println("Selected: " + selectedPiece.getPieceName());
+            //System.out.println("Selected: " + selectedPiece.getPieceName());
             validMoves = myGridModel.getValidMoves(c,activePlayer);
             togglePlayerStage(READY_TO_MOVE);
             setChanged(true);
-            System.out.println("Valid moves generated:");
+            //System.out.println("Valid moves generated:");
             for (Coordinate move: validMoves) {
-              System.out.println(move.getRow() + "" + move.getCol());
+              //System.out.println(move.getRow() + "" + move.getCol());
             }
           }
           break;
         case READY_TO_MOVE:
           if(myGridModel.checkPieceExists(c) && myGridModel.getPiece(c).getSide() == activePlayer){
-            System.out.println("Deactivating selected piece.");
+            //System.out.println("Deactivating selected piece.");
             resetPlayerStage();
           } else {
-            System.out.println("Moved piece");
+            //.out.println("Moved piece");
             moveSelectedPiece(c);
           }
           setChanged(true);
@@ -119,11 +119,11 @@ public class GameController {
             setChanged(true);
             break;
           } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | ClassNotFoundException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
       }
     }
-    System.out.println("Player " + activePlayer + " is " + playerStage + "\n");
+    //System.out.println("Player " + activePlayer + " is " + playerStage + "\n");
   }
 
   private void handlePlaceableClick(Coordinate c) {
@@ -146,7 +146,7 @@ public class GameController {
           activePlayer = activePlayer == 1 ? -1 : 1;
         }
       } catch (InvalidPieceException e) {
-        e.printStackTrace();
+        //e.printStackTrace();
       }
     } else {
       try {
@@ -155,13 +155,14 @@ public class GameController {
           AI newAI = myGameModel.getNewGameAI(myGridModel, activePlayer);
           newAI.setMyGoal(myGameModel.getGoals().get(0));
           newAI.setMyGameModel(myGameModel);
-          newAI.getBestMove(8);
+          List<Coordinate> newMoves = newAI.getBestMove(8);
+          selectedPiece = myGridModel.getPiece(newMoves.get(0));
 
           setChanged(true);
           activePlayer = activePlayer == 1 ? -1 : 1;
         }
       } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | ClassNotFoundException e) {
-        System.out.println(e.getMessage());
+        //System.out.println(e.getMessage());
       }
     }
   }

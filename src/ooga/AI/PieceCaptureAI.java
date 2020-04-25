@@ -32,7 +32,7 @@ public class PieceCaptureAI implements AI{
         }
         Pair<Integer, List<Coordinate>> resultList = recursiveMoveFinder(depthOfAnalysis, true, alphaDefault, betaDefault);
         List<Coordinate> returnMove = resultList.getValue();
-        System.out.println("Best Move Value: " + resultList.getKey());
+        //System.out.println("Best Move Value: " + resultList.getKey());
         return returnMove;
     }
 

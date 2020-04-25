@@ -42,7 +42,7 @@ public class PlacePiecesInRowAI implements AI{
         Collections.shuffle(allPossibilities);
         placeNewPiece(allPossibilities.get(0));
 
-        return null;
+        return allPossibilities;
     }
 
     private Pair<Integer, Coordinate> recursiveMoveFinder(int depth, boolean isMaximizing) {
@@ -69,7 +69,7 @@ public class PlacePiecesInRowAI implements AI{
                 myGridModel.movePiece(selectedPiece, Collections.max(validMoves));
             }
         } catch (InvalidPieceException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }
