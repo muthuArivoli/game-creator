@@ -139,8 +139,8 @@ public class GameBoard extends BorderPane {
       object = constructor.newInstance(gameController, tileWidth, tileHeight, row, col, tileColor, isPiece);
       return (ComponentShape) object;
     }catch (ClassNotFoundException| NoSuchMethodException| IllegalAccessException| InvocationTargetException| InstantiationException e) {
-      //Never Reached because user choices are limited under settings
-      return null;
+      //Never Reached because user choices are restricted under settings
+      throw new IllegalStateException("No such shape", e);
     }
   }
 
