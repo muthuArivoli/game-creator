@@ -155,6 +155,18 @@ public class GridModel {
     return myGrid;
   }
 
+  public List<Coordinate> emptySpaces() {
+    List<Coordinate> empties = new ArrayList<>();
+    for(int i = 0; i < myGrid.length; i++) {
+      for(int j = 0; j < myGrid.length; j++) {
+        if(myGrid[i][j] == null) {
+          empties.add(new Coordinate(i, j));
+        }
+      }
+    }
+    return empties;
+  }
+
   public void undoLastMove() {
     previousMove.pop().undoThisMove();
   }

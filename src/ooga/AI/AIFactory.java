@@ -1,5 +1,6 @@
 package ooga.AI;
 
+import ooga.goals.Goal;
 import ooga.models.GridModel;
 
 import java.lang.reflect.InvocationTargetException;
