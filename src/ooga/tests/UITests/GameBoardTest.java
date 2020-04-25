@@ -30,7 +30,7 @@ class GameBoardTest {
         Arrays.asList(Color.WHITE, Color.BLACK, Color.RED, Color.CYAN));
     gameDisplay = new GameBoard(gameColors);
     myGameController = new GameController();
-    myGameController.parseFile("C:/Users/Okechukwu/Desktop/College/COMPSCI 308/final_team09/data/gameFiles/chess.json");
+    myGameController.parseFile("./data/gameFiles/chess.json");
   }
 
   @Test
