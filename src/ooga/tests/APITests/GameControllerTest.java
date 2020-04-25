@@ -7,24 +7,12 @@ import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import javafx.scene.Group;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import ooga.controller.GameController;
-import ooga.game_view.board.GameBoard;
-import ooga.game_view.board.availableShapes.ComponentShape;
 import ooga.goals.Goal;
-import ooga.goals.enemyPiecesLeft;
 import ooga.models.GameModel;
 import ooga.models.GridModel;
-import ooga.piece.Coordinate;
-import ooga.piece.Piece;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.css.Rect;
 
 class GameControllerTest {
   private GameController myGameController;
