@@ -15,6 +15,10 @@ import ooga.models.GridModel;
 import ooga.piece.Coordinate;
 
 public class GameBoard extends BorderPane {
+
+  public static final double WIDTH_FACTOR = 0.80;
+  public static final double HEIGHT_FACTOR = 0.14;
+  public static final double LENGTHFACTOR = 0.62;
   private GameController gameController;
   private GridModel gridModel;
   private String currentStyleSheet;
@@ -86,11 +90,11 @@ public class GameBoard extends BorderPane {
   }
 
   private void calculateSize(double dispWidth, double dispHeight) {
-    displayWidth = dispWidth * 0.80;
-    displayHeight = dispHeight * 0.14;
+    displayWidth = dispWidth * WIDTH_FACTOR;
+    displayHeight = dispHeight * HEIGHT_FACTOR;
     boardSideLength = dispHeight - displayHeight;
     if (displayWidth < boardSideLength) {
-      boardSideLength = displayWidth * 0.62;
+      boardSideLength = displayWidth * LENGTHFACTOR;
     }
     this.setMaxSize(displayWidth, dispHeight);
   }
