@@ -25,7 +25,7 @@ Alexander Uzochukwu: 60
 
 Eric Jiang: 60
 
-Turner Jordan:
+Turner Jordan: 45
 
 Muthu Arivoli: 60
 
@@ -46,6 +46,9 @@ Eric Jiang
     * Implemented frontend features such as handling user clicks to move and place items
 
 Turner Jordan
+* Responsible for back-end design (AI)
+    * Designed and implemented the AI factory and inheritance hierarchy
+    * Implemented a recursive min-max algorithm for peice capture game type AI
 
 Muthu Arivoli
 * Responsible for back-end design
@@ -73,6 +76,9 @@ Game files will be loaded from the "data/gameFiles" directory. This is the sole 
 * Game Area Editor
 * Intelligent MinMax AI and greedy AI
 * Ability to fully customize tile/piece shapes and colors
+
+### Demo
+A demo showcasing the project's functionality can be found[ here! ](https://drive.google.com/file/d/1oJ4sdkqZZ2oYNDyc9__dmbHx7FeK5qCi/view?usp=sharing)
 
 ### Notes/Assumptions
 
