@@ -27,7 +27,7 @@ Eric Jiang: 60
 
 Turner Jordan:
 
-Muthu Arivoli:
+Muthu Arivoli: 60
 
 ### Primary Roles
 Alexander Uzochukwu:
@@ -48,7 +48,10 @@ Eric Jiang
 Turner Jordan
 
 Muthu Arivoli
-
+* Responsible for back-end design
+    * Designed and implemented the various movements for pieces
+    * Implemented the chain of responsibility for determining the possible movements of a piece on a grid
+    
 ### ooga.games Used
 * Chess
 * Connect 4
