@@ -33,9 +33,9 @@ import ooga.game_view.board.GameBoard;
 
 public class GameGuiController extends Application {
 
-  private static final String LIGHT_STYLESHEET = "ooga/resources/styleSheets/lightMode.css";
-  private static final String DARK_STYLESHEET = "ooga/resources/styleSheets/darkMode.css";
-  private static final String LANGUAGES_PACKAGE = "ooga.resources.languages.";
+  private static final String LIGHT_STYLESHEET = "styleSheets/lightMode.css";
+  private static final String DARK_STYLESHEET = "styleSheets/darkMode.css";
+  private static final String LANGUAGES_PACKAGE = "languages.";
   private static final String GAME_DIRECTORY = "data/gameFiles";
   private static final String GAME_FILE_EXTENSIONS = "*.json";
   private static final double FRAMES_PER_SECOND = 60;

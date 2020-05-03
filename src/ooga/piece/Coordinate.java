@@ -2,6 +2,10 @@ package ooga.piece;
 
 import java.util.Objects;
 
+/**
+ * Represents a coordinate in the grid
+ * @author Muthu Arivoli
+ */
 public class Coordinate implements Comparable<Coordinate>{
     private int row;
     private int col;
@@ -32,6 +36,11 @@ public class Coordinate implements Comparable<Coordinate>{
         return Objects.hash(row, col);
     }
 
+    /**
+     * Checks if this coordinate is equal to another
+     * @param o the other coordinate
+     * @return whether the coordinates are equal to each other
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
