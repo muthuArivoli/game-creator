@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * Represents a movement towards the upper left corner of the board along the diagonal
+ * @author Muthu Arivoli
+ */
 public class diagFdLeft implements Movement {
   private int rangeBegin;
   private int rangeEnd;
@@ -15,6 +19,13 @@ public class diagFdLeft implements Movement {
     this.rangeEnd = rangeEnd;
   }
 
+  /**
+   * Returns all of the possible paths that a piece can take in the direction of diagonal forward
+   * @param position the starting position of the piece
+   * @param playerSide the side of the piece
+   * @param checkCoordinatesInBound function that checks whether a coordinate is in the bounds of the game
+   * @return valid paths for a left diagonal forward movement
+   */
   @Override
   public List<List<Coordinate>> getValidPaths(Coordinate position, int playerSide, Predicate<Coordinate> checkCoordinatesInBound) {
     List<List<Coordinate>> paths = new ArrayList<>();

@@ -60,6 +60,12 @@ public class GridModel {
         myGrid[c.getRow()][c.getCol()] != null;
   }
 
+  /**
+   * Returns all of the possible moves for the piece at a certain coordinate
+   * @param c the coordinate the piece is at
+   * @param playerSide the side the piece is on
+   * @return the list of moves that the piece a coordinate c can take
+   */
   public List<Coordinate> getValidMoves(Coordinate c, int playerSide){
     if(!checkPieceExists(c)){
       //HANDLE EXCEPTION
@@ -143,14 +149,6 @@ public class GridModel {
     }
   }
 
-  public void print () {
-    for (int i = 0; i < myGrid.length; i++) {
-      for (int j = 0; j < myGrid[0].length; j++) {
-        System.out.print(myGrid[i][j]);
-      }
-      System.out.println();
-    }
-  }
   public Piece[][] getGrid () {
     return myGrid;
   }

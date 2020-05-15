@@ -13,15 +13,21 @@ public class CompositeMovement implements Movement {
         movements = new ArrayList<>();
     }
 
+    /**
+     * Adds a movement to the composite movement
+     * @param nextMovement the next movement to add to this composite movement
+     */
     public void add(Movement nextMovement){
         movements.add(nextMovement);
     }
 
-    public List<Movement> movements(){
-        return this.movements;
-    }
-
-
+    /**
+     * Gets valid paths from this composite movement
+     * @param position the starting position of the piece
+     * @param playerSide the side of the piece
+     * @param checkCoordinatesInBound function that checks whether a coordinate is in the bounds of the game
+     * @return valid paths for a composite movement
+     */
     @Override
     public List<List<Coordinate>> getValidPaths(Coordinate position, int playerSide, Predicate<Coordinate> checkCoordinatesInBound) {
         List<List<Coordinate>> paths = new ArrayList<>();

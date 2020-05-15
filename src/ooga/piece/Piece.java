@@ -47,6 +47,14 @@ public class Piece {
         return this.captureMovements;
     }
 
+    /**
+     * Gets all of the valid paths for the piece
+     * @param c the coordinate the piece is at
+     * @param playerSide the side that the piece is on
+     * @param checkCoordinateInBounds checks whether a coordinate is within the game board
+     * @param movementList the type of movements to use when calculating the paths
+     * @return the valid paths/movements that the piece can take
+     */
     public List<List<Coordinate>> getValidPaths(Coordinate c, int playerSide, Predicate<Coordinate> checkCoordinateInBounds, List<Movement> movementList){
         List<List<Coordinate>> validPaths = new ArrayList<>();
         for(Movement m:movementList){
